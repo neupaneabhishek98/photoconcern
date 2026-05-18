@@ -21,6 +21,7 @@ Thumbs.db
 # Build folders (if any)
 dist/
 build/
+_site/
 
 # Optional: IDE files
 .vscode/
