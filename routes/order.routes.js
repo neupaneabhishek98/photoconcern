@@ -4,9 +4,29 @@ const multer       = require("multer");
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const r2           = require("../config/r2.config");
 const Order        = require("../models/order.models");
+const User         = require("../models/register.models");
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 const { sendWhatsApp }    = require("../services/whatsapp.services");
 const { uploadLimiter }   = require("../middlewares/ratelimit.middleware");
+
+// Lazy-load Drive + Fonepay services so the server still boots even if those
+// optional deps (googleapis, qrcode) aren't installed yet. They throw a clear
+// error at call time instead of crashing at import time.
+function lazy(modulePath) {
+    let mod = null;
+    return new Proxy({}, {
+        get(_, prop) {
+            if (!mod) mod = require(modulePath);
+            return mod[prop];
+        }
+    });
+}
+const drive   = lazy("../services/drive.services");
+const fonepay = lazy("../services/fonepay.services");
+
+// Storage backend: "drive" (default) uploads to Google Drive; "r2" keeps the
+// original Cloudflare R2 behaviour. Set via STORAGE_BACKEND env var.
+const STORAGE_BACKEND = (process.env.STORAGE_BACKEND || "drive").toLowerCase();
 const upload = multer({
     storage: multer.memoryStorage(),
     fileFilter: (req, file, cb) => {
@@ -293,36 +313,112 @@ router.post(
                 });
             }
 
-            const uploadedUrls = [];
+            let uploadedUrls = [];
 
-            for (const file of req.files) {
-                // unique key: orderId/timestamp-originalname
-                const key = `orders/${order._id}/${Date.now()}-${file.originalname.replace(/\s+/g, "_")}`;
+            if (STORAGE_BACKEND === "drive") {
+                // ── Google Drive backend (photoconcern65@gmail.com) ─────
+                // Folder layout: Online Orders / YYYY-MM-DD / <Customer> /
+                let customerName = "Customer";
+                try {
+                    const user = await User.findById(req.session.userId)
+                        .select("full_name studio_name free_name email_address studio_email free_email role");
+                    if (user) {
+                        customerName =
+                            user.full_name ||
+                            user.studio_name ||
+                            user.free_name ||
+                            user.email_address ||
+                            user.studio_email ||
+                            user.free_email ||
+                            "Customer";
+                    }
+                } catch (_) { /* fall through with default */ }
 
-                await r2.send(new PutObjectCommand({
-                    Bucket:      process.env.bucket_name,
-                    Key:         key,
-                    Body:        file.buffer,
-                    ContentType: file.mimetype,
-                }));
-
-                // public URL — uses R2 public bucket domain from env
-                const publicUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
-                uploadedUrls.push(publicUrl);
+                const result = await drive.uploadOrderFiles(customerName, req.files, {
+                    orderId: order.orderId || String(order._id),
+                });
+                uploadedUrls = result.files.map(f => f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`);
+                order.driveFolderId  = result.folderId;
+                order.driveFolderUrl = result.folderUrl;
+            } else {
+                // ── Cloudflare R2 backend (legacy) ──────────────────────
+                for (const file of req.files) {
+                    const key = `orders/${order._id}/${Date.now()}-${file.originalname.replace(/\s+/g, "_")}`;
+                    await r2.send(new PutObjectCommand({
+                        Bucket:      process.env.bucket_name,
+                        Key:         key,
+                        Body:        file.buffer,
+                        ContentType: file.mimetype,
+                    }));
+                    const publicUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
+                    uploadedUrls.push(publicUrl);
+                }
             }
 
             // save URLs to order
             order.designImages = uploadedUrls;
             await order.save();
 
-            return res.json({ message: "Designs uploaded", urls: uploadedUrls });
+            return res.json({
+                message: "Designs uploaded",
+                backend: STORAGE_BACKEND,
+                folderUrl: order.driveFolderUrl || null,
+                urls: uploadedUrls,
+            });
 
         } catch (err) {
             console.error("[order/upload-designs]", err);
-            return res.status(500).json({ message: "Upload failed. Please try again." });
+            return res.status(500).json({ message: err.message || "Upload failed. Please try again." });
         }
     }
 );
+
+
+/* ════════════════════════════════════════════════════════════
+   POST /api/orders/:orderId/pay/fonepay
+   Issues a Fonepay dynamic QR for the given order.
+   Body: none. Returns: { qr: { qrDataUrl, reference, amount, ... } }
+   ════════════════════════════════════════════════════════════ */
+router.post("/orders/:orderId/pay/fonepay", isAuthenticated, async (req, res) => {
+    try {
+        const order = await Order.findOne({
+            _id:    req.params.orderId,
+            userId: req.session.userId,
+        });
+        if (!order) return res.status(404).json({ message: "Order not found" });
+        if (order.paymentStatus === "paid") {
+            return res.status(400).json({ message: "Order is already paid" });
+        }
+
+        const qr = await fonepay.createDynamicQr(order);
+        order.fonepayReference = qr.reference;
+        await order.save();
+        return res.json({ qr, orderId: order._id, humanOrderId: order.orderId });
+    } catch (err) {
+        console.error("[order/pay/fonepay]", err);
+        return res.status(500).json({ message: err.message || "Could not create QR" });
+    }
+});
+
+
+/* ════════════════════════════════════════════════════════════
+   POST /api/orders/webhook/fonepay
+   Webhook endpoint Fonepay calls to notify of a successful payment.
+   In test mode, also reachable by the frontend for manual confirmation.
+   Body: { reference, amount, status }
+   ════════════════════════════════════════════════════════════ */
+router.post("/orders/webhook/fonepay", async (req, res) => {
+    const v = fonepay.verifyWebhook(req.body || {});
+    if (!v.ok) return res.status(400).json({ message: v.error });
+
+    const order = await Order.findOne({ fonepayReference: v.reference });
+    if (!order) return res.status(404).json({ message: "No matching order" });
+
+    order.paymentStatus = "paid";
+    order.orderStatus   = order.orderStatus === "placed" ? "processing" : order.orderStatus;
+    await order.save();
+    return res.json({ ok: true, orderId: order._id });
+});
 
 
 /* ════════════════════════════════════════════════════════════
@@ -406,49 +502,6 @@ router.get("/admin/proxy-image", isAdmin, async (req, res) => {
     }
 });
 
-/* ════════════════════════════════════════════════════════════
-   eSewa INTEGRATION PLACEHOLDER
-   ════════════════════════════════════════════════════════════
-   TODO: Add eSewa initiate payment route here.
-   Docs: https://developer.esewa.com.np/
-
-   router.post("/orders/:orderId/pay/esewa", isAuthenticated, async (req, res) => {
-       const order = await Order.findById(req.params.orderId);
-       const params = {
-           amt: order.total, psc: 0, pdc: 0, txAmt: 0, tAmt: order.total,
-           pid: order._id.toString(),
-           scd: process.env.ESEWA_MERCHANT_CODE,
-           su:  `${process.env.BASE_URL}/api/orders/${order._id}/esewa/success`,
-           fu:  `${process.env.BASE_URL}/api/orders/${order._id}/esewa/failure`,
-       };
-       return res.json({ esewaUrl: "https://uat.esewa.com.np/epay/main", params });
-   });
-   ════════════════════════════════════════════════════════════ */
-
-
-/* ════════════════════════════════════════════════════════════
-   Khalti INTEGRATION PLACEHOLDER
-   ════════════════════════════════════════════════════════════
-   TODO: Add Khalti initiate payment route here.
-   Docs: https://docs.khalti.com/
-
-   router.post("/orders/:orderId/pay/khalti", isAuthenticated, async (req, res) => {
-       const order = await Order.findById(req.params.orderId);
-       const initRes = await fetch("https://a.khalti.com/api/v2/epayment/initiate/", {
-           method: "POST",
-           headers: { Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`, "Content-Type": "application/json" },
-           body: JSON.stringify({
-               return_url: `${process.env.BASE_URL}/api/orders/${order._id}/khalti/callback`,
-               website_url: process.env.BASE_URL,
-               amount: order.total * 100,
-               purchase_order_id: order._id.toString(),
-               purchase_order_name: "ShopHub Order",
-           })
-       });
-       const data = await initRes.json();
-       return res.json({ paymentUrl: data.payment_url });
-   });
-   ════════════════════════════════════════════════════════════ */
 
 
 module.exports = router;

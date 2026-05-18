@@ -1757,3 +1757,113 @@ body.theme-dark .product-card--featured {
   margin: 0 !important;
   width: 100%;
 }
+
+/* ===================== Photo Tools section ===================== */
+.tools-section {
+  max-width: 1200px;
+  margin: 60px auto 40px;
+  padding: 0 20px;
+}
+.tools-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.tools-heading h2 {
+  font-size: 1.9rem;
+  margin: 0 0 6px;
+  color: #021024;
+}
+.tools-heading p {
+  color: #5a6478;
+  margin: 0;
+}
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff, #f3f7fb);
+  border: 1px solid #e3eaf2;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(2, 16, 36, 0.08);
+  border-color: #5483B3;
+}
+.tool-card--active {
+  background: linear-gradient(135deg, #021024, #173b69);
+  color: #f5f8fb;
+  border-color: transparent;
+}
+.tool-card--active .tool-card__body p { color: #c8d4e3; }
+.tool-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(84, 131, 179, 0.12);
+  display: grid;
+  place-items: center;
+  color: #5483B3;
+}
+.tool-card--active .tool-card__icon {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+.tool-card__icon svg { width: 26px; height: 26px; }
+.tool-card__body h3 {
+  margin: 0 0 4px;
+  font-size: 1.12rem;
+}
+.tool-card__body p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #5a6478;
+  line-height: 1.5;
+}
+.tool-card__cta {
+  margin-top: auto;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #5483B3;
+}
+.tool-card--active .tool-card__cta { color: #9fc1e6; }
+.tool-card__cta--soon { color: #9aa3b2; font-weight: 500; }
+
+/* ===== Image-only hero (text removed per spec) ===== */
+.hero-banner--image-only .hero-inner {
+  display: block;
+  grid-template-columns: none;
+}
+.hero-banner--image-only .hero-media--full {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero-banner--image-only .hero-slider {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f3f6fb, #e5ecf4);
+  box-shadow: 0 12px 32px rgba(2,16,36,0.06);
+}
+.hero-banner--image-only .hero-slider img,
+.hero-banner--image-only .hero-slider .hero-slide,
+.hero-banner--image-only .hero-slider > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-banner--image-only .hero-slide-info,
+.hero-banner--image-only .hero-text {
+  display: none !important;
+}

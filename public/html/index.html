@@ -87,45 +87,7 @@
   </div>
 
   <div class="main-content">
-    <section class="hero-banner">
-      <div class="hero-inner">
-        <div class="hero-text">
-          <p class="hero-pill">New in • Curated for you</p>
-          <h1>Spring drops you<br>won&rsquo;t find anywhere else.</h1>
-          <p class="hero-subtitle">
-            Discover hand-picked gifts, office essentials and custom pieces for every occasion.
-          </p>
-          <div class="hero-actions">
-            <button class="hero-primary-btn" type="button">Shop New Arrivals</button>
-            <button class="hero-secondary-btn" type="button">Browse Categories</button>
-          </div>
-          <div class="hero-meta">
-            <span>⭐ 4.8 rating</span>
-            <span>🚚 Free shipping all over Nepal</span>
-          </div>
-        </div>
-        <div class="hero-media">
-          <div class="hero-slider">
-            <!-- slides injected by index.js from featured products -->
-          </div>
-          <div class="hero-slide-info">
-            <span class="hero-slide-title"></span>
-            <span class="hero-slide-price"></span>
-            <span class="hero-slide-desc"></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="top-products">
-      <div class="text-top-products">
-        <h2>Our Products</h2>
-        <p>Our best-selling items</p>
-      </div>
-      <div class="products"></div>
-    </div>
-
-    <!-- HOT SECTION -->
+    <!-- FEATURED PHOTOBOOK SECTION (above hero per spec) -->
     <div class="hot-section">
       <div class="hot-img-wrap">
         <img src="/resources/photobook.png" alt="Photo Book" class="hot-img">
@@ -149,6 +111,77 @@
         </div>
       </div>
     </div>
+
+    <!-- HERO BANNER (image-only — text removed per spec) -->
+    <section class="hero-banner hero-banner--image-only">
+      <div class="hero-inner">
+        <div class="hero-media hero-media--full">
+          <div class="hero-slider">
+            <!-- slides injected by index.js from featured products -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="top-products">
+      <div class="text-top-products">
+        <h2>Our Products</h2>
+        <p>Our best-selling items</p>
+      </div>
+      <div class="products"></div>
+    </div>
+
+    <!-- TOOLS SECTION (passport photo, MRP photo, skin retouch) -->
+    <section class="tools-section">
+      <div class="tools-heading">
+        <h2>Photo Tools</h2>
+        <p>Free in-browser tools — passport photo, MRP photo, and more.</p>
+      </div>
+      <div class="tools-grid">
+        <a class="tool-card tool-card--active" href="/serve/tools/passport">
+          <div class="tool-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="16" height="18" rx="2"/>
+              <circle cx="12" cy="10" r="3"/>
+              <path d="M7 18c1.5-2.5 3.5-3.5 5-3.5s3.5 1 5 3.5"/>
+            </svg>
+          </div>
+          <div class="tool-card__body">
+            <h3>Passport Photo Maker</h3>
+            <p>Auto-cropped 28×32 mm portrait with white background. Just upload and download.</p>
+          </div>
+          <span class="tool-card__cta">Open →</span>
+        </a>
+        <a class="tool-card" href="/serve/tools/mrp">
+          <div class="tool-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16v16H4z"/>
+              <path d="M4 9h16"/>
+              <path d="M8 4v5"/>
+              <path d="M16 4v5"/>
+            </svg>
+          </div>
+          <div class="tool-card__body">
+            <h3>MRP Photo Maker</h3>
+            <p>Machine-readable passport size (35×45 mm) with proper composition.</p>
+          </div>
+          <span class="tool-card__cta tool-card__cta--soon">Coming soon</span>
+        </a>
+        <a class="tool-card" href="/serve/tools/retouch">
+          <div class="tool-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 4l6 6-9 9H5v-6z"/>
+              <path d="M3 21h7"/>
+            </svg>
+          </div>
+          <div class="tool-card__body">
+            <h3>Skin Retouch</h3>
+            <p>Smooth blemishes and even skin tone while keeping a natural look.</p>
+          </div>
+          <span class="tool-card__cta tool-card__cta--soon">Coming soon</span>
+        </a>
+      </div>
+    </section>
 
     <div class="categories" id="categories" style="display:none">
       <div class="categories-heading">

@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
 
   email_address: {
     type: String,
-        unique: true
+    unique: true,
+    sparse: true
   },
 
   password: {
@@ -20,6 +21,14 @@ const userSchema = new mongoose.Schema({
 
   phone: String,
 
+  // Google Sign-In: set when the user signed in with Google.
+  googleId: { type: String, unique: true, sparse: true },
+  picture:  { type: String },
+  authProvider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local"
+  },
 
   // STUDIO
   studio_name: String,
@@ -27,7 +36,7 @@ const userSchema = new mongoose.Schema({
   studio_phone: String,
   studio_pan: String,
   studio_location: String,
-  studio_password : String,
+  studio_password: String,
 
   // FREELANCER
   free_name: String,
@@ -35,7 +44,7 @@ const userSchema = new mongoose.Schema({
   free_phone: String,
   free_pan: String,
   free_location: String,
-  free_password : String,
+  free_password: String,
 
 }, { timestamps: true });
 

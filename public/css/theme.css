@@ -474,3 +474,47 @@ body.theme-dark .logout-btn:hover { background: rgba(248,113,113,0.08) !importan
     left: 10px !important;
   }
 }
+
+/* ====== Primary brand color & active-state nav icons ====== */
+:root {
+  --pc-primary: #d00106;
+  --pc-primary-tint: #ffe5e5;
+}
+
+/* Top-bar icons */
+.nav-bar-right > a,
+.nav-bar-right > .hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 10px;
+  transition: background .15s, color .15s;
+}
+.icons-svg-nav {
+  width: 26px;
+  height: 26px;
+  transition: stroke .15s, fill .15s;
+}
+.nav-bar-right > a:hover .icons-svg-nav {
+  stroke: var(--pc-primary);
+}
+
+/* Active route — fill the icon AND tint background */
+.nav-bar-right > a.is-active {
+  background: var(--pc-primary-tint);
+}
+.nav-bar-right > a.is-active .icons-svg-nav {
+  fill: var(--pc-primary);
+  stroke: var(--pc-primary);
+}
+
+/* Quickies dropdown items */
+.quickies a.is-active,
+.quickies a.is-active svg {
+  color: var(--pc-primary);
+}
+.quickies a.is-active svg {
+  fill: var(--pc-primary);
+  stroke: var(--pc-primary);
+}

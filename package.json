@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node scripts/check-setup.js",
+    "seed-admin": "node scripts/seed-admin.js"
   },
   "keywords": [],
   "author": "",
@@ -20,12 +22,15 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.2",
     "express-session": "^1.19.0",
+    "google-auth-library": "^9.11.0",
+    "googleapis": "^140.0.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.3",
     "multer": "^2.1.1",
     "myql": "^1.0.0",
     "mysql2": "^3.20.0",
     "nodemailer": "^8.0.4",
+    "qrcode": "^1.5.4",
     "twilio": "^5.13.1"
   }
 }

@@ -1,4 +1,3 @@
-
 // Show toast function (reuse your register one)
 function showToast(message, type = "info", duration = 3000) {
   const toast = document.createElement("div");
@@ -31,7 +30,7 @@ document.querySelector(".auth-form").addEventListener("submit", async (e) => {
   const data = Object.fromEntries(formData.entries());
 
   const btn = e.target.querySelector(".auth-btn");
-  if (btn) { btn.disabled = true; btn.textContent = "Signing in…"; }
+  if (btn) { btn.disabled = true; btn.textContent = "Signing in..."; }
 
   try {
     const res = await fetch("/api/login", {
@@ -43,7 +42,6 @@ document.querySelector(".auth-form").addEventListener("submit", async (e) => {
     const result = await res.json();
 
     if (res.ok) {
-      // Redirect on success — use server redirect or default to home
       window.location.href = result.redirect || "/";
     } else {
       showToast(result.message || "Login failed. Please try again.", "error", 4000);

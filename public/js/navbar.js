@@ -1,9 +1,35 @@
 /* ============================================================
    navbar.js — shared across all pages
-   Checks session via GET /api/profile.
-   - Logged in  → profile icon stays, cart icon stays
-   - Not logged → profile icon → Login button, cart icon hidden
+   1) Session-aware navbar:
+        - Logged in   → profile + cart visible
+        - Not logged  → profile becomes a Login button, cart hidden
+   2) Active-state highlighting on nav icons (primary color #d00106).
    ============================================================ */
+
+(function highlightActiveNav() {
+    const path = (location.pathname || "/").toLowerCase();
+    const matches = [
+        ["/serve/contact",    /^\/serve\/contact/],
+        ["/serve/cart",       /^\/serve\/cart/],
+        ["/serve/wishlist",   /^\/serve\/wishlist/],
+        ["/serve/profile",    /^\/serve\/profile/],
+        ["/orders",           /^\/orders/],
+        ["/serve/tools/passport", /^\/serve\/tools\/passport/],
+        ["/serve/tools/mrp",  /^\/serve\/tools\/mrp/],
+        ["/serve/tools/retouch", /^\/serve\/tools\/retouch/],
+        ["/",                 /^\/$/],
+    ];
+    function activate(selector) {
+        document.querySelectorAll(selector).forEach((a) => a.classList.add("is-active"));
+    }
+    for (const [href, re] of matches) {
+        if (re.test(path)) {
+            activate(`.nav-bar-right > a[href="${href}"]`);
+            activate(`.quickies a[href="${href}"]`);
+            break;
+        }
+    }
+})();
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -39,5 +65,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {
         // network error — leave as-is
     }
-
 });

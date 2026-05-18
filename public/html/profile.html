@@ -1,335 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile — LuckyGroup</title>
-    <meta name="description" content="Manage your LuckyGroup account, delivery address and order history.">
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="/css/theme.css">
-    <link rel="stylesheet" href="/css/profile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — Photo Concern</title>
+  <meta name="description" content="Manage your Photo Concern account, addresses, orders, wishlist and account type.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
   <div class="navbar">
     <div class="nav-bar-left">
       <a href="/" class="shophub-nav" aria-label="Photo Concern Home"><img src="/resources/banner.png" alt="Photo Concern" class="nav-logo"></a>
     </div>
-
     <div class="nav-bar-right">
-      <a href="/serve/contact">
+      <a href="/serve/contact" aria-label="Contact">
         <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 5l9 8 9-8"/></svg>
       </a>
-
       <a href="/serve/cart" aria-label="Cart">
         <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
-          <circle cx="9" cy="21" r="1.25"/>
-          <circle cx="17" cy="21" r="1.25"/>
+          <circle cx="9" cy="21" r="1.25"/><circle cx="17" cy="21" r="1.25"/>
         </svg>
       </a>
-
       <a href="/serve/profile" aria-label="Profile">
         <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
         </svg>
       </a>
-
       <div class="hamburger" onclick="toggleMenu()">
         <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </div>
-
       <div class="quickies">
-        <a href="/serve/cart">
-            <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M6 8h15l-2 11H7L5 4H3"/>
-                <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
-            </svg>
-            <span>Cart</span>
-        </a>
-        <a href="/serve/wishlist">
-            <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-            </svg>
-            <span>Wishlist</span>
-        </a>
-        <a href="/orders">
-            <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="m7.5 4.27 9 0"/>
-                <path d="M6 7h12l-1 14H7L6 7z"/>
-                <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
-            </svg>
-            <span>My Orders</span>
-        </a>
-        <a href="/serve/contact">
-            <svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 5l9 8 9-8"/></svg>
-            <span>Contact</span>
-        </a>
-        <a href="#" aria-label="Toggle theme" class="theme-toggle">
-          <span class="icon"></span>
-          <span>Theme</span>
-        </a>
-        <button onclick="logout()" class="logout-btn">
-          <svg class="menu-item-icon" fill="currentColor" viewBox="0 0 474 512.46">
-            <path d="M249.71.13 12.08 35.6C5.46 36.59 0 43.43 0 50.23v418.88c0 6.77 5.39 9.38 12.08 10.31l237.63 32.97c6.68.92 12.08-7.77 12.08-14.63V10.44c0-6.86-5.53-11.28-12.08-10.31zm124.96 329.08-.01-34.07c-.58.17-1.2.27-1.83.27h-53.47c-3.55 0-6.45-2.96-6.45-6.45v-66.2c0-3.48 2.97-6.45 6.45-6.45h53.47c.63 0 1.24.1 1.82.27v-34.06c0-6.29 5.1-11.4 11.39-11.4 3.29 0 6.25 1.4 8.33 3.63l76.01 70.9c4.59 4.27 4.85 11.47.58 16.06l-76.95 75.59c-4.47 4.4-11.67 4.34-16.07-.13a11.439 11.439 0 0 1-3.27-7.96zm-87.26 129.54h31.02V345.46h25.37v113.9c0 6.77-2.8 12.95-7.27 17.44-4.47 4.52-10.67 7.31-17.49 7.31h-31.63v-25.36zm31.02-292.48V52.98h-31.02V27.62h31.63c6.81 0 13.01 2.79 17.49 7.27 4.47 4.48 7.27 10.68 7.27 17.49v113.89h-25.37zm-87.67 58.52-24.93-5.68v74.24l24.93-7.18v-61.38z"/>
-          </svg>
-          <span>Logout</span>
-        </button>
+        <a href="/serve/cart"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h15l-2 11H7L5 4H3"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Cart</span></a>
+        <a href="/serve/wishlist"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span>Wishlist</span></a>
+        <a href="/orders"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m7.5 4.27 9 0"/><path d="M6 7h12l-1 14H7L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg><span>My Orders</span></a>
+        <a href="/serve/contact"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 5l9 8 9-8"/></svg><span>Contact</span></a>
+        <a href="#" aria-label="Toggle theme" class="theme-toggle"><span class="icon"></span><span>Theme</span></a>
+        <button onclick="logout()" class="logout-btn"><span>Logout</span></button>
       </div>
     </div>
   </div>
 
-<main class="profile-page">
-    <div class="profile-container">
-        <header class="profile-page-header" data-animate="page-header">
-            <h2 class="profile-title">My Profile</h2>
-            <p class="profile-subtitle">Manage your account information</p>
+  <main class="profile-page">
+    <header class="profile-page__header">
+      <h1 class="profile-title">My Profile</h1>
+      <p class="profile-subtitle">Manage your account, orders and delivery details.</p>
+    </header>
+
+    <section class="profile-summary">
+      <div class="profile-summary__avatar" id="profileAvatar">
+        <span class="profile-avatar-letter" id="profileAvatarLetter">A</span>
+        <button class="avatar-camera-btn" id="avatarCameraBtn" type="button" aria-label="Change profile photo" hidden></button>
+      </div>
+      <div class="profile-summary__id">
+        <p class="profile-summary__greeting">Hi, <span id="profileNameHeading">there</span></p>
+        <p class="profile-summary__email" id="profileEmailHeading">—</p>
+      </div>
+    </section>
+
+    <div class="profile-grid">
+      <article class="profile-card profile-card--info">
+        <header class="profile-card__head">
+          <h2>Personal Information</h2>
+          <button type="button" class="profile-card__edit" id="_editToggleBtn">Edit</button>
         </header>
+        <dl class="profile-fields">
+          <div class="field">
+            <dt><label for="fullNameInput">Full Name</label></dt>
+            <dd>
+              <div class="field-view" data-field="fullName">—</div>
+              <input class="field-input" id="fullNameInput" name="fullName" type="text" hidden>
+            </dd>
+          </div>
+          <div class="field">
+            <dt><label for="emailInput">Email Address</label></dt>
+            <dd>
+              <div class="field-view" data-field="email">—</div>
+              <input class="field-input" id="emailInput" name="email" type="email" hidden>
+            </dd>
+          </div>
+          <div class="field">
+            <dt><label for="phoneInput">Phone Number</label></dt>
+            <dd>
+              <div class="field-view" data-field="phone">—</div>
+              <input class="field-input" id="phoneInput" name="phone" type="tel" hidden>
+            </dd>
+          </div>
+          <div class="field">
+            <dt><label for="addressInput">Address</label></dt>
+            <dd>
+              <div class="field-view" data-field="address">—</div>
+              <input class="field-input" id="addressInput" name="address" type="text" hidden>
+            </dd>
+          </div>
+        </dl>
+      </article>
 
-<!-- 
-  REPLACE the entire <section class="profile-card" ...> block in your HTML with this.
-  Everything else in your HTML stays exactly the same.
--->
-
-<section class="profile-card" aria-label="Profile overview" data-animate="profile-card">
-    <div class="profile-card-body profile-card-body--minimal">
-        <div class="profile-header-row profile-header-row--minimal">
-
-            <!-- Small avatar logo -->
-            <div class="profile-avatar-wrap">
-                <div class="profile-avatar profile-avatar--sm" id="profileAvatar" aria-label="Profile avatar">
-                    <span class="profile-avatar-letter" id="profileAvatarLetter">A</span>
-                    <button class="avatar-camera-btn" id="avatarCameraBtn" type="button" aria-label="Change profile photo" hidden>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-                            <path d="M14.5 4h-5L7.8 6H5.5A2.5 2.5 0 0 0 3 8.5v9A2.5 2.5 0 0 0 5.5 20h13A2.5 2.5 0 0 0 21 17.5v-9A2.5 2.5 0 0 0 18.5 6h-2.3L14.5 4z"/>
-                            <path d="M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Greeting + email -->
-            <div class="profile-identity profile-identity--minimal">
-                <p class="profile-greeting" id="profileGreeting">Hi! <span id="profileNameHeading">Abhishek</span> 👋</p>
-                <p class="profile-email" id="profileEmailHeading">abhishek@example.com</p>
-            </div>
-
+      <article class="profile-card profile-card--actions">
+        <header class="profile-card__head"><h2>Quick Actions</h2></header>
+        <div class="quick-actions">
+          <a class="qa-link" href="/serve/cart">
+            <span class="qa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h15l-2 11H7L5 4H3"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><circle cx="9" cy="21" r="1.25"/><circle cx="17" cy="21" r="1.25"/></svg></span>
+            <span class="qa-text"><strong>My Cart</strong><small>Review items waiting for checkout</small></span>
+            <span class="qa-arrow">›</span>
+          </a>
+          <a class="qa-link" href="/serve/wishlist">
+            <span class="qa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
+            <span class="qa-text"><strong>My Wishlist</strong><small>Saved items to buy later</small></span>
+            <span class="qa-arrow">›</span>
+          </a>
+          <a class="qa-link" href="/orders">
+            <span class="qa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 0"/><path d="M6 7h12l-1 14H7L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg></span>
+            <span class="qa-text"><strong>Order History</strong><small>Track current and past orders</small></span>
+            <span class="qa-arrow">›</span>
+          </a>
         </div>
+
+        <div class="account-dropdown">
+          <button class="dropdown-toggle" onclick="toggleAccountDropdown()">
+            <span id="accountTypeText">Account type: Customer</span>
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="account-menu" id="accountMenu">
+            <div onclick="changeAccountType('Customer')">Customer</div>
+            <div onclick="changeAccountType('Freelancer')">Freelancer</div>
+            <div onclick="changeAccountType('Studio')">Studio</div>
+          </div>
+        </div>
+      </article>
     </div>
-</section>
 
-
-        <section class="content-grid" aria-label="Profile details">
-            <article class="card card-shadow lg-col-2" aria-label="Personal information" data-animate="content">
-                <div class="card-header">
-                    <div class="card-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="title-icon title-icon-purple" aria-hidden="true">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                        </svg>
-                        <h4>Personal Information</h4>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="fields-grid">
-                        <div class="field">
-                            <label class="field-label" for="fullNameInput">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="label-icon label-icon-purple" aria-hidden="true">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                                </svg>
-                                Full Name
-                            </label>
-                            <div class="field-view" data-field="fullName">Abhishek</div>
-                            <input class="field-input" id="fullNameInput" name="fullName" type="text" value="Abhishek" hidden>
-                        </div>
-
-                        <div class="field">
-                            <label class="field-label" for="emailInput">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="label-icon label-icon-blue" aria-hidden="true">
-                                    <path d="M4 4h16v16H4z" opacity="0"/>
-                                    <path d="M4 8l8 5 8-5"/>
-                                    <path d="M4 8v12h16V8"/>
-                                </svg>
-                                Email Address
-                            </label>
-                            <div class="field-view" data-field="email">abhishek@example.com</div>
-                            <input class="field-input" id="emailInput" name="email" type="email" value="abhishek@example.com" hidden>
-                        </div>
-
-                        <div class="field">
-                            <label class="field-label" for="phoneInput">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="label-icon label-icon-green" aria-hidden="true">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.09a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                                Phone Number
-                            </label>
-                            <div class="field-view" data-field="phone">+977 98XXXXXXXX</div>
-                            <input class="field-input" id="phoneInput" name="phone" type="tel" value="+977 98XXXXXXXX" hidden>
-                        </div>
-
-                        <div class="field">
-                            <label class="field-label" for="addressInput">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="label-icon label-icon-red" aria-hidden="true">
-                                    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-                                    <path d="M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                </svg>
-                                Address
-                            </label>
-                            <div class="field-view" data-field="address">Kathmandu, Nepal</div>
-                            <input class="field-input" id="addressInput" name="address" type="text" value="Kathmandu, Nepal" hidden>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <div class="sidebar" aria-label="Profile sidebar" data-animate="content">
-                <article class="card card-shadow" aria-label="Quick actions">
-                    <div class="card-header">
-                        <div class="card-title">
-                            <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="title-icon title-icon-purple" aria-hidden="true">
-                                <path d="M12 1v2"/>
-                                <path d="M12 21v2"/>
-                                <path d="M4.22 4.22l1.42 1.42"/>
-                                <path d="M18.36 18.36l1.42 1.42"/>
-                                <path d="M1 12h2"/>
-                                <path d="M21 12h2"/>
-                                <path d="M4.22 19.78l1.42-1.42"/>
-                                <path d="M18.36 5.64l1.42-1.42"/>
-                                <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-                            </svg>
-                            <h4>Quick Actions</h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="quick-actions">
-                            <a class="btn btn-outline btn-block btn-lg" href="/serve/orders" role="button">
-                                <svg  class="svg-icons-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
-                                    <path d="m7.5 4.27 9 0"/>
-                                    <path d="M6 7h12l-1 14H7L6 7z"/>
-                                    <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
-                                </svg>
-                                Order History
-                            </a>
-                            <a class="btn btn-outline btn-block btn-lg" href="/serve/wishlist" role="button">
-                                <svg class="svg-icons-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="btn-icon" aria-hidden="true">
-                                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-                                </svg>
-                                My Wishlist
-                            </a>
-<div class="account-dropdown">
-  <button class="btn btn-outline btn-block btn-lg dropdown-toggle" onclick="toggleAccountDropdown()">
-
-    <span id="accountTypeText">Account type: Customer</span>
-  </button>
-
-  <div class="account-menu" id="accountMenu">
-    <div onclick="changeAccountType('Customer')">Customer</div>
-    <div onclick="changeAccountType('Freelancer')">Freelancer</div>
-    <div onclick="changeAccountType('Studio')">Studio</div>
-  </div>
-</div>
-                        </div>
-                    </div>
-                </article>
-
-
-            </div>
-        </section>
-        <!-- Delivery address -->
-             <div class="profile-section">
-                 <div class="section-header">
-                     <h3>Delivery Address</h3>
-                     <span class="status-badge" id="addressStatus">Missing</span>
-                    </div>
-                    
-                    <div class="address-grid">
-                        <div class="field-group">
-            <label for="provinceInput">Province</label>
-            <select id="provinceInput" name="province" class="field-input">
-                <option value="">Select Province</option>
-            </select>
-        </div>
-
+    <section class="profile-card profile-card--address">
+      <header class="profile-card__head">
+        <h2>Delivery Address</h2>
+        <span class="status-badge" id="addressStatus">Missing</span>
+      </header>
+      <div class="address-grid">
         <div class="field-group">
-            <label for="districtInput">District</label>
-            <select id="districtInput" name="district" class="field-input">
-                <option value="">Select District</option>
-            </select>
+          <label for="provinceInput">Province</label>
+          <select id="provinceInput" name="province" class="field-input"><option value="">Select Province</option></select>
         </div>
-        
         <div class="field-group">
-            <label for="municipalityInput">Municipality / Local Level</label>
-            <select id="municipalityInput" name="municipality" class="field-input">
-                <option value="">Select Municipality</option>
-            </select>
+          <label for="districtInput">District</label>
+          <select id="districtInput" name="district" class="field-input"><option value="">Select District</option></select>
         </div>
-        
-        <div class="row-flex">
-            <div class="field-group small">
-                <label for="wardInput">Ward No.</label>
-                <input type="number" id="wardInput" name="ward" class="field-input" placeholder="e.g. 10">
-            </div>
-            <div class="field-group large">
-                <label for="detailsInput">Address Details</label>
-                <input type="text" id="detailsInput" name="addressDetails" class="field-input" placeholder="House no, Street name, Landmark...">
-            </div>
+        <div class="field-group">
+          <label for="municipalityInput">Municipality / Local Level</label>
+          <select id="municipalityInput" name="municipality" class="field-input"><option value="">Select Municipality</option></select>
         </div>
-    </div>
-</div>
+        <div class="field-group small">
+          <label for="wardInput">Ward No.</label>
+          <input type="number" id="wardInput" name="ward" class="field-input" placeholder="e.g. 10">
+        </div>
+        <div class="field-group large">
+          <label for="detailsInput">Address Details</label>
+          <input type="text" id="detailsInput" name="addressDetails" class="field-input" placeholder="House no, Street name, Landmark…">
+        </div>
+      </div>
+    </section>
 
-        <section class="stats-grid" aria-label="Account statistics">
-            <article class="stat-card" data-animate="stat" style="--delay: 0.1s;">
-                <div class="stat-inner">
-                    <div class="stat-icon stat-icon-purple" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m7.5 4.27 9 0"/>
-                            <path d="M6 7h12l-1 14H7L6 7z"/>
-                            <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="stat-value" id="statOrders">0</div>
-                        <div class="stat-label">Total Orders</div>
-                    </div>
-                </div>
-            </article>
+    <section class="profile-stats">
+      <article class="stat-card">
+        <div class="stat-card__value" id="statOrders">0</div>
+        <div class="stat-card__label">Total Orders</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__value" id="statWishlist">0</div>
+        <div class="stat-card__label">Wishlist Items</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__value" id="statAge">—</div>
+        <div class="stat-card__label">Account Age</div>
+      </article>
+    </section>
+  </main>
 
-            <article class="stat-card" data-animate="stat" style="--delay: 0.2s;">
-                <div class="stat-inner">
-                    <div class="stat-icon stat-icon-pink" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="stat-value" id="statWishlist">0</div>
-                        <div class="stat-label">Wishlist Items</div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="stat-card" data-animate="stat" style="--delay: 0.3s;">
-                <div class="stat-inner">
-                    <div class="stat-icon stat-icon-blue" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="stat-value" id="statAge">1 month</div>
-                        <div class="stat-label">Account Age</div>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
-</main>
+  <div id="toast-container"></div>
+  <script src="/js/theme.js"></script>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/logout.js"></script>
+  <script src="/js/profile.js"></script>
 </body>
-<script src="/js/theme.js"></script>
-<script src="/js/logout.js"></script>
-<script src="/js/profile.js"></script>
 </html>

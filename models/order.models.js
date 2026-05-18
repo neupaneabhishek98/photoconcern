@@ -59,7 +59,7 @@ const orderSchema = new mongoose.Schema({
 
     paymentMethod: {
         type: String,
-        enum: ["esewa", "khalti", "ime", "connectips", "cod"],
+        enum: ["esewa", "khalti", "ime", "connectips", "cod", "fonepay"],
         required: true,
     },
 
@@ -77,8 +77,15 @@ const orderSchema = new mongoose.Schema({
 
     note: { type: String },
 
-    // design photos uploaded by user (Cloudflare Images URLs)
+    // design photos uploaded by user (Drive webViewLink URLs)
     designImages: [{ type: String }],
+
+    // Google Drive folder (per-order) containing the uploaded design photos
+    driveFolderId:  { type: String },
+    driveFolderUrl: { type: String },
+
+    // ── Fonepay Dynamic QR ─────────────────────────────────
+    fonepayReference: { type: String },
 
     // ── eSewa integration ──────────────────────────────────
     // TODO: store eSewa transaction UUID and ref ID here after payment callback

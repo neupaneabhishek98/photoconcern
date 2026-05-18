@@ -154,6 +154,16 @@ body {
 }
 .google-btn:hover { background: #f8fafc; }
 
+.google-rendered-btn {
+    display: flex;
+    justify-content: center;
+    min-height: 46px;
+}
+
+.google-rendered-btn > div {
+    width: 100% !important;
+}
+
 .google-icon {
     width: 20px;
     height: 20px;

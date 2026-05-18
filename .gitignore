@@ -10,6 +10,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Python cache
+__pycache__/
+*.pyc
+
 # OS files
 .DS_Store
 Thumbs.db
@@ -21,3 +25,9 @@ build/
 # Optional: IDE files
 .vscode/
 .idea/
+
+# Google Drive service account key
+config/service-account.json
+
+# Uploaded files / temp
+uploads-tmp/

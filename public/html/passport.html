@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passport Photo Maker — Photo Concern</title>
+  <meta name="description" content="Free passport photo maker. Upload a portrait and get a 28x32 mm photo with white background, properly cropped and centered.">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/passport.css">
+</head>
+<body>
+  <header class="passport-topbar">
+    <a href="/" class="passport-back">← Photo Concern</a>
+    <h1>Passport Photo Maker</h1>
+  </header>
+
+  <main class="passport-page">
+    <section class="passport-intro">
+      <h2>Make a passport photo in seconds</h2>
+      <p>
+        Upload a clear front-facing portrait. We detect the face, crop to <strong>28 × 32 mm</strong>
+        with proper headroom, center the subject, and put it on a white background.
+      </p>
+      <ul class="passport-tips">
+        <li>Even lighting on the face — no harsh shadows.</li>
+        <li>Look straight at the camera, neutral expression.</li>
+        <li>Plain background works best (any color).</li>
+        <li>JPG / PNG / WebP — up to 10 MB.</li>
+      </ul>
+    </section>
+
+    <section class="passport-tool">
+      <form id="passportForm" class="passport-form">
+        <label class="passport-drop" id="passportDrop">
+          <input type="file" id="passportInput" name="photo" accept="image/*" hidden>
+          <div class="passport-drop__inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="48" height="48">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <p class="passport-drop__title">Drop your photo here</p>
+            <p class="passport-drop__hint">or click to choose a file</p>
+          </div>
+        </label>
+
+        <div class="passport-options">
+          <div class="passport-option">
+            <label for="bgRemove">Background</label>
+            <select id="bgRemove" name="bg">
+              <option value="white">Replace with white</option>
+              <option value="keep">Keep original</option>
+            </select>
+          </div>
+          <div class="passport-option">
+            <label for="dpi">Print resolution</label>
+            <select id="dpi" name="dpi">
+              <option value="300">300 DPI (recommended)</option>
+              <option value="600">600 DPI (high)</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" id="passportGenerate" class="passport-generate" disabled>
+          Generate Passport Photo
+        </button>
+        <p class="passport-status" id="passportStatus"></p>
+      </form>
+
+      <div class="passport-result" id="passportResult" hidden>
+        <h3>Your passport photo</h3>
+        <div class="passport-result__previews">
+          <figure>
+            <figcaption>Original</figcaption>
+            <img id="passportOriginalPreview" alt="Original">
+          </figure>
+          <figure>
+            <figcaption>Passport (28×32 mm)</figcaption>
+            <img id="passportProcessed" alt="Processed">
+          </figure>
+        </div>
+        <a id="passportDownload" class="passport-download" download="passport-photo.jpg">Download JPG</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/passport.js"></script>
+</body>
+</html>

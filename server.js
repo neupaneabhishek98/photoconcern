@@ -27,6 +27,7 @@ app.use("/api", generalLimiter);
 // Specific limiters on vulnerable endpoints
 app.use("/api/login",                    authLimiter);
 app.use("/api/register",                 authLimiter);
+app.use("/api/auth/google",              authLimiter);
 app.use("/api/logout",                   authLimiter);
 app.use("/api/profile/switch-role",      sensitiveActionLimiter);
 app.use("/api/profile/role",             sensitiveActionLimiter);
@@ -128,6 +129,17 @@ app.get("/serve/checkout/upload", (req,res)=>{
     res.sendFile(__dirname+"/public/html/checkout_upload.html")
 });
 
+//Serve photo tools pages
+app.get("/serve/tools/passport", (req,res)=>{
+    res.sendFile(__dirname+"/public/html/passport.html")
+});
+app.get("/serve/tools/mrp", (req,res)=>{
+    res.status(200).send("<h1 style='font-family:system-ui;padding:40px'>MRP Photo Maker — coming soon</h1><p style='font-family:system-ui'><a href='/'>← Home</a></p>");
+});
+app.get("/serve/tools/retouch", (req,res)=>{
+    res.status(200).send("<h1 style='font-family:system-ui;padding:40px'>Skin Retouch — coming soon</h1><p style='font-family:system-ui'><a href='/'>← Home</a></p>");
+});
+
 //Serve order tracking
 app.get("/orders", (req,res)=>{
     res.sendFile(__dirname+"/public/html/orders.html"
@@ -182,6 +194,10 @@ app.use("/api", registerRoute);
 const loginRoute = require("./routes/login.routes");
 app.use("/api", loginRoute);
 
+//Serve Google Sign-In route
+const googleAuthRoute = require("./routes/google_auth.routes");
+app.use("/api", googleAuthRoute);
+
 //Serve profile route
 const profileRoute = require("./routes/profile.routes");
 app.use("/api", profileRoute);
@@ -205,6 +221,10 @@ app.use("/api", wishlistRoute);
 //Serve order route
 const orderRoute = require("./routes/order.routes");
 app.use("/api", orderRoute);
+
+//Serve photo tools route
+const toolsRoute = require("./routes/tools.routes");
+app.use("/api", toolsRoute);
 
 //Serve admin login route
 const adminLoginRoute = require("./routes/admin_login.routes");
