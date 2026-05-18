@@ -17,7 +17,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/register.models");
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
+function getGoogleClientId() {
+    return (process.env.GOOGLE_CLIENT_ID || "").trim();
+}
 
 // Lazy-load google-auth-library so the server still boots if the user hasn't
 // run `npm install` after the merge.
@@ -28,18 +30,19 @@ function getOauthClient() {
     if (!OAuth2Client) {
         ({ OAuth2Client } = require("google-auth-library"));
     }
-    oauthClient = new OAuth2Client(GOOGLE_CLIENT_ID);
+    oauthClient = new OAuth2Client(getGoogleClientId());
     return oauthClient;
 }
 
 /** GET /api/auth/google/config — frontend uses this to init the GIS button. */
 router.get("/auth/google/config", (req, res) => {
-    if (!GOOGLE_CLIENT_ID) {
+    const googleClientId = getGoogleClientId();
+    if (!googleClientId) {
         return res.status(500).json({
             message: "GOOGLE_CLIENT_ID is not configured on the server. See SETUP.md.",
         });
     }
-    return res.json({ clientId: GOOGLE_CLIENT_ID });
+    return res.json({ clientId: googleClientId });
 });
 
 /** POST /api/auth/google — body: { credential } (the Google ID token JWT) */
@@ -49,7 +52,8 @@ router.post("/auth/google", async (req, res) => {
         if (!credential) {
             return res.status(400).json({ message: "Missing Google credential" });
         }
-        if (!GOOGLE_CLIENT_ID) {
+        const googleClientId = getGoogleClientId();
+        if (!googleClientId) {
             return res.status(500).json({
                 message: "Server is missing GOOGLE_CLIENT_ID. See SETUP.md.",
             });
@@ -58,7 +62,7 @@ router.post("/auth/google", async (req, res) => {
         // Verify the ID token with Google's published certs.
         const ticket = await getOauthClient().verifyIdToken({
             idToken: credential,
-            audience: GOOGLE_CLIENT_ID,
+            audience: googleClientId,
         });
         const payload = ticket.getPayload();
         if (!payload || !payload.sub) {
@@ -68,8 +72,11 @@ router.post("/auth/google", async (req, res) => {
             return res.status(401).json({ message: "Your Google email is not verified." });
         }
 
-        const email = (payload.email || "").toLowerCase();
+        const email = (payload.email || "").toLowerCase().trim();
         const googleId = payload.sub;
+        if (!email) {
+            return res.status(401).json({ message: "Google account did not provide an email address." });
+        }
 
         // Find by googleId first, then fall back to email (link existing account).
         let user = await User.findOne({ googleId });

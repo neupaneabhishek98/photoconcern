@@ -4,6 +4,18 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const path = require("path");
+
+const isProduction = process.env.NODE_ENV === "production";
+const sessionSecret = process.env.SESSION_SECRET || (isProduction ? "" : "development-only-session-secret-change-me");
+
+if (!sessionSecret) {
+    throw new Error("SESSION_SECRET is required when NODE_ENV=production");
+}
+
+if (isProduction || process.env.RENDER) {
+    app.set("trust proxy", 1);
+}
 
 //Middleware
 app.use(express.static("public"));
@@ -61,14 +73,14 @@ connectDb_submit().then(async () => {
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: sessionSecret,
     resave: false, 
     saveUninitialized: false, 
     cookie: {
       httpOnly: true, // prevents browser From accessing cookie
-      secure: process.env.NODE_ENV === "production", 
+      secure: isProduction, 
       maxAge: 1000 * 60 * 60, //Limit of 1 hour
-      sameSite: "strict",
+      sameSite: "lax",
     },
   })
 );
@@ -78,7 +90,7 @@ app.use(
 
 //Serve home page
 app.get("/", (req,res)=>{
-    res.sendFile(__dirname+"/public/html/index.html");
+    res.sendFile(path.join(__dirname, "public/html/index.html"));
 })
 //Serve cart
 app.get("/serve/cart", (req,res)=>{
@@ -173,7 +185,7 @@ app.get("/forgot-password", (req,res)=>{
 
 //Serve admin login
 app.get("/admin/login", (req,res)=>{
-    res.sendFile(__dirname+"/public/html/admin/login.html")
+    res.sendFile(path.join(__dirname, "public/html/login_admin.html"))
 });
 
 //Serve admin login (alternate path)
@@ -233,6 +245,7 @@ app.use("/api", adminLoginRoute);
 
 
 //Start Server
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

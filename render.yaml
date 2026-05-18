@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: photo-concern-website
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: atlas_url
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: STORAGE_BACKEND
+        value: drive
+      - key: GOOGLE_SERVICE_ACCOUNT_KEYFILE
+        value: /etc/secrets/service-account.json
+      - key: DRIVE_ROOT_FOLDER_NAME
+        value: Online Orders
+      - key: FONEPAY_MODE
+        value: test
+      - key: FONEPAY_MERCHANT_CODE
+        sync: false
+      - key: FONEPAY_USERNAME
+        sync: false
+      - key: FONEPAY_PASSWORD
+        sync: false
+      - key: FONEPAY_SECRET_KEY
+        sync: false
+      - key: FONEPAY_API_BASE
+        value: https://merchantapi.fonepay.com
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: ADMIN_WHATSAPP
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

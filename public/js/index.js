@@ -34,6 +34,129 @@ function parsePrice(priceText) {
   return Number(String(priceText).replace(/[^0-9]/g, "")) || 0;
 }
 
+function setupQuickUpload() {
+  const dropzone = document.getElementById("quickUploadDropzone");
+  const input = document.getElementById("quickUploadInput");
+  const browseBtn = document.getElementById("quickUploadBrowse");
+  const continueBtn = document.getElementById("quickUploadContinue");
+  const preview = document.getElementById("quickUploadPreview");
+  const meta = document.getElementById("quickUploadMeta");
+  if (!dropzone || !input || !browseBtn || !continueBtn || !preview || !meta) return;
+
+  let files = [];
+  let objectUrls = [];
+
+  function openPicker() {
+    input.click();
+  }
+
+  function clearObjectUrls() {
+    objectUrls.forEach((url) => URL.revokeObjectURL(url));
+    objectUrls = [];
+  }
+
+  function renderPreview() {
+    clearObjectUrls();
+    preview.innerHTML = "";
+
+    if (!files.length) {
+      meta.textContent = "JPG, PNG, WEBP or PDF";
+      return;
+    }
+
+    meta.textContent = `${files.length} file${files.length === 1 ? "" : "s"} ready`;
+
+    files.slice(0, 6).forEach((file, index) => {
+      const tile = document.createElement("div");
+      tile.className = "quick-upload-thumb";
+
+      if (file.type.startsWith("image/")) {
+        const url = URL.createObjectURL(file);
+        objectUrls.push(url);
+        tile.innerHTML = `<img src="${url}" alt="${file.name}">`;
+      } else {
+        tile.classList.add("quick-upload-thumb--file");
+        tile.textContent = file.name.split(".").pop()?.toUpperCase() || "FILE";
+      }
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "quick-upload-remove";
+      removeBtn.textContent = "x";
+      removeBtn.setAttribute("aria-label", `Remove ${file.name}`);
+      removeBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        files.splice(index, 1);
+        renderPreview();
+      });
+
+      tile.appendChild(removeBtn);
+      preview.appendChild(tile);
+    });
+  }
+
+  function addFiles(fileList) {
+    const nextFiles = Array.from(fileList || []).filter((file) =>
+      file.type.startsWith("image/") || file.type === "application/pdf"
+    );
+    files = [...files, ...nextFiles].slice(0, 12);
+    renderPreview();
+  }
+
+  browseBtn.addEventListener("click", openPicker);
+  dropzone.addEventListener("click", openPicker);
+  dropzone.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openPicker();
+    }
+  });
+
+  input.addEventListener("change", () => {
+    addFiles(input.files);
+    input.value = "";
+  });
+
+  ["dragenter", "dragover"].forEach((eventName) => {
+    dropzone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.add("is-dragging");
+    });
+  });
+
+  ["dragleave", "drop"].forEach((eventName) => {
+    dropzone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.remove("is-dragging");
+    });
+  });
+
+  dropzone.addEventListener("drop", (event) => {
+    addFiles(event.dataTransfer.files);
+  });
+
+  continueBtn.addEventListener("click", async () => {
+    continueBtn.disabled = true;
+    continueBtn.textContent = "Starting...";
+
+    try {
+      await API.addToCart({
+        title: "Custom Photo Upload",
+        price: "0",
+        img: "/resources/photobook.png",
+        desc: files.length
+          ? `${files.length} selected file${files.length === 1 ? "" : "s"} for custom printing.`
+          : "Custom photo printing order.",
+      });
+      window.location.href = "/serve/cart";
+    } catch (err) {
+      showToast(err.message, "error");
+      continueBtn.disabled = false;
+      continueBtn.textContent = "Continue order";
+    }
+  });
+}
+
 // ============================================================
 // PRODUCTS DATA — loaded from /api/products (products.json)
 // ============================================================
@@ -358,6 +481,7 @@ function setupHeroSlider() {
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
+  setupQuickUpload();
   setupMenuOutsideClick();
   await loadProducts();
   renderProducts();

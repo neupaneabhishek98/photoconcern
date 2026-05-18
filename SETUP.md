@@ -77,6 +77,32 @@ The login and signup pages have a "Continue with Google" button. To make it work
 
 Existing local accounts with the same email get linked on first Google sign-in (their `googleId` is filled in). New users get a password-less customer account created automatically.
 
+### 3c. Deploy on Render
+
+The repo includes `render.yaml`, so Render can create the web service from the repository blueprint.
+
+1. In Render, create a **Blueprint** from `https://github.com/neupaneabhishek98/Photo-Concern-Website`.
+2. Render will use:
+   - Build command: `npm install`
+   - Start command: `npm start`
+   - Runtime: Node
+3. Fill the required environment variables that are marked `sync: false` in `render.yaml`:
+   - `atlas_url`
+   - `GOOGLE_CLIENT_ID`
+   - `ADMIN_USERNAME`
+   - `ADMIN_PASSWORD`
+4. For Google Drive uploads, add a Render secret file named `service-account.json` mounted at:
+   ```
+   /etc/secrets/service-account.json
+   ```
+   Keep `GOOGLE_SERVICE_ACCOUNT_KEYFILE=/etc/secrets/service-account.json`.
+5. After Render gives you the live service URL, add that exact origin to your Google OAuth client:
+   ```
+   https://your-render-service.onrender.com
+   ```
+   Authorized redirect URIs are still not needed because this uses Google Identity Services popup flow.
+6. Redeploy the Render service after changing OAuth or environment variables.
+
 ### 4. Set Fonepay mode
 
 Until you have Fonepay merchant credentials, leave `.env` set to:

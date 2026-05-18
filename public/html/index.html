@@ -112,14 +112,31 @@
       </div>
     </div>
 
-    <!-- HERO BANNER (image-only — text removed per spec) -->
-    <section class="hero-banner hero-banner--image-only">
-      <div class="hero-inner">
-        <div class="hero-media hero-media--full">
-          <div class="hero-slider">
-            <!-- slides injected by index.js from featured products -->
-          </div>
+    <!-- QUICK UPLOAD SECTION -->
+    <section class="quick-upload-section" aria-labelledby="quickUploadTitle">
+      <div class="quick-upload-copy">
+        <span class="quick-upload-kicker">Custom prints</span>
+        <h2 id="quickUploadTitle">Drop your photos here</h2>
+        <p>Frames, photo books, mugs, medals, and custom gifts start with your files.</p>
+        <div class="quick-upload-actions">
+          <button type="button" class="quick-upload-primary" id="quickUploadBrowse">Browse files</button>
+          <button type="button" class="quick-upload-secondary" id="quickUploadContinue">Continue order</button>
         </div>
+        <p class="quick-upload-meta" id="quickUploadMeta">JPG, PNG, WEBP or PDF</p>
+      </div>
+
+      <div class="quick-upload-dropzone" id="quickUploadDropzone" tabindex="0" role="button" aria-label="Upload photo files">
+        <input id="quickUploadInput" type="file" accept="image/*,.pdf" multiple hidden>
+        <div class="quick-upload-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 16V4"/>
+            <path d="m7 9 5-5 5 5"/>
+            <path d="M20 16.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2.5"/>
+          </svg>
+        </div>
+        <strong>Drag and drop</strong>
+        <span>or tap to choose files</span>
+        <div class="quick-upload-preview" id="quickUploadPreview" aria-live="polite"></div>
       </div>
     </section>
 
