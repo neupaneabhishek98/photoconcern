@@ -33,8 +33,7 @@ function setupThemeToggle() {
   const themeButton = document.querySelector(".theme-toggle");
   if (!themeButton) return;
 
-  const savedTheme = localStorage.getItem("theme") ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const savedTheme = localStorage.getItem("theme") || "light";
 
   applyTheme(savedTheme);
 
