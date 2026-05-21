@@ -38,13 +38,13 @@ const upload = multer({
     },
 });
 
-const PYTHON_BIN = process.env.PYTHON_BIN || "python";
 const SCRIPT = path.resolve(__dirname, "..", "scripts", "passport_photo.py");
+// Try common Python binary names — env var wins, then python3, then python.
+const PYTHON_CANDIDATES = [process.env.PYTHON_BIN, "python3", "python"].filter(Boolean);
 
-function runPython(inputPath, outputPath, opts) {
+function spawnOnce(bin, args) {
     return new Promise((resolve) => {
-        const args = [SCRIPT, inputPath, outputPath, "--bg", opts.bg, "--dpi", String(opts.dpi)];
-        const proc = spawn(PYTHON_BIN, args, { windowsHide: true });
+        const proc = spawn(bin, args, { windowsHide: true });
         let stdout = "";
         let stderr = "";
         proc.stdout.on("data", (b) => (stdout += b.toString()));
@@ -52,6 +52,15 @@ function runPython(inputPath, outputPath, opts) {
         proc.on("error", (err) => resolve({ code: -1, stdout, stderr: stderr + "\n" + err.message }));
         proc.on("close", (code) => resolve({ code, stdout, stderr }));
     });
+}
+
+async function runPython(inputPath, outputPath, opts) {
+    const args = [SCRIPT, inputPath, outputPath, "--bg", opts.bg, "--dpi", String(opts.dpi)];
+    for (const bin of PYTHON_CANDIDATES) {
+        const result = await spawnOnce(bin, args);
+        if (result.code !== -1) return result;          // Python ran (success or script-level error)
+    }
+    return { code: -1, stdout: "", stderr: "Python executable not found (tried: " + PYTHON_CANDIDATES.join(", ") + ")" };
 }
 
 router.post("/tools/passport", upload.single("photo"), async (req, res) => {
@@ -71,8 +80,10 @@ router.post("/tools/passport", upload.single("photo"), async (req, res) => {
     if (result.code === -1) {
         return res.status(500).json({
             message:
-                "Python is not installed on this server. Install Python 3 and run " +
-                "`pip install opencv-python numpy`, then restart the server.",
+                "The passport photo engine isn't available on this server. " +
+                "Python 3 with opencv-python-headless + numpy must be installed. " +
+                "On Render: set Build Command to `npm install && pip install -r requirements.txt` " +
+                "or rely on the postinstall hook in package.json.",
             detail: result.stderr.trim(),
         });
     }
