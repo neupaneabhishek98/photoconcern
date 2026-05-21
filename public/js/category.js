@@ -24,6 +24,38 @@ window.toggleMenu = function toggleMenu() {
   if (menu) menu.classList.toggle("show");
 };
 
+// ── Toast helper with icon (replaces alert) ──
+function showCategoryToast(message, type = "success") {
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.appendChild(container);
+  }
+  const toast = document.createElement("div");
+  toast.className = `toast toast--${type}`;
+  const iconSvg =
+    type === "success"
+      ? `<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>`
+      : type === "error"
+      ? `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>`
+      : `<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v5M12 16h.01"/>`;
+  const iconBg = type === "success" ? "#22c55e" : type === "error" ? "#ef4444" : "#3b82f6";
+  toast.innerHTML = `
+    <div class="toast-icon" style="background:${iconBg}">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="#fff">${iconSvg}</svg>
+    </div>
+    <span>${message}</span>
+  `;
+  container.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add("show"));
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.classList.add("hide");
+    setTimeout(() => toast.remove(), 400);
+  }, 2500);
+}
+
 function readJson(key, fallback) {
   try {
     const value = localStorage.getItem(key);
@@ -70,7 +102,7 @@ function renderCards(categoryKey) {
         cart.push({ title: item.title, price: item.price, img: item.img, quantity: 1 });
       }
       writeJson("cart", cart);
-      alert(`${item.title} added to cart`);
+      showCategoryToast(`${item.title} added to cart`, "success");
     });
 
     card.querySelector(".buy-now-btn")?.addEventListener("click", () => {

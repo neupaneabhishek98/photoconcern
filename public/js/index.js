@@ -483,8 +483,12 @@ function setupHeroSlider() {
 document.addEventListener("DOMContentLoaded", async () => {
   setupQuickUpload();
   setupMenuOutsideClick();
-  await loadProducts();
-  renderProducts();
+  // Products section was replaced with the Services grid (static HTML).
+  // Skip dynamic product loading on the home page.
+  if (document.querySelector(".products")) {
+    await loadProducts();
+    renderProducts();
+  }
   setupAddToCartButtons();
   setupLearnMoreButtons();
   // setupHeroSlider(); — now handled by hero.js

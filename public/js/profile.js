@@ -145,9 +145,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             profile = { ...pendingProfile };
             syncHeader(profile);
             hideSaveBar();
+            showProfileToast("Profile saved successfully", "success");
         } catch (err) {
             console.error("[save] error:", err);
-            alert("Could not save changes. Please try again.");
+            showProfileToast("Could not save changes. Please try again.", "error");
         } finally {
             saveBtn.disabled    = false;
             saveBtn.textContent = "Save changes";
@@ -175,10 +176,46 @@ document.addEventListener("DOMContentLoaded", async () => {
             updateAddressStatus();
 
             hideSaveBar();
+            showProfileToast("Changes discarded", "info");
         } catch (err) {
             console.error("[discard] error:", err);
+            showProfileToast("Could not reload profile", "error");
         }
     });
+
+    // Shared toast helper for save/discard feedback (with icon)
+    function showProfileToast(message, type = "success") {
+        let container = document.getElementById("toast-container");
+        if (!container) {
+            container = document.createElement("div");
+            container.id = "toast-container";
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        const iconSvg =
+            type === "success"
+                ? `<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>`
+                : type === "error"
+                ? `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>`
+                : `<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v5M12 16h.01"/>`;
+        const iconBg =
+            type === "success" ? "#22c55e" :
+            type === "error"   ? "#ef4444" : "#3b82f6";
+        toast.innerHTML = `
+            <div class="toast-icon" style="background:${iconBg}">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="#fff">${iconSvg}</svg>
+            </div>
+            <span>${message}</span>
+        `;
+        container.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add("show"));
+        setTimeout(() => {
+            toast.classList.remove("show");
+            toast.classList.add("hide");
+            setTimeout(() => toast.remove(), 400);
+        }, 3000);
+    }
 
 
 /* ============================================================
@@ -497,9 +534,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             savedAddress = { ...pendingAddress };
             updateAddressStatus();
             hideAddrBar();
+            showProfileToast("Address saved successfully", "success");
         } catch (err) {
             console.error("[address save] error:", err);
-            alert("Could not save address. Please try again.");
+            showProfileToast("Could not save address. Please try again.", "error");
         } finally {
             btn.disabled    = false;
             btn.textContent = "Save Address";
@@ -517,6 +555,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (savedAddress.district) populateMunicipalities(savedAddress.province, savedAddress.district);
         updateAddressStatus();
         hideAddrBar();
+        showProfileToast("Address changes discarded", "info");
     });
 
     provinceSelect?.addEventListener("change", () => {
