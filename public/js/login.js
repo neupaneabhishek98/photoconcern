@@ -1,25 +1,36 @@
-// Show toast function (reuse your register one)
+// Animated toast — white card + colored left border + animated tick icon.
 function showToast(message, type = "info", duration = 3000) {
-  const toast = document.createElement("div");
-  toast.innerText = message;
-  toast.className = `toast ${type}`;
-  toast.style = `
-    margin-top: 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    background-color: ${type === "success" ? "green" : type === "error" ? "red" : "blue"};
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  `;
-  document.getElementById("toast-container").appendChild(toast);
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.appendChild(container);
+  }
 
-  setTimeout(() => toast.style.opacity = 1, 50);
+  const toast = document.createElement("div");
+  toast.className = `toast toast--${type}`;
+
+  const iconPath =
+    type === "success"
+      ? `<path d="M5 13l4 4L19 7"/>`
+      : type === "error"
+      ? `<path d="M6 18L18 6M6 6l12 12"/>`
+      : `<path d="M12 8v5M12 16h.01"/>`;
+
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <svg viewBox="0 0 24 24">${iconPath}</svg>
+    </div>
+    <span class="toast-msg">${message}</span>
+  `;
+  container.appendChild(toast);
+
+  requestAnimationFrame(() => toast.classList.add("show"));
 
   setTimeout(() => {
-    toast.style.opacity = 0;
-    setTimeout(() => toast.remove(), 300);
+    toast.classList.remove("show");
+    toast.classList.add("hide");
+    setTimeout(() => toast.remove(), 400);
   }, duration);
 }
 

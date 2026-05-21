@@ -71,15 +71,19 @@ connectDb_submit().then(async () => {
 
 //Session Setup
 
+// Sessions last 30 days; cookie is refreshed (rolling) on every request
+// so an actively-used session never silently expires.
+const SESSION_MAX_AGE_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
 app.use(
   session({
     secret: sessionSecret,
-    resave: false, 
-    saveUninitialized: false, 
+    resave: false,
+    saveUninitialized: false,
+    rolling: true, // refresh the maxAge on every response
     cookie: {
-      httpOnly: true, // prevents browser From accessing cookie
-      secure: isProduction, 
-      maxAge: 1000 * 60 * 60, //Limit of 1 hour
+      httpOnly: true, // prevents browser JS from reading the cookie
+      secure: isProduction,
+      maxAge: SESSION_MAX_AGE_MS,
       sameSite: "lax",
     },
   })
