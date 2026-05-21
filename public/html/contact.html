@@ -1,158 +1,103 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us — Photo Concern</title>
-  <meta name="description" content="Get in touch with Photo Concern for orders, custom requests and support. We reply within one business day.">
+  <meta name="description" content="Get in touch with Photo Concern. Find us on social media or visit our studio in Nepal.">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="/css/contact.css">
 </head>
 <body>
-  <div class="navbar">
-    <div class="nav-bar-left">
-      <a href="/" class="shophub-nav" aria-label="Photo Concern Home"><img src="/resources/main.webp" alt="Photo Concern" class="nav-logo"></a>
-    </div>
-    <div class="nav-bar-right">
-      <a href="/serve/contact" aria-label="Contact">
-        <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 5l9 8 9-8"/></svg>
-      </a>
-      <a href="/serve/cart" aria-label="Cart">
-        <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.7">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h15l-2 11H7L5 4H3"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 0 1 6 0v2"/>
-          <circle cx="9" cy="21" r="1.25"/><circle cx="17" cy="21" r="1.25"/>
-        </svg>
-      </a>
-      <a href="/serve/profile" aria-label="Profile">
-        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 20c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"/>
-        </svg>
-      </a>
-      <div class="hamburger" onclick="toggleMenu()">
-        <svg class="icons-svg-nav" fill="none" stroke="#000" stroke-width="1.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </div>
-      <div class="quickies">
-        <a href="/serve/cart"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h15l-2 11H7L5 4H3"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Cart</span></a>
-        <a href="/serve/wishlist"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span>Wishlist</span></a>
-        <a href="/orders"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m7.5 4.27 9 0"/><path d="M6 7h12l-1 14H7L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg><span>My Orders</span></a>
-        <a href="/serve/contact"><svg class="menu-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 5l9 8 9-8"/></svg><span>Contact</span></a>
-        <a href="#" aria-label="Toggle theme" class="theme-toggle"><span class="icon"></span><span>Theme</span></a>
-        <button onclick="logout()" class="logout-btn"><span>Logout</span></button>
-      </div>
-    </div>
-  </div>
+
+  <div data-pc-header></div>
 
   <main class="contact-page">
-    <header class="contact-page__head">
-      <h1>Contact Us</h1>
-      <p>We'd love to hear from you — questions, custom orders, or anything else. We reply within one business day.</p>
+    <header class="contact-hero">
+      <span class="contact-hero__kicker">Get in touch</span>
+      <h1 class="contact-hero__title">We&rsquo;d love to hear from you</h1>
+      <p class="contact-hero__lead">
+        Reach out on social media, chat with us on WhatsApp, or drop by the studio &mdash;
+        the map below has the exact location.
+      </p>
     </header>
 
-    <div class="contact-grid">
-      <aside class="contact-info">
-        <article class="contact-card">
-          <h2>Reach out directly</h2>
-          <ul class="contact-list">
-            <li class="contact-list__row">
-              <span class="contact-list__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </span>
-              <div>
-                <p class="contact-list__label">Location</p>
-                <p class="contact-list__value">Kathmandu, Nepal</p>
-              </div>
-            </li>
-            <li class="contact-list__row">
-              <span class="contact-list__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-              </span>
-              <div>
-                <p class="contact-list__label">Office Hours</p>
-                <p class="contact-list__value">Sun – Fri, 9:00 AM – 6:00 PM</p>
-              </div>
-            </li>
-            <li class="contact-list__row">
-              <span class="contact-list__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-              </span>
-              <div>
-                <p class="contact-list__label">Email</p>
-                <a class="contact-list__value contact-list__link" href="mailto:photoconcern65@gmail.com">photoconcern65@gmail.com</a>
-              </div>
-            </li>
-            <li class="contact-list__row">
-              <span class="contact-list__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.09a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z"/></svg>
-              </span>
-              <div>
-                <p class="contact-list__label">Phone</p>
-                <a class="contact-list__value contact-list__link" href="tel:+9779847825916">+977 98-4782-5916</a>
-              </div>
-            </li>
-          </ul>
-        </article>
+    <section class="contact-card contact-socials">
+      <h2 class="contact-card__title">Socials</h2>
+      <p class="contact-card__sub">Fastest way to reach us &mdash; we usually reply within an hour during business hours.</p>
 
-        <article class="contact-card">
-          <h2>Connect</h2>
-          <div class="contact-channels">
-            <a class="channel channel--wa" href="https://wa.me/9779847825916?text=Hello%20Photo%20Concern%2C%20I%20need%20help." target="_blank" rel="noopener">
-              <span class="channel__dot"></span><span>WhatsApp</span>
-            </a>
-            <a class="channel channel--fb" href="https://www.facebook.com/" target="_blank" rel="noopener">
-              <span class="channel__dot"></span><span>Facebook</span>
-            </a>
-            <a class="channel channel--mail" href="mailto:photoconcern65@gmail.com">
-              <span class="channel__dot"></span><span>Email Us</span>
-            </a>
+      <div class="contact-socials__grid">
+        <a href="https://facebook.com" target="_blank" rel="noopener" class="contact-social contact-social--fb">
+          <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+          <div class="contact-social__copy">
+            <span class="contact-social__label">Facebook</span>
+            <span class="contact-social__handle">@photoconcern</span>
           </div>
-        </article>
-      </aside>
+        </a>
 
-      <section class="contact-form-wrap">
-        <article class="contact-card">
-          <h2>Send a message</h2>
-          <p class="contact-card__sub">Tell us what you need and we'll get back within a business day.</p>
-          <form id="contactForm" class="contact-form" action="/api/contact" method="POST" novalidate>
-            <div class="form-row">
-              <label class="form-field">
-                <span>Your Name</span>
-                <input type="text" id="name" name="name" placeholder="Jane Doe" required>
-              </label>
-              <label class="form-field">
-                <span>Email</span>
-                <input type="email" id="email" name="email" placeholder="you@example.com" required>
-              </label>
-            </div>
-            <label class="form-field">
-              <span>Subject</span>
-              <input type="text" id="subject" name="subject" placeholder="How can we help?" required>
-            </label>
-            <label class="form-field">
-              <span>Message</span>
-              <textarea id="message" name="message" rows="6" placeholder="Write your message…" required></textarea>
-            </label>
-            <button type="submit" class="contact-submit">Send Message</button>
-          </form>
-        </article>
-      </section>
-    </div>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="contact-social contact-social--ig">
+          <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          <div class="contact-social__copy">
+            <span class="contact-social__label">Instagram</span>
+            <span class="contact-social__handle">@photoconcern</span>
+          </div>
+        </a>
+
+        <a href="https://wa.me/9779800000000" target="_blank" rel="noopener" class="contact-social contact-social--wa">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          <div class="contact-social__copy">
+            <span class="contact-social__label">WhatsApp</span>
+            <span class="contact-social__handle">Chat with us</span>
+          </div>
+        </a>
+
+        <a href="mailto:photoconcern65@gmail.com" class="contact-social contact-social--mail">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          <div class="contact-social__copy">
+            <span class="contact-social__label">Email</span>
+            <span class="contact-social__handle">photoconcern65@gmail.com</span>
+          </div>
+        </a>
+
+        <a href="tel:+9779800000000" class="contact-social contact-social--call">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <div class="contact-social__copy">
+            <span class="contact-social__label">Phone</span>
+            <span class="contact-social__handle">+977 98 0000 0000</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="contact-card contact-map">
+      <h2 class="contact-card__title">Find us on the map</h2>
+      <p class="contact-card__sub">Tap the map to open turn-by-turn directions in Google Maps.</p>
+
+      <div class="contact-map__frame">
+        <iframe
+          src="https://maps.google.com/maps?q=Photo+Concern+Nepal&hl=en&z=15&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+          title="Photo Concern on Google Maps"></iframe>
+      </div>
+
+      <a class="btn btn-primary contact-map__cta"
+         href="https://maps.app.goo.gl/myhMTF8kdsM44S8c6"
+         target="_blank" rel="noopener">
+        Open in Google Maps
+      </a>
+    </section>
   </main>
 
-  <footer class="contact-footer">
-    <div class="contact-footer__inner">
-      <p>© 2026 Photo Concern · Quality photobooks, custom prints &amp; passport photos.</p>
-      <p>Visit <a href="/">Home</a> · <a href="/serve/cart">Cart</a> · <a href="/serve/contact">Contact</a></p>
-    </div>
-  </footer>
+  <footer data-pc-footer></footer>
 
-  <div id="toast" class="toast"></div>
+  <div id="toast-container"></div>
+
+  <script src="/js/layout.js"></script>
   <script src="/js/theme.js"></script>
   <script src="/js/navbar.js"></script>
   <script src="/js/logout.js"></script>
-  <script src="/js/contact.js"></script>
 </body>
 </html>
