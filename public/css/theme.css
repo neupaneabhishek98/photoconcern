@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    theme.css — LuckyGroup Design System
    Loaded FIRST on every page. Defines all shared styles.
    Page-specific CSS files should NOT redefine these.
@@ -73,13 +73,14 @@ body {
   width: auto !important;
   display: block !important;
   object-fit: contain !important;
-  mix-blend-mode: multiply;
 }
 
+/* Dark mode: wrap the colored logo in a tiny white pill so the
+   white background of main.webp doesn't look like a stray block. */
 body.theme-dark .nav-logo {
-  content: url("/resources/bannerblack.png");
-  mix-blend-mode: normal;
-  filter: none;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
 }
 
 @media (min-width: 1024px) {
@@ -708,11 +709,13 @@ button,
   gap: 10px;
 }
 .site-footer-logo {
-  height: 38px;
+  height: 44px;
   width: auto;
-  max-width: 160px;
+  max-width: 180px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  background: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
 }
 .site-footer-slogan {
   margin: 0;
