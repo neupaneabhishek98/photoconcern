@@ -82,6 +82,7 @@
         try {
           const body = await res.json();
           msg = body.message || msg;
+          if (body.detail) msg += "\n\nDetails: " + body.detail;
         } catch (_) {}
         throw new Error(msg);
       }
