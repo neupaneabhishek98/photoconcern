@@ -498,6 +498,59 @@ body.theme-dark .navbar {
   border-bottom-color: rgba(255, 255, 255, 0.06) !important;
 }
 
+/* ============================================================
+   BUTTON STANDARDIZATION — only Primary (gold) and Secondary
+   (dark navy) remain. Anything that was a "3rd" outline/alt
+   button gets the primary treatment.
+   ============================================================ */
+
+/* Primary look: gold gradient, white text, soft glow */
+.btn-alt,
+.hero-secondary-btn,
+.quick-upload-secondary,
+.hot-buy-btn,
+.hot-learn-btn,
+.buy-now-btn,
+.card-actions .buy-now-btn,
+.remove-btn,
+.product-card-actions .buy-now-btn {
+  background: linear-gradient(135deg, #f0b429, #c9920a) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(201, 146, 10, 0.28) !important;
+  font-weight: 700 !important;
+  backdrop-filter: none !important;
+}
+.btn-alt:hover,
+.hero-secondary-btn:hover,
+.quick-upload-secondary:hover,
+.hot-buy-btn:hover,
+.hot-learn-btn:hover,
+.buy-now-btn:hover,
+.card-actions .buy-now-btn:hover,
+.remove-btn:hover,
+.product-card-actions .buy-now-btn:hover {
+  opacity: 0.9 !important;
+  background: linear-gradient(135deg, #f0b429, #c9920a) !important;
+  border: none !important;
+  box-shadow: 0 6px 18px rgba(201, 146, 10, 0.36) !important;
+}
+
+/* Dark mode: keep gold gradient look */
+body.theme-dark .btn-alt,
+body.theme-dark .hero-secondary-btn,
+body.theme-dark .quick-upload-secondary,
+body.theme-dark .hot-buy-btn,
+body.theme-dark .hot-learn-btn,
+body.theme-dark .buy-now-btn,
+body.theme-dark .card-actions .buy-now-btn,
+body.theme-dark .remove-btn,
+body.theme-dark .product-card-actions .buy-now-btn {
+  background: linear-gradient(135deg, #f0b429, #c9920a) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
 /* 2. All buttons get a 4px radius */
 button,
 .btn,
@@ -551,15 +604,14 @@ button,
   display: block;
   overflow: hidden;
   border-radius: 14px;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 21 / 9;
   text-decoration: none;
   color: #fff;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: box-shadow 0.25s ease;
   isolation: isolate;
 }
 .service-card:hover {
-  transform: translateY(-3px);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
 }
 
@@ -572,7 +624,7 @@ button,
   transition: transform 0.5s ease;
   z-index: 0;
 }
-.service-card:hover .service-card-bg { transform: scale(1.06); }
+.service-card:hover .service-card-bg { transform: scale(1.08); }
 
 .service-card-overlay {
   position: absolute;
@@ -626,10 +678,10 @@ button,
 }
 
 @media (min-width: 1024px) {
-  .service-card { aspect-ratio: 16 / 10; }
-  .service-card-title { font-size: 1.7rem; }
-  .service-card-desc { font-size: 0.92rem; }
-  .service-card-content { padding: 26px 28px 28px; }
+  .service-card { aspect-ratio: 21 / 8; }
+  .service-card-title { font-size: 1.55rem; }
+  .service-card-desc { font-size: 0.88rem; }
+  .service-card-content { padding: 20px 24px 22px; }
 }
 
 /* ============================================================
@@ -713,6 +765,7 @@ button,
   background: transparent;
   border: 1.5px solid rgba(255, 255, 255, 0.85);
   color: #fff;
+  font-size: 14px;
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
