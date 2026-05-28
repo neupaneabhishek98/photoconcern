@@ -34,7 +34,7 @@ async function requestTestQr(order) {
   const reference = makeReference(order._id || order.orderId);
   const payload = {
     mode: "TEST",
-    merchant: "PHOTO CONCERN",
+    merchant: "SHOPHUB",
     amount: order.total,
     currency: "NPR",
     orderId: order.orderId || order._id,

@@ -45,6 +45,8 @@ function setupQuickUpload() {
 
   let files = [];
   let objectUrls = [];
+  const MIN_PHOTOS = 120;
+  const MAX_PHOTOS = 150;
 
   function openPicker() {
     input.click();
@@ -60,11 +62,15 @@ function setupQuickUpload() {
     preview.innerHTML = "";
 
     if (!files.length) {
-      meta.textContent = "JPG, PNG, WEBP or PDF";
+      meta.textContent = `Upload at least ${MIN_PHOTOS} photos. Maximum ${MAX_PHOTOS}.`;
+      updateContinueButton();
       return;
     }
 
-    meta.textContent = `${files.length} file${files.length === 1 ? "" : "s"} ready`;
+    const remaining = Math.max(MIN_PHOTOS - files.length, 0);
+    meta.textContent = remaining
+      ? `${files.length}/${MIN_PHOTOS} photos selected. Add ${remaining} more to continue.`
+      : `${files.length} photos ready. You can continue.`;
 
     files.slice(0, 6).forEach((file, index) => {
       const tile = document.createElement("div");
@@ -74,9 +80,6 @@ function setupQuickUpload() {
         const url = URL.createObjectURL(file);
         objectUrls.push(url);
         tile.innerHTML = `<img src="${url}" alt="${file.name}">`;
-      } else {
-        tile.classList.add("quick-upload-thumb--file");
-        tile.textContent = file.name.split(".").pop()?.toUpperCase() || "FILE";
       }
 
       const removeBtn = document.createElement("button");
@@ -93,13 +96,26 @@ function setupQuickUpload() {
       tile.appendChild(removeBtn);
       preview.appendChild(tile);
     });
+
+    updateContinueButton();
+  }
+
+  function updateContinueButton(isStarting = false) {
+    const ready = files.length >= MIN_PHOTOS;
+    continueBtn.disabled = !ready || isStarting;
+    continueBtn.classList.toggle("is-ready", ready && !isStarting);
+    continueBtn.innerHTML = isStarting
+      ? "Starting..."
+      : ready
+        ? `Continue order <span class="quick-upload-arrow" aria-hidden="true">→</span>`
+        : "Continue order";
   }
 
   function addFiles(fileList) {
     const nextFiles = Array.from(fileList || []).filter((file) =>
-      file.type.startsWith("image/") || file.type === "application/pdf"
+      file.type.startsWith("image/")
     );
-    files = [...files, ...nextFiles].slice(0, 12);
+    files = [...files, ...nextFiles].slice(0, MAX_PHOTOS);
     renderPreview();
   }
 
@@ -136,25 +152,26 @@ function setupQuickUpload() {
   });
 
   continueBtn.addEventListener("click", async () => {
-    continueBtn.disabled = true;
-    continueBtn.textContent = "Starting...";
+    if (files.length < MIN_PHOTOS) return;
+    updateContinueButton(true);
 
     try {
       await API.addToCart({
-        title: "Custom Photo Upload",
+        title: "Photobook Order",
         price: "0",
         img: "/resources/photobook.png",
         desc: files.length
-          ? `${files.length} selected file${files.length === 1 ? "" : "s"} for custom printing.`
-          : "Custom photo printing order.",
+          ? `${files.length} selected photos for a photobook order.`
+          : "Photobook order.",
       });
       window.location.href = "/serve/cart";
     } catch (err) {
       showToast(err.message, "error");
-      continueBtn.disabled = false;
-      continueBtn.textContent = "Continue order";
+      updateContinueButton();
     }
   });
+
+  updateContinueButton();
 }
 
 // ============================================================
@@ -184,6 +201,7 @@ const API = {
   async addToCart(product) {
     const res = await fetch("/api/cart/add", {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: product.title,

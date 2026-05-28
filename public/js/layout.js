@@ -21,8 +21,8 @@
   const HEADER_HTML = `
     <div class="navbar">
       <div class="nav-bar-left">
-        <a href="/" class="shophub-nav" aria-label="Photo Concern Home">
-          <img src="/resources/main.webp" alt="Photo Concern" class="nav-logo">
+        <a href="/" class="shophub-nav" aria-label="ShopHub Home">
+          <img src="/resources/main.webp" alt="ShopHub" class="nav-logo">
         </a>
       </div>
 
@@ -93,17 +93,16 @@
   const FOOTER_HTML = `
     <div class="site-footer-inner">
       <div class="site-footer-brand">
-        <a href="/" aria-label="Photo Concern Home">
-          <img src="/resources/main.webp" alt="Photo Concern" class="site-footer-logo">
+        <a href="/" aria-label="ShopHub Home">
+          <img src="/resources/main.webp" alt="ShopHub" class="site-footer-logo">
         </a>
+        <ul class="site-footer-col site-footer-home">
+          <li><a href="/">Home</a></li>
+          <li><a href="/serve/cart">Cart</a></li>
+          <li><a href="https://wa.me/9779800000000" target="_blank" rel="noopener">Chat with us</a></li>
+          <li><a href="/serve/contact">Contact us</a></li>
+        </ul>
       </div>
-
-      <ul class="site-footer-col site-footer-home">
-        <li><a href="/">Home</a></li>
-        <li><a href="/serve/cart">Cart</a></li>
-        <li><a href="https://wa.me/9779800000000" target="_blank" rel="noopener">Chat with us</a></li>
-        <li><a href="/serve/contact">Contact us</a></li>
-      </ul>
 
       <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="site-footer-social-tile site-footer-social-tile--fb">
         <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
@@ -131,7 +130,7 @@
     <div class="site-footer-divider"></div>
 
     <div class="site-footer-copy">
-      &copy; 2026 Photo Concern. All rights reserved. Built by
+      &copy; 2026 ShopHub. All rights reserved. Built by
       <a href="https://neupaneabhishek98.github.io/" target="_blank" rel="noopener" class="site-footer-credit">Er. Abhishek Neupane</a>
     </div>
   `;

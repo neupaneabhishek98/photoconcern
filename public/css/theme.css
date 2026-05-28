@@ -1,5 +1,5 @@
 ﻿/* ============================================================
-   theme.css — LuckyGroup Design System
+   theme.css — ShopHub Design System
    Loaded FIRST on every page. Defines all shared styles.
    Page-specific CSS files should NOT redefine these.
    ============================================================ */
@@ -68,14 +68,14 @@ body {
 .shophub-nav { text-decoration: none !important; }
 
 .nav-logo {
-  height: 62px !important;
-  max-width: 220px !important;
+  height: 76px !important;
+  max-width: 280px !important;
   width: auto !important;
   display: block !important;
   object-fit: contain !important;
 }
 @media (min-width: 1024px) {
-  .nav-logo { height: 72px !important; max-width: 260px !important; }
+  .nav-logo { height: 96px !important; max-width: 340px !important; }
 }
 
 /* Dark mode: wrap the colored logo in a tiny white pill so the
@@ -115,8 +115,8 @@ body.theme-dark .nav-contact-btn:hover { background: rgba(255, 255, 255, 0.08); 
 
 @media (min-width: 1024px) {
   .nav-logo {
-    height: 52px !important;
-    max-width: 220px !important;
+    height: 96px !important;
+    max-width: 340px !important;
   }
 }
 
@@ -866,7 +866,7 @@ button,
   max-width: 1240px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr 1fr auto;
+  grid-template-columns: minmax(210px, 1fr) repeat(3, minmax(112px, 142px)) minmax(190px, 1fr);
   gap: 24px;
   padding: 48px 40px 36px;
   align-items: center;
@@ -875,7 +875,9 @@ button,
 /* Brand block (logo on the far left) */
 .site-footer-brand {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
 }
 .site-footer-brand a {
   display: inline-flex;
@@ -913,30 +915,37 @@ button,
 /* Back-to-top button on the far right */
 .site-footer-top {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 12px;
   background: transparent;
   border: 1.5px solid rgba(255, 255, 255, 0.85);
   color: #fff;
-  width: 70px;
+  width: 190px;
   height: 70px;
-  border-radius: 50%;
+  border-radius: 10px;
   cursor: pointer;
   font-family: var(--font-base);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  justify-self: end;
 }
-.site-footer-top svg { width: 18px; height: 18px; }
-.site-footer-top-label { line-height: 1; }
-.site-footer-top:hover {
-  background: #fff;
-  color: #0d0d0d;
-  transform: translateY(-3px);
+.site-footer-top svg,
+.site-footer-top-label {
+  transition: transform 0.18s ease;
+}
+.site-footer-top svg { width: 19px; height: 19px; }
+.site-footer-top-label {
+  line-height: 1;
+  align-self: flex-end;
+  padding-bottom: 16px;
+}
+.site-footer-top:hover svg,
+.site-footer-top:hover .site-footer-top-label {
+  transform: translateY(-4px);
 }
 
 /* Brand-color social tiles */
@@ -948,13 +957,14 @@ button,
   gap: 12px;
   text-decoration: none;
   border-radius: 12px;
-  padding: 28px 16px;
+  padding: 20px 16px;
   font-weight: 700;
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-  min-height: 160px;
+  min-height: 132px;
+  aspect-ratio: 1 / 1;
   color: #fff;
 }
 .site-footer-social-tile i { font-size: 2.4rem; }
@@ -983,6 +993,8 @@ button,
   margin: 0 auto;
   text-align: center;
   font-size: 0.88rem;
+  font-family: var(--font-base);
+  letter-spacing: 0.025em;
   color: #ffffff;
   padding: 22px 24px 32px;
 }
@@ -990,18 +1002,30 @@ button,
   color: #ffffff;
   font-weight: 700;
   text-decoration: none;
-  transition: opacity 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.18s ease;
 }
-.site-footer-credit:hover { opacity: 0.8; }
+.site-footer-credit::after {
+  content: "\2192";
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.site-footer-credit:hover {
+  color: #f0b429;
+}
+.site-footer-credit:hover::after {
+  opacity: 1;
+  transform: translateX(2px);
+}
 
 @media (max-width: 1100px) {
   .site-footer-inner {
-    grid-template-columns: auto 1fr 1fr 1fr auto;
+    grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(100px, 1fr)) minmax(160px, 1fr);
     gap: 20px;
   }
-  .site-footer-home { grid-column: 2 / 6; }
-  .site-footer-brand { grid-row: 1; grid-column: 1; }
-  .site-footer-top   { grid-row: 1; grid-column: 5; }
 }
 @media (max-width: 780px) {
   .site-footer-inner {
@@ -1009,7 +1033,7 @@ button,
     gap: 18px;
     padding: 36px 22px 24px;
   }
-  .site-footer-brand { grid-column: 1 / -1; justify-content: center; }
+  .site-footer-brand { grid-column: 1 / -1; align-items: center; justify-content: center; }
   .site-footer-home  { grid-column: 1 / -1; text-align: center; }
   .site-footer-top   { grid-row: auto; grid-column: 1 / -1; justify-self: center; }
 }
