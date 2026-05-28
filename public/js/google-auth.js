@@ -61,7 +61,6 @@
       },
       auto_select: false,
       cancel_on_tap_outside: true,
-      use_fedcm_for_prompt: true,
     });
 
     initialized = true;
@@ -105,7 +104,14 @@
       clientId = body.clientId;
       let tries = 0;
       const timer = setInterval(() => {
-        if (initializeGoogle() || ++tries > 40) clearInterval(timer);
+        if (initializeGoogle()) {
+          clearInterval(timer);
+          return;
+        }
+        if (++tries > 40) {
+          clearInterval(timer);
+          button.dataset.googleAuthError = "Google sign-in could not load. Check that accounts.google.com is not blocked and refresh the page.";
+        }
       }, 100);
     } catch (err) {
       console.warn("[google-auth] config", err);
@@ -128,7 +134,7 @@
       const notDisplayed = typeof notification?.isNotDisplayed === "function" && notification.isNotDisplayed();
       const skipped = typeof notification?.isSkippedMoment === "function" && notification.isSkippedMoment();
       if (notDisplayed || skipped) {
-        toast("Google could not show the sign-in prompt. Check your browser popup or third-party sign-in settings.", "error", 5000);
+        toast("Use the Google button above. If it still fails, make sure this Render URL is added to Authorized JavaScript origins in Google Cloud.", "error", 6000);
       }
     });
   });

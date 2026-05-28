@@ -67,7 +67,7 @@ The login and signup pages have a "Continue with Google" button. To make it work
 1. https://console.cloud.google.com → **APIs & Services → Credentials → Create credentials → OAuth client ID**.
 2. If prompted, configure the OAuth consent screen first (User type: External; app name: Photo Concern; user support email: yours; scopes: leave default; test users: add your own Gmail while in Testing).
 3. Application type: **Web application**.
-4. **Authorized JavaScript origins**: add `http://localhost:3000`. Add your production URL later.
+4. **Authorized JavaScript origins**: add `http://localhost:3000` and your Render production origin, for example `https://photo-concern-website.onrender.com`.
 5. **Authorized redirect URIs**: not needed — we use the GIS popup flow.
 6. Copy the resulting **Client ID** (looks like `1234-abc.apps.googleusercontent.com`) into `.env`:
    ```
@@ -98,7 +98,7 @@ The repo includes `render.yaml`, so Render can create the web service from the r
    Keep `GOOGLE_SERVICE_ACCOUNT_KEYFILE=/etc/secrets/service-account.json`.
 5. After Render gives you the live service URL, add that exact origin to your Google OAuth client:
    ```
-   https://your-render-service.onrender.com
+   https://photo-concern-website.onrender.com
    ```
    Authorized redirect URIs are still not needed because this uses Google Identity Services popup flow.
 6. Redeploy the Render service after changing OAuth or environment variables.

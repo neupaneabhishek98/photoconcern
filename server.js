@@ -39,7 +39,7 @@ app.use("/api", generalLimiter);
 // Specific limiters on vulnerable endpoints
 app.use("/api/login",                    authLimiter);
 app.use("/api/register",                 authLimiter);
-app.use("/api/auth/google",              authLimiter);
+app.use(/^\/api\/auth\/google$/,         authLimiter);
 app.use("/api/logout",                   authLimiter);
 app.use("/api/profile/switch-role",      sensitiveActionLimiter);
 app.use("/api/profile/role",             sensitiveActionLimiter);
