@@ -84,6 +84,7 @@
         text: "continue_with",
         shape: "rectangular",
         logo_alignment: "left",
+        locale: "en",
         width: Math.max(button.offsetWidth || 0, 240),
       });
       button.style.display = "none";
@@ -134,7 +135,7 @@
       const notDisplayed = typeof notification?.isNotDisplayed === "function" && notification.isNotDisplayed();
       const skipped = typeof notification?.isSkippedMoment === "function" && notification.isSkippedMoment();
       if (notDisplayed || skipped) {
-        toast("Use the Google button above. If it still fails, make sure this Render URL is added to Authorized JavaScript origins in Google Cloud.", "error", 6000);
+        toast(`Use the Google button above. If it still fails, add ${window.location.origin} to Authorized JavaScript origins in Google Cloud.`, "error", 7000);
       }
     });
   });

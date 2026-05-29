@@ -59,12 +59,18 @@ body {
   justify-content: space-between !important;
   align-items: center !important;
   padding: 24px !important;
-  background: rgba(16, 18, 22, 0.42) !important;
-  backdrop-filter: saturate(150%) blur(18px) !important;
-  -webkit-backdrop-filter: saturate(150%) blur(18px) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.18) !important;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.16) !important;
+  background: #050505 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.22) !important;
   min-height: 40px !important;
+}
+
+.nav-bar-left {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
 .photoconcern-nav { text-decoration: none !important; }
@@ -80,40 +86,38 @@ body {
   .nav-logo { height: 96px !important; max-width: 340px !important; }
 }
 
-/* Dark mode: wrap the colored logo in a tiny white pill so the
-   white background of main.webp doesn't look like a stray block. */
 body.theme-dark .nav-logo {
-  background: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
 
-/* Contact button in the navbar — phone icon + 'Contact us' label */
+/* Contact icon beside the logo */
 .nav-contact-btn {
   display: inline-flex !important;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px !important;
-  border-radius: 4px;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0 !important;
+  border-radius: 50%;
   text-decoration: none;
-  color: #ffffff;
+  color: #b8bcc5;
   font-weight: 700;
   font-size: 0.88rem;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: color 0.18s ease, transform 0.18s ease;
 }
-.nav-contact-btn:hover { background: rgba(0, 0, 0, 0.06); }
+.nav-contact-btn:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
 .nav-contact-btn .icons-svg-nav {
   width: 22px !important;
   height: 22px !important;
   stroke: currentColor !important;
 }
-.nav-contact-text { white-space: nowrap; }
 body.theme-dark .nav-contact-btn { color: #e5e7eb; }
-body.theme-dark .nav-contact-btn:hover { background: rgba(255, 255, 255, 0.08); }
-@media (max-width: 768px) {
-  .nav-contact-text { display: none; }
-  .nav-contact-btn { padding: 6px !important; }
-}
+body.theme-dark .nav-contact-btn:hover { color: #ffffff; }
 
 @media (min-width: 1024px) {
   .nav-logo {
@@ -315,35 +319,36 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
   justify-content: center !important;
   height: 36px !important;
   padding: 0 24px !important;
-  background: #1a1a1a !important;
-  color: #fff !important;
+  background: transparent !important;
+  color: #ffffff !important;
   font-size: 0.85rem !important;
   font-weight: 700 !important;
   font-family: var(--font-base) !important;
   border-radius: 4px !important;
   text-decoration: none !important;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.25) !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.18s ease !important;
+  box-shadow: none !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
   white-space: nowrap !important;
-  border: 1.5px solid #1a1a1a !important;
+  border: 1.5px solid #ffffff !important;
 }
 .nav-login-btn:hover {
-  background: #000 !important;
-  border-color: #000 !important;
+  background: #12b886 !important;
+  border-color: #12b886 !important;
+  color: #ffffff !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4) !important;
+  box-shadow: 0 0 0 4px rgba(18,184,134,0.16), 0 12px 28px rgba(18,184,134,0.24) !important;
 }
 .nav-login-btn:active {
   transform: scale(0.97) !important;
 }
 body.theme-dark .nav-login-btn {
-  background: #fff !important;
-  color: #1a1a1a !important;
+  background: transparent !important;
+  color: #ffffff !important;
   border-color: #fff !important;
 }
 body.theme-dark .nav-login-btn:hover {
-  background: #f0f0f0 !important;
-  border-color: #f0f0f0 !important;
+  background: #12b886 !important;
+  border-color: #12b886 !important;
 }
 @media (min-width: 768px) {
   .nav-login-btn {
@@ -603,16 +608,16 @@ body.theme-dark .logout-btn:hover { background: rgba(248,113,113,0.08) !importan
    GLOBAL OVERRIDES — applied across every page
    ============================================================ */
 
-/* 1. Slightly transparent / glass navbar */
+/* 1. Solid black navbar */
 .navbar {
-  background: rgba(16, 18, 22, 0.42) !important;
-  backdrop-filter: saturate(150%) blur(18px) !important;
-  -webkit-backdrop-filter: saturate(150%) blur(18px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16) !important;
+  background: #050505 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22) !important;
 }
 body.theme-dark .navbar {
-  background: rgba(15, 23, 42, 0.55) !important;
+  background: #050505 !important;
   border-bottom-color: rgba(255, 255, 255, 0.06) !important;
 }
 

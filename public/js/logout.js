@@ -87,21 +87,27 @@ async function logout() {
             justify-content: center;
             height: 36px;
             padding: 0 24px;
-            background: linear-gradient(135deg, #f0b429, #c9920a);
+            background: transparent;
             color: #fff !important;
             font-size: 0.85rem;
             font-weight: 700;
             font-family: inherit;
-            border-radius: 999px;
+            border-radius: 4px;
             text-decoration: none;
             white-space: nowrap;
-            border: none;
-            transition: box-shadow 0.15s ease, transform 0.15s ease;
-            box-shadow: 0 3px 12px rgba(201,146,10,0.4);
+            border: 1.5px solid #fff;
+            transition: box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+            box-shadow: none;
         }
-        .nav-login-btn:hover { box-shadow: 0 6px 18px rgba(201,146,10,0.5); transform: translateY(-1px); }
+        .nav-login-btn:hover {
+            background: #12b886;
+            border-color: #12b886;
+            box-shadow: 0 0 0 4px rgba(18,184,134,0.16), 0 12px 28px rgba(18,184,134,0.24);
+            transform: translateY(-1px);
+        }
         .nav-login-btn:active { transform: scale(0.97); }
-        body.theme-dark .nav-login-btn { background: linear-gradient(135deg, #f0b429, #c9920a); color: #fff !important; }
+        body.theme-dark .nav-login-btn { background: transparent; color: #fff !important; border-color: #fff; }
+        body.theme-dark .nav-login-btn:hover { background: #12b886; border-color: #12b886; }
         @media (min-width: 768px) {
             .nav-login-btn { height: 40px; padding: 0 36px; font-size: 0.9rem; }
         }

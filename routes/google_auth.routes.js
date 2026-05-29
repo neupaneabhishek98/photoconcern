@@ -136,6 +136,11 @@ router.post("/auth/google", async (req, res) => {
                 message: "Google client ID mismatch. The frontend and backend GOOGLE_CLIENT_ID must match.",
             });
         }
+        if (err.message && /invalid|malformed|signature|pem|jwt|token/i.test(err.message)) {
+            return res.status(401).json({
+                message: "Google credential could not be verified. Refresh the page and try Google sign-in again.",
+            });
+        }
         return res.status(500).json({ message: "Google sign-in failed. Please try again." });
     }
 });
