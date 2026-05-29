@@ -22,9 +22,10 @@
     <div class="navbar">
       <div class="nav-bar-left">
         <a href="/" class="photoconcern-nav" aria-label="PhotoConcern Home">
-          <img src="/resources/alt_white.webp" alt="PhotoConcern" class="nav-logo">
+          <img src="/resources/alt_white.webp" alt="PhotoConcern" class="nav-logo nav-logo-white">
+          <img src="/resources/main.webp" alt="" class="nav-logo nav-logo-main" aria-hidden="true">
         </a>
-        <a href="/serve/contact" class="nav-contact-btn" aria-label="Chat with PhotoConcern">
+        <a href="https://m.me/photoconcernnepal?text=Hi%2C%20Can%20I%20learn%20more%20about%20your%20services" target="_blank" rel="noopener" class="nav-contact-btn" aria-label="Chat with PhotoConcern on Messenger">
           <svg class="icons-svg-nav nav-chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-5 3 1.6-5.2A7.5 7.5 0 1 1 21 11.5Z"/>
             <circle class="chat-dot chat-dot-1" cx="9" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
@@ -97,28 +98,28 @@
         <a href="/" aria-label="PhotoConcern Home">
           <img src="/resources/alt_white.webp" alt="PhotoConcern" class="site-footer-logo">
         </a>
-        <ul class="site-footer-col site-footer-home">
-          <li><a href="/">Home</a></li>
-          <li><a href="/serve/cart">Cart</a></li>
-          <li><a href="https://wa.me/9779800000000" target="_blank" rel="noopener">Chat with us</a></li>
-          <li><a href="/serve/contact">Contact us</a></li>
-        </ul>
       </div>
 
-      <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="site-footer-social-tile site-footer-social-tile--fb">
-        <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-        <span class="site-footer-social-tile-label">Facebook</span>
-      </a>
+      <ul class="site-footer-col site-footer-home">
+        <li><a href="/">Home</a></li>
+        <li><a href="/serve/cart">Cart</a></li>
+        <li><a href="https://m.me/photoconcernnepal?text=Hi%2C%20Can%20I%20learn%20more%20about%20your%20services" target="_blank" rel="noopener">Chat with us</a></li>
+        <li><a href="/serve/contact">Contact us</a></li>
+      </ul>
 
-      <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="site-footer-social-tile site-footer-social-tile--ig">
-        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-        <span class="site-footer-social-tile-label">Instagram</span>
-      </a>
+      <div class="site-footer-socials">
+        <a href="https://facebook.com/photoconcernnepal" target="_blank" rel="noopener" aria-label="Facebook" class="site-footer-social-tile site-footer-social-tile--fb">
+          <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+        </a>
 
-      <a href="https://wa.me/9779800000000" target="_blank" rel="noopener" aria-label="WhatsApp" class="site-footer-social-tile site-footer-social-tile--wa">
-        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-        <span class="site-footer-social-tile-label">WhatsApp</span>
-      </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="site-footer-social-tile site-footer-social-tile--ig">
+          <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+        </a>
+
+        <a href="https://wa.me/9779800000000" target="_blank" rel="noopener" aria-label="WhatsApp" class="site-footer-social-tile site-footer-social-tile--wa">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        </a>
+      </div>
 
       <button type="button" class="site-footer-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
