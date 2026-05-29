@@ -137,9 +137,9 @@ router.post("/forgot-password/send-otp", async (req, res) => {
 
     try {
         await makeTransporter().sendMail({
-            from:    `"ShopHub" <${process.env.EMAIL_USER}>`,
+            from:    `"PhotoConcern" <${process.env.EMAIL_USER}>`,
             to:      emailLower,
-            subject: "Your ShopHub Password Reset OTP",
+            subject: "Your PhotoConcern Password Reset OTP",
             html: `<div style="font-family:sans-serif;max-width:420px">
                      <h2 style="color:#021024">Password Reset</h2>
                      <p>Your one-time password is:</p>

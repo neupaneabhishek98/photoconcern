@@ -21,8 +21,8 @@
   const HEADER_HTML = `
     <div class="navbar">
       <div class="nav-bar-left">
-        <a href="/" class="shophub-nav" aria-label="ShopHub Home">
-          <img src="/resources/main.webp" alt="ShopHub" class="nav-logo">
+        <a href="/" class="photoconcern-nav" aria-label="PhotoConcern Home">
+          <img src="/resources/main.webp" alt="PhotoConcern" class="nav-logo">
         </a>
       </div>
 
@@ -93,8 +93,8 @@
   const FOOTER_HTML = `
     <div class="site-footer-inner">
       <div class="site-footer-brand">
-        <a href="/" aria-label="ShopHub Home">
-          <img src="/resources/main.webp" alt="ShopHub" class="site-footer-logo">
+        <a href="/" aria-label="PhotoConcern Home">
+          <img src="/resources/main.webp" alt="PhotoConcern" class="site-footer-logo">
         </a>
         <ul class="site-footer-col site-footer-home">
           <li><a href="/">Home</a></li>
@@ -130,7 +130,7 @@
     <div class="site-footer-divider"></div>
 
     <div class="site-footer-copy">
-      &copy; 2026 ShopHub. All rights reserved. Built by
+      &copy; 2026 PhotoConcern. All rights reserved. Built by
       <a href="https://neupaneabhishek98.github.io/" target="_blank" rel="noopener" class="site-footer-credit">Er. Abhishek Neupane</a>
     </div>
   `;

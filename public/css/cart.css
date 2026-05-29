@@ -1,5 +1,5 @@
 /* =============================================================================
-   SHOPHUB — CART PAGE STYLESHEET
+   PHOTOCONCERN — CART PAGE STYLESHEET
    -----------------------------------------------------------------------------
    Table of Contents
    1.  Reset & Base
@@ -64,7 +64,7 @@ body {
 }
 
 /* Removes underline from logo link */
-.shophub-nav {
+.photoconcern-nav {
   text-decoration: none;
 }
 

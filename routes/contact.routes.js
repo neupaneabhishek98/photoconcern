@@ -29,7 +29,7 @@ router.post("/contact", async (req, res) => {
             });
 
             await transporter.sendMail({
-                from:    `"ShopHub Contact" <${process.env.EMAIL_USER}>`,
+                from:    `"PhotoConcern Contact" <${process.env.EMAIL_USER}>`,
                 to:      "arjungautam0018@gmail.com",
                 replyTo: email,
                 subject: `New Contact: ${subject}`,

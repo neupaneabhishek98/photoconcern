@@ -1,8 +1,8 @@
-# Frontend Documentation — ShopHub
+# Frontend Documentation — PhotoConcern
 
 ## What is this?
 
-ShopHub's frontend is plain HTML, CSS, and vanilla JavaScript — no framework, no build step. Every page is a static HTML file served directly by Express. JavaScript files handle all the interactivity, API calls, and dynamic rendering.
+PhotoConcern's frontend is plain HTML, CSS, and vanilla JavaScript — no framework, no build step. Every page is a static HTML file served directly by Express. JavaScript files handle all the interactivity, API calls, and dynamic rendering.
 
 ---
 

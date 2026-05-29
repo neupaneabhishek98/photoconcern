@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShopHub — Quality Gifts, Office & Custom Products Nepal</title>
-  <meta name="description" content="ShopHub is Nepal's trusted store for custom frames, trophies, medals, stamps, office essentials and event products. Shop online with fast delivery.">
-  <meta name="keywords" content="ShopHub, custom frames Nepal, trophies Nepal, medals, stamps, office products, gifts Nepal, ecommerce Nepal, photo printing Nepal">
-  <meta name="author" content="ShopHub">
-  <meta property="og:title" content="ShopHub — Quality Gifts, Office & Custom Products Nepal">
+  <title>PhotoConcern — Quality Gifts, Office & Custom Products Nepal</title>
+  <meta name="description" content="PhotoConcern is Nepal's trusted store for custom frames, trophies, medals, stamps, office essentials and event products. Shop online with fast delivery.">
+  <meta name="keywords" content="PhotoConcern, custom frames Nepal, trophies Nepal, medals, stamps, office products, gifts Nepal, ecommerce Nepal, photo printing Nepal">
+  <meta name="author" content="PhotoConcern">
+  <meta property="og:title" content="PhotoConcern — Quality Gifts, Office & Custom Products Nepal">
   <meta property="og:description" content="Nepal's trusted store for custom frames, trophies, medals, stamps and office essentials.">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
@@ -70,6 +70,49 @@
         <span>or tap to choose files</span>
         <div class="quick-upload-preview" id="quickUploadPreview" aria-live="polite"></div>
       </div>
+    </section>
+
+    <section class="creators-section" aria-labelledby="creatorsTitle">
+      <div class="creators-copy">
+        <span class="creators-kicker">PhotoConcern Creators</span>
+        <h2 id="creatorsTitle">Send your original photographs</h2>
+        <p>Upload one or more photographs, describe the story behind them, and confirm ownership before sending.</p>
+      </div>
+
+      <form class="creators-form" id="creatorsForm">
+        <div class="creators-upload" id="creatorsDropzone" tabindex="0" role="button" aria-label="Upload creator photographs">
+          <input id="creatorsInput" name="photos" type="file" accept="image/*" multiple hidden>
+          <div class="creators-upload-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 16l4.6-4.6a2 2 0 0 1 2.8 0L16 16"/>
+              <path d="M14 14l1.6-1.6a2 2 0 0 1 2.8 0L22 16"/>
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <circle cx="8" cy="9" r="1.5"/>
+            </svg>
+          </div>
+          <strong>Upload photographs</strong>
+          <span id="creatorsCount">Multiple images accepted</span>
+          <div class="creators-preview" id="creatorsPreview" aria-live="polite"></div>
+        </div>
+
+        <label class="creators-field" for="creatorsDescription">
+          <span>Description</span>
+          <textarea id="creatorsDescription" name="description" rows="6" maxlength="2000" placeholder="Describe the photograph, location, subject, or story you want PhotoConcern to know."></textarea>
+        </label>
+
+        <label class="creators-owner" id="creatorsOwnerLabel">
+          <input id="creatorsOwner" name="ownerConfirmed" type="checkbox" disabled>
+          <span>I am the owner of this photograph and would be liable if proven otherwise.</span>
+        </label>
+
+        <button type="submit" class="creators-send" id="creatorsSend" disabled>
+          <span>Send submission</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 2 11 13"/>
+            <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </form>
     </section>
 
     <div class="top-products">

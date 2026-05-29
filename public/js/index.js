@@ -174,6 +174,147 @@ function setupQuickUpload() {
   updateContinueButton();
 }
 
+function setupCreatorsForm() {
+  const form = document.getElementById("creatorsForm");
+  const dropzone = document.getElementById("creatorsDropzone");
+  const input = document.getElementById("creatorsInput");
+  const preview = document.getElementById("creatorsPreview");
+  const count = document.getElementById("creatorsCount");
+  const description = document.getElementById("creatorsDescription");
+  const owner = document.getElementById("creatorsOwner");
+  const ownerLabel = document.getElementById("creatorsOwnerLabel");
+  const send = document.getElementById("creatorsSend");
+  if (!form || !dropzone || !input || !preview || !count || !description || !owner || !send) return;
+
+  let files = [];
+  let objectUrls = [];
+  const MAX_FILES = 30;
+
+  function clearObjectUrls() {
+    objectUrls.forEach((url) => URL.revokeObjectURL(url));
+    objectUrls = [];
+  }
+
+  function updateState() {
+    const hasPhotos = files.length > 0;
+    owner.disabled = !hasPhotos;
+    ownerLabel?.classList.toggle("is-enabled", hasPhotos);
+    if (!hasPhotos) owner.checked = false;
+    send.disabled = !(hasPhotos && owner.checked && description.value.trim());
+    send.classList.toggle("is-ready", !send.disabled);
+    count.textContent = hasPhotos
+      ? `${files.length} photograph${files.length === 1 ? "" : "s"} ready`
+      : "Multiple images accepted";
+  }
+
+  function renderPreview() {
+    clearObjectUrls();
+    preview.innerHTML = "";
+    files.slice(0, 8).forEach((file, index) => {
+      const tile = document.createElement("div");
+      tile.className = "creators-thumb";
+      const url = URL.createObjectURL(file);
+      objectUrls.push(url);
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = file.name;
+      tile.appendChild(img);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "creators-remove";
+      remove.textContent = "x";
+      remove.setAttribute("aria-label", `Remove ${file.name}`);
+      remove.addEventListener("click", (event) => {
+        event.stopPropagation();
+        files.splice(index, 1);
+        renderPreview();
+      });
+
+      tile.appendChild(remove);
+      preview.appendChild(tile);
+    });
+    updateState();
+  }
+
+  function addFiles(fileList) {
+    const next = Array.from(fileList || []).filter((file) => file.type.startsWith("image/"));
+    files = [...files, ...next].slice(0, MAX_FILES);
+    renderPreview();
+  }
+
+  function openPicker() {
+    input.click();
+  }
+
+  dropzone.addEventListener("click", openPicker);
+  dropzone.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openPicker();
+    }
+  });
+  input.addEventListener("change", () => {
+    addFiles(input.files);
+    input.value = "";
+  });
+  ["dragenter", "dragover"].forEach((eventName) => {
+    dropzone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.add("is-dragging");
+    });
+  });
+  ["dragleave", "drop"].forEach((eventName) => {
+    dropzone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.remove("is-dragging");
+    });
+  });
+  dropzone.addEventListener("drop", (event) => {
+    addFiles(event.dataTransfer.files);
+  });
+  owner.addEventListener("change", updateState);
+  description.addEventListener("input", updateState);
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (send.disabled) return;
+
+    send.disabled = true;
+    send.classList.remove("is-ready");
+    send.querySelector("span").textContent = "Sending...";
+
+    const formData = new FormData();
+    files.forEach((file) => formData.append("photos", file));
+    formData.append("description", description.value.trim());
+    formData.append("ownerConfirmed", owner.checked ? "true" : "false");
+
+    try {
+      const res = await fetch("/api/creators", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.message || "Could not send your submission.");
+
+      showToast(body.message || "Submission sent.", "success");
+      files = [];
+      description.value = "";
+      owner.checked = false;
+      renderPreview();
+    } catch (err) {
+      showToast(err.message || "Could not send your submission.", "error");
+      updateState();
+    } finally {
+      send.querySelector("span").textContent = "Send submission";
+    }
+  });
+
+  updateState();
+}
+
 // ============================================================
 // PRODUCTS DATA — loaded from /api/products (products.json)
 // ============================================================
@@ -500,6 +641,7 @@ function setupHeroSlider() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   setupQuickUpload();
+  setupCreatorsForm();
   setupMenuOutsideClick();
   // Products section was replaced with the Services grid (static HTML).
   // Skip dynamic product loading on the home page.

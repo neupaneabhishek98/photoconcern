@@ -46,6 +46,7 @@ app.use("/api/profile/role",             sensitiveActionLimiter);
 app.use("/api/orders/place",             orderLimiter);
 app.use("/api/orders",                   generalLimiter);
 app.use(/^\/api\/orders\/.*\/upload/,    uploadLimiter);
+app.use("/api/creators",                 uploadLimiter);
 app.use("/api/contact",                  contactLimiter);
 // ──────────────────────────────────────────────────────────
 
@@ -241,6 +242,10 @@ app.use("/api", orderRoute);
 //Serve photo tools route
 const toolsRoute = require("./routes/tools.routes");
 app.use("/api", toolsRoute);
+
+//Serve creator submission route
+const creatorsRoute = require("./routes/creators.routes");
+app.use("/api", creatorsRoute);
 
 //Serve admin login route
 const adminLoginRoute = require("./routes/admin_login.routes");

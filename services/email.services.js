@@ -16,7 +16,7 @@ async function sendEmail({ to, subject, html }) {
     try {
         const transporter = makeTransporter();
         const info = await transporter.sendMail({
-            from:    `"ShopHub" <${process.env.EMAIL_USER}>`,
+            from:    `"PhotoConcern" <${process.env.EMAIL_USER}>`,
             to,
             subject,
             html,

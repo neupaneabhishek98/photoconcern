@@ -1,8 +1,8 @@
-# Backend Documentation — ShopHub
+# Backend Documentation — PhotoConcern
 
 ## What is this?
 
-ShopHub's backend is a Node.js server that handles everything behind the scenes — user accounts, orders, cart, wishlist, delivery addresses, admin panel, file uploads, and WhatsApp notifications. It talks to a MongoDB database and a Cloudflare R2 bucket for storing images.
+PhotoConcern's backend is a Node.js server that handles everything behind the scenes — user accounts, orders, cart, wishlist, delivery addresses, admin panel, file uploads, and WhatsApp notifications. It talks to a MongoDB database and a Cloudflare R2 bucket for storing images.
 
 ---
 
