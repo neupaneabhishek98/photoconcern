@@ -24,9 +24,12 @@
         <a href="/" class="photoconcern-nav" aria-label="PhotoConcern Home">
           <img src="/resources/alt_white.webp" alt="PhotoConcern" class="nav-logo">
         </a>
-        <a href="/serve/contact" class="nav-contact-btn" aria-label="Contact us">
-          <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+        <a href="/serve/contact" class="nav-contact-btn" aria-label="Chat with PhotoConcern">
+          <svg class="icons-svg-nav nav-chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-5 3 1.6-5.2A7.5 7.5 0 1 1 21 11.5Z"/>
+            <circle class="chat-dot chat-dot-1" cx="9" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
+            <circle class="chat-dot chat-dot-2" cx="12" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
+            <circle class="chat-dot chat-dot-3" cx="15" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
           </svg>
         </a>
       </div>
@@ -92,7 +95,7 @@
     <div class="site-footer-inner">
       <div class="site-footer-brand">
         <a href="/" aria-label="PhotoConcern Home">
-          <img src="/resources/main.webp" alt="PhotoConcern" class="site-footer-logo">
+          <img src="/resources/alt_white.webp" alt="PhotoConcern" class="site-footer-logo">
         </a>
         <ul class="site-footer-col site-footer-home">
           <li><a href="/">Home</a></li>

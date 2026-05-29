@@ -12,8 +12,8 @@
   --color-primary-dark: #a87508;
   --color-primary-light:#f0b429;
   --color-secondary:    #1a1a2e;
-  --color-bg:           #e8e8e8;
-  --color-bg-soft:      #deded8;
+  --color-bg:           #f7f8f9;
+  --color-bg-soft:      #eef0f2;
   --color-fg:           #141414;
   --color-fg-muted:     #50545d;
   --color-border:       rgba(0,0,0,0.08);
@@ -43,7 +43,9 @@ body {
   margin: 0;
   font-family: var(--font-base);
   color: var(--color-fg);
-  background: linear-gradient(180deg, #e2e2e2 0%, #d8d8d8 100%);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 34%),
+    linear-gradient(180deg, #ffffff 0%, #f4f5f6 46%, #eceff1 100%);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -102,7 +104,7 @@ body.theme-dark .nav-logo {
   padding: 0 !important;
   border-radius: 50%;
   text-decoration: none;
-  color: #b8bcc5;
+  color: #d2d5dc;
   font-weight: 700;
   font-size: 0.88rem;
   transition: color 0.18s ease, transform 0.18s ease;
@@ -118,6 +120,29 @@ body.theme-dark .nav-logo {
 }
 body.theme-dark .nav-contact-btn { color: #e5e7eb; }
 body.theme-dark .nav-contact-btn:hover { color: #ffffff; }
+
+.nav-chat-icon .chat-dot {
+  transform-origin: center;
+}
+.nav-contact-btn:hover .chat-dot {
+  animation: chatDotPulse 0.9s ease-in-out infinite;
+}
+.nav-contact-btn:hover .chat-dot-2 {
+  animation-delay: 0.12s;
+}
+.nav-contact-btn:hover .chat-dot-3 {
+  animation-delay: 0.24s;
+}
+@keyframes chatDotPulse {
+  0%, 100% {
+    opacity: 0.46;
+    transform: translateY(0) scale(0.9);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(-1.6px) scale(1.18);
+  }
+}
 
 @media (min-width: 1024px) {
   .nav-logo {
@@ -875,7 +900,7 @@ button,
   max-width: 1240px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(210px, 1fr) repeat(3, minmax(112px, 142px)) minmax(190px, 1fr);
+  grid-template-columns: minmax(220px, 1fr) repeat(3, 82px) minmax(190px, 1fr);
   gap: 24px;
   padding: 48px 40px 36px;
   align-items: center;
@@ -895,9 +920,9 @@ button,
   border-radius: 0;
 }
 .site-footer-logo {
-  height: 52px;
+  height: 82px;
   width: auto;
-  max-width: 200px;
+  max-width: 220px;
   object-fit: contain;
   display: block;
 }
@@ -933,7 +958,7 @@ button,
   border: 1.5px solid rgba(255, 255, 255, 0.85);
   color: #fff;
   width: 190px;
-  height: 70px;
+  height: 82px;
   border-radius: 10px;
   cursor: pointer;
   font-family: var(--font-base);
@@ -942,12 +967,13 @@ button,
   letter-spacing: 0.08em;
   text-transform: uppercase;
   justify-self: end;
-  padding: 0 22px 18px;
+  padding: 0 22px 16px;
   align-items: flex-end;
 }
 .site-footer-top svg,
 .site-footer-top-label {
-  transition: transform 0.18s ease;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 .site-footer-top svg { width: 19px; height: 19px; }
 .site-footer-top-label {
@@ -955,7 +981,7 @@ button,
 }
 .site-footer-top:hover svg,
 .site-footer-top:hover .site-footer-top-label {
-  transform: translateY(-21px);
+  transform: translateY(-18px);
 }
 
 /* Brand-color social tiles */
@@ -966,18 +992,19 @@ button,
   justify-content: center;
   gap: 12px;
   text-decoration: none;
-  border-radius: 12px;
-  padding: 16px 12px;
+  border-radius: 10px;
+  padding: 10px 8px;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-  min-height: 104px;
-  aspect-ratio: 1 / 1;
+  width: 82px;
+  height: 82px;
+  min-height: 82px;
   color: #fff;
 }
-.site-footer-social-tile i { font-size: 1.8rem; }
+.site-footer-social-tile i { font-size: 1.35rem; }
 .site-footer-social-tile:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
@@ -1033,7 +1060,7 @@ button,
 
 @media (max-width: 1100px) {
   .site-footer-inner {
-    grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(100px, 1fr)) minmax(160px, 1fr);
+    grid-template-columns: minmax(180px, 1fr) repeat(3, 82px) minmax(160px, 1fr);
     gap: 20px;
   }
 }
@@ -1048,8 +1075,10 @@ button,
   .site-footer-top   { grid-row: auto; grid-column: 1 / -1; justify-self: center; }
 }
 @media (max-width: 520px) {
-  .site-footer-social-tile { min-height: 96px; padding: 14px 10px; }
-  .site-footer-social-tile i { font-size: 1.55rem; }
+  .site-footer-social-tile { width: 78px; height: 78px; min-height: 78px; padding: 10px 8px; }
+  .site-footer-social-tile i { font-size: 1.3rem; }
+  .site-footer-logo { height: 78px; }
+  .site-footer-top { height: 78px; }
   .site-footer-copy { padding-bottom: 28px; }
 }
 

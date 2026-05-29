@@ -2,7 +2,9 @@
 body {
     margin: 0;
     font-family: 'Poppins', 'Manrope', sans-serif;
-    background: #dcdcdc;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 34%),
+      linear-gradient(180deg, #ffffff 0%, #f5f6f7 48%, #edf0f2 100%);
 }
 
 /* Navbar */
@@ -867,7 +869,9 @@ body.theme-dark .card-actions .buy-now-btn:hover { background: rgba(255,255,255,
 
 .main-content {
   min-height: 100vh;
-  background: linear-gradient(180deg, #e1e1e1 0%, #d6d6d6 100%);
+  background:
+    radial-gradient(circle at 80% 12%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 32%),
+    linear-gradient(180deg, #ffffff 0%, #f5f6f7 50%, #eef1f3 100%);
 }
 
 body.theme-dark {
