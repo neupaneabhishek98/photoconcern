@@ -39,14 +39,11 @@ function handleCreatorUpload(req, res, next) {
 
 router.post("/creators", handleCreatorUpload, async (req, res) => {
     try {
-        const description = String(req.body.description || "").trim();
+        const description = String(req.body.description || "").trim() || `PhotoConcern Creators submission with ${req.files?.length || 0} photograph(s).`;
         const ownerConfirmed = req.body.ownerConfirmed === "true";
 
         if (!req.files?.length) {
             return res.status(400).json({ message: "Upload at least one photograph." });
-        }
-        if (!description) {
-            return res.status(400).json({ message: "Please describe the photograph submission." });
         }
         if (!ownerConfirmed) {
             return res.status(400).json({ message: "Please confirm that you own the submitted photograph(s)." });

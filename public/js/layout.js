@@ -26,11 +26,12 @@
           <img src="/resources/main.webp" alt="" class="nav-logo nav-logo-main" aria-hidden="true">
         </a>
         <a href="https://m.me/photoconcernnepal?text=Hi%2C%20Can%20I%20learn%20more%20about%20your%20services" target="_blank" rel="noopener" class="nav-contact-btn" aria-label="Chat with PhotoConcern on Messenger">
-          <svg class="icons-svg-nav nav-chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-5 3 1.6-5.2A7.5 7.5 0 1 1 21 11.5Z"/>
-            <circle class="chat-dot chat-dot-1" cx="9" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
-            <circle class="chat-dot chat-dot-2" cx="12" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
-            <circle class="chat-dot chat-dot-3" cx="15" cy="11.5" r="0.8" fill="currentColor" stroke="none"/>
+          <svg class="icons-svg-nav nav-chat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path class="chat-bubble" d="M4.4 11.2c0-4.1 3.6-7.2 8-7.2s8 3.1 8 7.2-3.6 7.2-8 7.2c-.9 0-1.8-.1-2.6-.4l-4.3 2.2 1.1-4A6.9 6.9 0 0 1 4.4 11.2Z" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+            <path class="chat-spark" d="M16.8 6.7l.6 1.2 1.3.5-1.3.5-.6 1.2-.6-1.2-1.3-.5 1.3-.5.6-1.2Z" fill="currentColor"/>
+            <circle class="chat-dot chat-dot-1" cx="9.4" cy="11.4" r="0.82" fill="currentColor"/>
+            <circle class="chat-dot chat-dot-2" cx="12.2" cy="11.4" r="0.82" fill="currentColor"/>
+            <circle class="chat-dot chat-dot-3" cx="15" cy="11.4" r="0.82" fill="currentColor"/>
           </svg>
         </a>
       </div>
@@ -160,6 +161,16 @@
         if (menu) menu.classList.toggle("show");
       };
     }
+
+    const updateFooterTopVisibility = () => {
+      const topButton = document.querySelector(".site-footer-top");
+      if (!topButton) return;
+      const hasScroll = document.documentElement.scrollHeight > window.innerHeight + 8;
+      topButton.classList.toggle("is-hidden", !hasScroll);
+    };
+    updateFooterTopVisibility();
+    window.addEventListener("resize", updateFooterTopVisibility, { passive: true });
+    window.addEventListener("load", updateFooterTopVisibility, { once: true });
   }
 
   if (document.readyState === "loading") {

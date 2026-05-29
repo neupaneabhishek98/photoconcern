@@ -44,8 +44,8 @@ body {
   font-family: var(--font-base);
   color: var(--color-fg);
   background:
-    radial-gradient(circle at 15% 0%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 34%),
-    linear-gradient(180deg, #ffffff 0%, #f4f5f6 46%, #eceff1 100%);
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0) 36%),
+    linear-gradient(104deg, #ffffff 0%, #f8f9fa 42%, #e8ebef 100%);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -143,7 +143,13 @@ body.theme-dark .nav-logo {
 body.theme-dark .nav-contact-btn { color: #e5e7eb; }
 body.theme-dark .nav-contact-btn:hover { color: #ffffff; }
 
-.nav-chat-icon .chat-dot {
+.nav-chat-icon {
+  width: 24px !important;
+  height: 24px !important;
+  overflow: visible;
+}
+.nav-chat-icon .chat-dot,
+.nav-chat-icon .chat-spark {
   transform-origin: center;
 }
 .nav-contact-btn:hover .chat-dot {
@@ -155,6 +161,9 @@ body.theme-dark .nav-contact-btn:hover { color: #ffffff; }
 .nav-contact-btn:hover .chat-dot-3 {
   animation-delay: 0.24s;
 }
+.nav-contact-btn:hover .chat-spark {
+  animation: chatSpark 1.45s ease-in-out infinite;
+}
 @keyframes chatDotPulse {
   0%, 100% {
     opacity: 0.46;
@@ -164,6 +173,10 @@ body.theme-dark .nav-contact-btn:hover { color: #ffffff; }
     opacity: 1;
     transform: translateY(-1.6px) scale(1.18);
   }
+}
+@keyframes chatSpark {
+  0%, 100% { opacity: 0.55; transform: scale(0.9) rotate(0deg); }
+  45% { opacity: 1; transform: scale(1.16) rotate(10deg); }
 }
 
 @media (min-width: 1024px) {
@@ -1009,6 +1022,11 @@ button,
 .site-footer-top:hover svg,
 .site-footer-top:hover .site-footer-top-label {
   transform: translateY(-18px);
+}
+.site-footer-top.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Brand-color social tiles */

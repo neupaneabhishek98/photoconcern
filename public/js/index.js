@@ -157,12 +157,12 @@ function setupQuickUpload() {
 
     try {
       await API.addToCart({
-        title: "Photobook Order",
+        title: "Karizma Album Order",
         price: "0",
-        img: "/resources/photobook.png",
+        img: "/resources/karizma-album.png",
         desc: files.length
-          ? `${files.length} selected photos for a photobook order.`
-          : "Photobook order.",
+          ? `${files.length} selected photos for a Karizma Album order.`
+          : "Karizma Album order.",
       });
       window.location.href = "/serve/cart";
     } catch (err) {
@@ -180,11 +180,10 @@ function setupCreatorsForm() {
   const input = document.getElementById("creatorsInput");
   const preview = document.getElementById("creatorsPreview");
   const count = document.getElementById("creatorsCount");
-  const description = document.getElementById("creatorsDescription");
   const owner = document.getElementById("creatorsOwner");
   const ownerLabel = document.getElementById("creatorsOwnerLabel");
   const send = document.getElementById("creatorsSend");
-  if (!form || !dropzone || !input || !preview || !count || !description || !owner || !send) return;
+  if (!form || !dropzone || !input || !preview || !count || !owner || !send) return;
 
   let files = [];
   let objectUrls = [];
@@ -200,11 +199,13 @@ function setupCreatorsForm() {
     owner.disabled = !hasPhotos;
     ownerLabel?.classList.toggle("is-enabled", hasPhotos);
     if (!hasPhotos) owner.checked = false;
-    send.disabled = !(hasPhotos && owner.checked && description.value.trim());
+    send.disabled = !(hasPhotos && owner.checked);
     send.classList.toggle("is-ready", !send.disabled);
-    count.textContent = hasPhotos
-      ? `${files.length} photograph${files.length === 1 ? "" : "s"} ready`
-      : "Multiple images accepted";
+    if (hasPhotos) {
+      count.textContent = `${files.length} photograph${files.length === 1 ? "" : "s"} ready`;
+    } else {
+      count.innerHTML = 'Drag and drop your Photograph(s) here, or <button type="button" class="creators-browse">Browse</button> files in your computer.';
+    }
   }
 
   function renderPreview() {
@@ -275,7 +276,6 @@ function setupCreatorsForm() {
     addFiles(event.dataTransfer.files);
   });
   owner.addEventListener("change", updateState);
-  description.addEventListener("input", updateState);
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -287,7 +287,7 @@ function setupCreatorsForm() {
 
     const formData = new FormData();
     files.forEach((file) => formData.append("photos", file));
-    formData.append("description", description.value.trim());
+    formData.append("description", `PhotoConcern Creators submission with ${files.length} photograph${files.length === 1 ? "" : "s"}.`);
     formData.append("ownerConfirmed", owner.checked ? "true" : "false");
 
     try {
@@ -301,7 +301,6 @@ function setupCreatorsForm() {
 
       showToast(body.message || "Submission sent.", "success");
       files = [];
-      description.value = "";
       owner.checked = false;
       renderPreview();
     } catch (err) {
@@ -424,7 +423,7 @@ function createProductCard(product) {
 
 function createFeaturedBanner(product, index) {
   const wrap = document.createElement("div");
-  wrap.className = "hot-section";  // same class as photo book — identical layout
+  wrap.className = "hot-section";  // same class as Karizma Album — identical layout
   wrap.innerHTML = `
     <div class="hot-img-wrap">
       <img src="${product.img}" alt="${product.title}" class="hot-img">

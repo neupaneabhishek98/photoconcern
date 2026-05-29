@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const creatorSubmissionSchema = new mongoose.Schema({
     description: {
         type: String,
-        required: true,
+        default: "",
         trim: true,
         maxlength: 2000,
     },

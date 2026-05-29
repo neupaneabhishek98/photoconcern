@@ -19,25 +19,25 @@
   <div data-pc-header></div>
 
   <div class="main-content">
-    <!-- FEATURED PHOTOBOOK SECTION (above hero per spec) -->
+    <!-- FEATURED KARIZMA ALBUM SECTION (above hero per spec) -->
     <div class="hot-section">
       <div class="hot-img-wrap">
-        <img src="/resources/photobook.png" alt="Photo Book" class="hot-img">
+        <img src="/resources/karizma-album.png" alt="Karizma Album" class="hot-img">
         <div class="hot-overlay">
           <div class="hot-top">
             <div class="hot-badge">🔥 Hot Right Now</div>
           </div>
           <div class="hot-content">
-            <h2 class="hot-title">Photo Book</h2>
-            <p class="hot-desc">Turn your memories into a beautifully printed photo book. Custom layouts, premium paper, and fast delivery across Nepal.</p>
+            <h2 class="hot-title">Karizma Album</h2>
+            <p class="hot-desc">Turn your memories into a beautifully printed Karizma Album. Custom layouts, premium paper, and fast delivery across Nepal.</p>
             <p class="hot-price">रू.1,499</p>
             <div class="hot-actions">
               <button type="button" class="add-to-cart-btn hot-cart-btn"
-                data-title="Photo Book"
+                data-title="Karizma Album"
                 data-price="1499"
-                data-img="/resources/photobook.png"
-                data-desc="Custom printed photo book with premium paper.">Buy Now</button>
-              <button type="button" class="hot-learn-btn" data-title="Photo Book">Learn More</button>
+                data-img="/resources/karizma-album.png"
+                data-desc="Custom printed Karizma Album with premium paper.">Buy Now</button>
+              <button type="button" class="hot-learn-btn" data-title="Karizma Album">Learn More</button>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
     <!-- QUICK UPLOAD SECTION -->
     <section class="quick-upload-section" aria-labelledby="quickUploadTitle">
       <div class="quick-upload-copy">
-        <span class="quick-upload-kicker">ORDER PHOTOBOOK</span>
+        <span class="quick-upload-kicker">ORDER KARIZMA ALBUM</span>
         <h2 id="quickUploadTitle">Upload pictures to create an order</h2>
         <p>Upload 120-150 photos to proceed with the order.</p>
         <div class="quick-upload-actions">
@@ -73,10 +73,11 @@
     </section>
 
     <section class="creators-section" aria-labelledby="creatorsTitle">
+      <span class="creators-kicker"><span>PhotoConcern</span> <strong>Creators</strong></span>
       <div class="creators-copy">
-        <span class="creators-kicker">PhotoConcern Creators</span>
         <h2 id="creatorsTitle">Send your original photographs</h2>
-        <p>Upload one or more photographs, describe the story behind them, and confirm ownership before sending.</p>
+        <p>Upload one or more photographs and confirm ownership before sending.</p>
+        <button type="button" class="creators-learn">Learn more</button>
       </div>
 
       <form class="creators-form" id="creatorsForm">
@@ -91,14 +92,9 @@
             </svg>
           </div>
           <strong>Upload photographs</strong>
-          <span id="creatorsCount">Multiple images accepted</span>
+          <span id="creatorsCount">Drag and drop your Photograph(s) here, or <button type="button" class="creators-browse">Browse</button> files in your computer.</span>
           <div class="creators-preview" id="creatorsPreview" aria-live="polite"></div>
         </div>
-
-        <label class="creators-field" for="creatorsDescription">
-          <span>Description</span>
-          <textarea id="creatorsDescription" name="description" rows="6" maxlength="2000" placeholder="Describe the photograph, location, subject, or story you want PhotoConcern to know."></textarea>
-        </label>
 
         <label class="creators-owner" id="creatorsOwnerLabel">
           <input id="creatorsOwner" name="ownerConfirmed" type="checkbox" disabled>
@@ -121,11 +117,11 @@
         <p>What we do best</p>
       </div>
       <div class="services-grid">
-        <a class="service-card" href="/serve/category/custom" style="--svc-img:url('/resources/photobook.png')">
+        <a class="service-card" href="/serve/category/custom" style="--svc-img:url('/resources/karizma-album.png')">
           <div class="service-card-bg" aria-hidden="true"></div>
           <div class="service-card-overlay"></div>
           <div class="service-card-content">
-            <h3 class="service-card-title">Photobook</h3>
+            <h3 class="service-card-title">Karizma Album</h3>
             <p class="service-card-sub">Karizma Album</p>
             <p class="service-card-desc">Premium-bound albums for weddings, anniversaries, and family memories.</p>
           </div>
@@ -164,7 +160,7 @@
     </div>
 
     <!-- TOOLS SECTION (passport photo, MRP photo, skin retouch) -->
-    <section class="tools-section">
+    <section class="tools-section" hidden>
       <div class="tools-heading">
         <h2>Photo Tools</h2>
         <p>Free in-browser tools — passport photo, MRP photo, and more.</p>
