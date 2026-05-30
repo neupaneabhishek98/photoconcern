@@ -8,8 +8,8 @@ body {
 }
 
 :root {
-  --pc-page-gutter: clamp(40px, 4vw, 84px);
-  --pc-shell-max: 1680px;
+  --pc-page-gutter: clamp(48px, 5vw, 112px);
+  --pc-shell-max: 1480px;
 }
 
 /* Navbar */
