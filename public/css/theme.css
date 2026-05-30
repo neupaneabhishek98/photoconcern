@@ -27,8 +27,8 @@
   --shadow-md:          0 6px 20px rgba(0,0,0,0.10);
   --shadow-lg:          0 12px 36px rgba(0,0,0,0.14);
   --shadow-primary:     0 4px 14px rgba(201,146,10,0.28);
-  --pc-page-gutter: clamp(18px, 2vw, 38px);
-  --pc-shell-max: 1920px;
+  --pc-page-gutter: clamp(32px, 3vw, 64px);
+  --pc-shell-max: 1760px;
 }
 
 body.theme-dark {
@@ -90,7 +90,7 @@ body {
   width: auto !important;
   display: block !important;
   object-fit: contain !important;
-  transition: opacity 0.34s ease-in-out, transform 0.34s ease-in-out !important;
+  transition: opacity 0.28s ease-in-out !important;
 }
 @media (min-width: 1024px) {
   .nav-logo { height: 96px !important; max-width: 340px !important; }
@@ -106,24 +106,21 @@ body.theme-dark .nav-logo {
   position: absolute;
   inset: 0 auto auto 0;
   opacity: 0;
-  transform: scale(0.98);
 }
 .photoconcern-nav:hover .nav-logo-white,
 .photoconcern-nav:focus-visible .nav-logo-white {
   opacity: 0;
-  transform: scale(1.02);
 }
 .photoconcern-nav:hover .nav-logo-main,
 .photoconcern-nav:focus-visible .nav-logo-main,
 .photoconcern-nav:hover .nav-logo-alt,
 .photoconcern-nav:focus-visible .nav-logo-alt {
   opacity: 1;
-  transform: scale(1);
 }
 
 /* Contact icon beside the logo */
 .nav-contact-btn {
-  display: inline-flex !important;
+  display: none !important;
   align-items: center;
   justify-content: center;
   width: 38px;
@@ -134,7 +131,7 @@ body.theme-dark .nav-logo {
   color: #d2d5dc;
   font-weight: 700;
   font-size: 0.88rem;
-  transition: color 0.18s ease, transform 0.18s ease;
+  transition: color 0.18s ease;
 }
 .nav-contact-btn:hover {
   color: #ffffff;
@@ -399,7 +396,7 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
   background: #12b886 !important;
   border-color: #12b886 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(18,184,134,0.16), 0 12px 28px rgba(18,184,134,0.24) !important;
+  box-shadow: none !important;
 }
 .nav-login-btn:active {
   background: #0fa678 !important;
@@ -980,23 +977,20 @@ button,
   max-width: 220px;
   object-fit: contain;
   display: block;
-  transition: opacity 0.34s ease-in-out, transform 0.34s ease-in-out;
+  transition: opacity 0.28s ease-in-out;
 }
 .site-footer-logo-alt {
   position: absolute;
   inset: 0 auto auto 0;
   opacity: 0;
-  transform: scale(0.98);
 }
 .site-footer-brand a:hover .site-footer-logo-white,
 .site-footer-brand a:focus-visible .site-footer-logo-white {
   opacity: 0;
-  transform: scale(1.02);
 }
 .site-footer-brand a:hover .site-footer-logo-alt,
 .site-footer-brand a:focus-visible .site-footer-logo-alt {
   opacity: 1;
-  transform: scale(1);
 }
 
 .site-footer-socials {
@@ -1080,7 +1074,7 @@ button,
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition: none;
   width: 82px;
   height: 82px;
   min-height: 82px;
@@ -1092,15 +1086,15 @@ button,
 }
 .site-footer-social-tile:hover {
   transform: none;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
-  filter: brightness(1.08);
+  box-shadow: none;
+  filter: none;
 }
 .site-footer-social-tile:hover i {
   transform: scale(1.16);
 }
 .site-footer-social-tile--fb { background: #1877F2; }
 .site-footer-social-tile--ig {
-  background: linear-gradient(135deg, #f09433 0%, #e70000 25%, #e70000 50%, #e70000 75%, #bc1888 100%);
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
 }
 .site-footer-social-tile--wa { background: #25D366; }
 
@@ -1188,6 +1182,21 @@ button,
 }
 .nav-bar-right > a:hover .icons-svg-nav {
   stroke: var(--pc-primary);
+}
+
+.nav-phone-btn {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: color 0.18s ease !important;
+}
+
+.nav-phone-btn:hover,
+.nav-phone-btn:focus-visible {
+  color: var(--pc-primary) !important;
+}
+
+.nav-phone-btn .icons-svg-nav {
+  stroke: currentColor !important;
 }
 
 /* Active route — fill the icon AND tint background */

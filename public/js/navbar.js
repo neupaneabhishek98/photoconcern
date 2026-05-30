@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.querySelector('a[href="/serve/cart"][aria-label="Cart"]') ||
         document.querySelector('a[href="/serve/cart"]');
 
+    const hamburger = document.querySelector(".hamburger");
+
     if (!profileLink) return;
 
     try {
@@ -57,6 +59,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // hide cart icon
             if (cartLink) cartLink.style.display = "none";
+
+            if (hamburger) {
+                const phoneLink = document.createElement("a");
+                phoneLink.href = "/serve/contact";
+                phoneLink.className = "nav-phone-btn";
+                phoneLink.setAttribute("aria-label", "Contact PhotoConcern");
+                phoneLink.innerHTML = `
+                    <svg class="icons-svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v2.6a2 2 0 0 1-2.18 2 19.78 19.78 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.78 19.78 0 0 1-3.07-8.63A2 2 0 0 1 4.11 1.82h2.6a2 2 0 0 1 2 1.72c.13.98.36 1.93.7 2.84a2 2 0 0 1-.45 2.11L7.85 9.6a16 16 0 0 0 6.55 6.55l1.11-1.11a2 2 0 0 1 2.11-.45c.91.34 1.86.57 2.84.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                `;
+                hamburger.replaceWith(phoneLink);
+            }
 
             // hide logout button in quickies
             document.querySelectorAll(".logout-btn").forEach(btn => btn.style.display = "none");

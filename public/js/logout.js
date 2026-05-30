@@ -102,7 +102,7 @@ async function logout() {
         .nav-login-btn:hover {
             background: #12b886;
             border-color: #12b886;
-            box-shadow: 0 0 0 4px rgba(18,184,134,0.16), 0 12px 28px rgba(18,184,134,0.24);
+            box-shadow: none;
         }
         .nav-login-btn:active { background: #0fa678; border-color: #0fa678; }
         body.theme-dark .nav-login-btn { background: transparent; color: #fff !important; border-color: #fff; }
