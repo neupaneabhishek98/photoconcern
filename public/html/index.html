@@ -69,11 +69,19 @@
     </section>
 
     <section class="creators-section" aria-labelledby="creatorsTitle">
-      <img src="/resources/creators_logo.webp" alt="PhotoConcern Creators" class="creators-logo">
+      <div class="creators-brand-row">
+        <img src="/resources/creators_logo.webp" alt="PhotoConcern Creators" class="creators-logo">
+        <p class="creators-cta">Upload your best photograph for studio review.</p>
+      </div>
       <div class="creators-copy">
         <h2 id="creatorsTitle">Send your original photographs</h2>
-        <p>Watermark your picture and send it to us, if its selected, we'll get back to you.</p>
-        <button type="button" class="creators-learn"><span class="creators-learn-icon" aria-hidden="true">i</span> Learn more</button>
+        <p>Watermark your picture and send it to us. If selected, we will get back to you.</p>
+        <ol class="creators-steps" aria-label="How to submit your photograph">
+          <li><span>1</span>Log in to your account.</li>
+          <li><span>2</span>Drag or browse to upload your picture.</li>
+          <li><span>3</span>Confirm ownership and send the photograph.</li>
+        </ol>
+        <p class="creators-review-note">After submission, the photograph will be reviewed and selected to be featured in our New Road studio. The photographer may be contacted for future business opportunities.</p>
       </div>
 
       <form class="creators-form" id="creatorsForm">
@@ -94,7 +102,7 @@
 
         <label class="creators-owner" id="creatorsOwnerLabel">
           <input id="creatorsOwner" name="ownerConfirmed" type="checkbox" disabled>
-          <span>I am the owner of this photograph and would be liable if proven otherwise.</span>
+          <span>I confirm that I own the rights to this photograph and accept responsibility for any ownership dispute.</span>
         </label>
 
         <button type="submit" class="creators-send" id="creatorsSend" disabled>

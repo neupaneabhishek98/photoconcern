@@ -100,13 +100,13 @@ async function logout() {
             box-shadow: none;
         }
         .nav-login-btn:hover {
-            background: #12b886;
-            border-color: #12b886;
+            background: #10a37f;
+            border-color: #10a37f;
             box-shadow: none;
         }
-        .nav-login-btn:active { background: #0fa678; border-color: #0fa678; }
+        .nav-login-btn:active { background: #0e8f70; border-color: #0e8f70; }
         body.theme-dark .nav-login-btn { background: transparent; color: #fff !important; border-color: #fff; }
-        body.theme-dark .nav-login-btn:hover { background: #12b886; border-color: #12b886; }
+        body.theme-dark .nav-login-btn:hover { background: #10a37f; border-color: #10a37f; }
         @media (min-width: 768px) {
             .nav-login-btn { height: 40px; padding: 0 36px; font-size: 0.9rem; }
         }

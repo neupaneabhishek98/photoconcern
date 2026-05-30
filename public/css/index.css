@@ -8,8 +8,8 @@ body {
 }
 
 :root {
-  --pc-page-gutter: clamp(32px, 3vw, 64px);
-  --pc-shell-max: 1760px;
+  --pc-page-gutter: clamp(40px, 4vw, 84px);
+  --pc-shell-max: 1680px;
 }
 
 /* Navbar */
@@ -1842,13 +1842,31 @@ body.theme-dark .quick-upload-secondary.is-ready {
   gap: 12px;
 }
 
-.creators-logo {
+.creators-brand-row {
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(220px, 0.6fr);
+  gap: 22px;
+  align-items: end;
+}
+
+.creators-logo {
   display: block;
-  width: min(100%, 460px);
-  max-height: 92px;
+  width: 100%;
+  max-height: 132px;
   object-fit: contain;
   object-position: left center;
+}
+
+.creators-cta {
+  justify-self: end;
+  max-width: 360px;
+  margin: 0;
+  color: rgba(255,255,255,0.78);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: right;
 }
 
 .creators-copy h2 {
@@ -1865,36 +1883,40 @@ body.theme-dark .quick-upload-secondary.is-ready {
   max-width: 440px;
 }
 
-.creators-learn {
-  width: 100%;
-  margin-top: auto;
-  padding: 10px 18px;
-  border: 1px solid rgba(255,255,255,0.42);
-  border-radius: 6px;
-  background: transparent;
-  color: #ffffff;
-  font-family: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+.creators-steps {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
 }
 
-.creators-learn:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.7);
+.creators-steps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.86);
+  font-size: 0.92rem;
+  line-height: 1.35;
 }
 
-.creators-learn-icon {
-  width: 18px;
-  height: 18px;
+.creators-steps span {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
   display: inline-grid;
   place-items: center;
-  margin-right: 8px;
-  border: 1px solid rgba(255,255,255,0.55);
   border-radius: 50%;
-  font-size: 0.74rem;
+  background: #ffffff;
+  color: #111827;
+  font-size: 0.78rem;
   font-weight: 900;
-  line-height: 1;
+}
+
+.creators-review-note {
+  margin-top: auto !important;
+  color: rgba(255,255,255,0.66) !important;
+  font-size: 0.86rem;
 }
 
 .creators-form {
@@ -2085,6 +2107,15 @@ body.theme-dark .quick-upload-secondary.is-ready {
   .creators-section,
   .creators-form {
     grid-template-columns: 1fr;
+  }
+
+  .creators-brand-row {
+    grid-template-columns: 1fr;
+  }
+
+  .creators-cta {
+    justify-self: start;
+    text-align: left;
   }
 }
 

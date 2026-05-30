@@ -27,8 +27,8 @@
   --shadow-md:          0 6px 20px rgba(0,0,0,0.10);
   --shadow-lg:          0 12px 36px rgba(0,0,0,0.14);
   --shadow-primary:     0 4px 14px rgba(201,146,10,0.28);
-  --pc-page-gutter: clamp(32px, 3vw, 64px);
-  --pc-shell-max: 1760px;
+  --pc-page-gutter: clamp(40px, 4vw, 84px);
+  --pc-shell-max: 1680px;
 }
 
 body.theme-dark {
@@ -393,14 +393,14 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
   border: 1.5px solid #ffffff !important;
 }
 .nav-login-btn:hover {
-  background: #12b886 !important;
-  border-color: #12b886 !important;
+  background: #10a37f !important;
+  border-color: #10a37f !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
 .nav-login-btn:active {
-  background: #0fa678 !important;
-  border-color: #0fa678 !important;
+  background: #0e8f70 !important;
+  border-color: #0e8f70 !important;
 }
 body.theme-dark .nav-login-btn {
   background: transparent !important;
@@ -408,8 +408,8 @@ body.theme-dark .nav-login-btn {
   border-color: #fff !important;
 }
 body.theme-dark .nav-login-btn:hover {
-  background: #12b886 !important;
-  border-color: #12b886 !important;
+  background: #10a37f !important;
+  border-color: #10a37f !important;
 }
 @media (min-width: 768px) {
   .nav-login-btn {
@@ -739,7 +739,6 @@ body.theme-dark .navbar {
 .quick-upload-secondary,
 .hot-buy-btn,
 .hot-learn-btn,
-.creators-learn,
 .buy-now-btn,
 .card-actions .buy-now-btn,
 .product-card-actions .buy-now-btn,
@@ -759,7 +758,6 @@ body.theme-dark .navbar {
 .quick-upload-secondary:hover,
 .hot-buy-btn:hover,
 .hot-learn-btn:hover,
-.creators-learn:hover,
 .buy-now-btn:hover,
 .card-actions .buy-now-btn:hover,
 .product-card-actions .buy-now-btn:hover,
@@ -793,7 +791,6 @@ body.theme-dark .btn-secondary,
 body.theme-dark .quick-upload-secondary,
 body.theme-dark .hot-buy-btn,
 body.theme-dark .hot-learn-btn,
-body.theme-dark .creators-learn,
 body.theme-dark .buy-now-btn,
 body.theme-dark .card-actions .buy-now-btn,
 body.theme-dark .product-card-actions .buy-now-btn,
@@ -817,7 +814,6 @@ button,
 .hot-buy-btn,
 .hot-order-btn,
 .hot-learn-btn,
-.creators-learn,
 .creators-send,
 .add-to-cart-btn,
 .buy-now-btn,
@@ -1185,6 +1181,7 @@ button,
 }
 
 .nav-phone-btn {
+  position: relative;
   color: #ffffff !important;
   text-decoration: none !important;
   transition: color 0.18s ease !important;
@@ -1197,6 +1194,46 @@ button,
 
 .nav-phone-btn .icons-svg-nav {
   stroke: currentColor !important;
+}
+
+.nav-phone-btn::before,
+.nav-phone-btn::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid currentColor;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.72) rotate(-18deg);
+  pointer-events: none;
+}
+
+.nav-phone-btn:hover::before,
+.nav-phone-btn:focus-visible::before,
+.nav-phone-btn:hover::after,
+.nav-phone-btn:focus-visible::after {
+  animation: phoneRing 0.95s ease-out infinite;
+}
+
+.nav-phone-btn:hover::after,
+.nav-phone-btn:focus-visible::after {
+  animation-delay: 0.18s;
+}
+
+@keyframes phoneRing {
+  0% {
+    opacity: 0;
+    transform: scale(0.72) rotate(-18deg);
+  }
+  35% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.32) rotate(-18deg);
+  }
 }
 
 /* Active route — fill the icon AND tint background */

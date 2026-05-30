@@ -181,7 +181,6 @@ function setupKarizmaOrderToggle() {
 
   trigger.addEventListener("click", () => {
     card.classList.remove("is-collapsed");
-    card.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
