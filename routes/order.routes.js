@@ -1,6 +1,7 @@
 const express      = require("express");
 const router       = express.Router();
 const multer       = require("multer");
+const path         = require("path");
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const r2           = require("../config/r2.config");
 const Order        = require("../models/order.models");
@@ -40,6 +41,47 @@ const upload = multer({
 });
 
 const ADMIN_WHATSAPP = process.env.ADMIN_WHATSAPP;
+const ALLOWED_PAYMENT_METHODS = new Set(["esewa", "khalti", "ime", "connectips", "cod", "fonepay"]);
+
+function cleanText(value, max = 500) {
+    return String(value || "").trim().slice(0, max);
+}
+
+function money(value) {
+    const n = Number(value);
+    return Number.isFinite(n) && n >= 0 ? n : null;
+}
+
+function normalizeOrderItems(items) {
+    if (!Array.isArray(items) || !items.length) return null;
+    const cleanItems = items.slice(0, 100).map((item) => {
+        const title = cleanText(item.title, 180);
+        const price = money(item.price);
+        const quantity = Number(item.quantity);
+        if (!title || price === null || !Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+            return null;
+        }
+        return {
+            title,
+            price,
+            quantity,
+            img: cleanText(item.img, 2048),
+            description: cleanText(item.description || item.desc, 800),
+        };
+    });
+    return cleanItems.every(Boolean) ? cleanItems : null;
+}
+
+function normalizeDeliveryAddress(address) {
+    if (!address || typeof address !== "object") return null;
+    return {
+        province: cleanText(address.province, 120),
+        district: cleanText(address.district, 120),
+        municipality: cleanText(address.municipality, 160),
+        ward: cleanText(address.ward, 20),
+        addressDetails: cleanText(address.addressDetails, 300),
+    };
+}
 
 // ── Nepali BS orderId generator ────────────────────────────
 function getNepaliYear() {
@@ -66,22 +108,33 @@ async function generateOrderId() {
 router.post("/orders/place", isAuthenticated, async (req, res) => {
     try {
         const { items, deliveryAddress, subtotal, tax, total, paymentMethod } = req.body;
+        const cleanItems = normalizeOrderItems(items);
+        const cleanAddress = normalizeDeliveryAddress(deliveryAddress);
+        const cleanPaymentMethod = cleanText(paymentMethod, 30).toLowerCase();
+        const cleanSubtotal = money(subtotal);
+        const cleanTax = money(tax);
+        const cleanTotal = money(total);
 
-        if (!items?.length)   return res.status(400).json({ message: "No items in order" });
-        if (!paymentMethod)   return res.status(400).json({ message: "Payment method required" });
-        if (!deliveryAddress) return res.status(400).json({ message: "Delivery address required" });
+        if (!cleanItems) return res.status(400).json({ message: "Order items are invalid" });
+        if (!cleanAddress) return res.status(400).json({ message: "Delivery address required" });
+        if (!ALLOWED_PAYMENT_METHODS.has(cleanPaymentMethod)) {
+            return res.status(400).json({ message: "Payment method is not supported" });
+        }
+        if (cleanSubtotal === null || cleanTax === null || cleanTotal === null) {
+            return res.status(400).json({ message: "Order totals are invalid" });
+        }
 
         const orderId = await generateOrderId();
 
         const order = await Order.create({
             orderId,
             userId: req.session.userId,
-            items,
-            deliveryAddress,
-            subtotal,
-            tax,
-            total,
-            paymentMethod,
+            items: cleanItems,
+            deliveryAddress: cleanAddress,
+            subtotal: cleanSubtotal,
+            tax: cleanTax,
+            total: cleanTotal,
+            paymentMethod: cleanPaymentMethod,
             orderStatus: "placed",
         });
 
@@ -96,8 +149,8 @@ router.post("/orders/place", isAuthenticated, async (req, res) => {
             await sendWhatsApp(ADMIN_WHATSAPP,
                 `📦 *New Order Placed!*\n` +
                 `Order ID: *${order.orderId}*\n` +
-                `Total: Rs.${total}\n` +
-                `Payment: ${paymentMethod.toUpperCase()}\n` +
+                `Total: Rs.${cleanTotal}\n` +
+                `Payment: ${cleanPaymentMethod.toUpperCase()}\n` +
                 `Items:\n${itemList}\n` +
                 `Delivery: ${addrStr || "Not provided"}`
             );
@@ -165,7 +218,7 @@ router.post("/orders/:orderId/confirm", isAuthenticated, async (req, res) => {
         if (!order) return res.status(404).json({ message: "Order not found" });
 
         const { note } = req.body;
-        if (note) order.note = note;
+        if (note) order.note = cleanText(note, 1000);
 
         order.orderStatus = "processing";
 
@@ -248,11 +301,12 @@ router.post("/orders/:orderId/cancel", isAuthenticated, async (req, res) => {
         }
 
         const { reason } = req.body;
+        const cleanReason = cleanText(reason, 500);
 
         order.orderStatus   = "cancelled";
         order.paymentStatus = "failed";
         order.cancelledAt   = new Date(); // triggers TTL — deleted from DB after 24h
-        if (reason) order.note = `Cancelled: ${reason}`;
+        if (cleanReason) order.note = `Cancelled: ${cleanReason}`;
 
         await order.save();
 
@@ -264,7 +318,7 @@ router.post("/orders/:orderId/cancel", isAuthenticated, async (req, res) => {
                 `Order ID: *${order.orderId}*\n` +
                 `Total: Rs.${order.total}\n` +
                 `Payment: ${order.paymentMethod.toUpperCase()}\n` +
-                `Reason: ${reason || "User aborted process"}\n` +
+                `Reason: ${cleanReason || "User aborted process"}\n` +
                 `Items:\n${itemList}`
             );
             await Order.findByIdAndUpdate(order._id, { whatsappCancelNotified: true });
@@ -343,7 +397,8 @@ router.post(
             } else {
                 // ── Cloudflare R2 backend (legacy) ──────────────────────
                 for (const file of req.files) {
-                    const key = `orders/${order._id}/${Date.now()}-${file.originalname.replace(/\s+/g, "_")}`;
+                    const safeName = path.basename(file.originalname || "upload").replace(/[^A-Za-z0-9._-]/g, "_").slice(0, 120);
+                    const key = `orders/${order._id}/${Date.now()}-${safeName}`;
                     await r2.send(new PutObjectCommand({
                         Bucket:      process.env.bucket_name,
                         Key:         key,
@@ -486,10 +541,18 @@ router.get("/admin/proxy-image", isAdmin, async (req, res) => {
     if (!url) return res.status(400).json({ message: "url param required" });
 
     try {
-        const response = await fetch(url);
+        const parsed = new URL(url);
+        if (!["http:", "https:"].includes(parsed.protocol)) {
+            return res.status(400).json({ message: "Only http(s) image URLs are allowed" });
+        }
+
+        const response = await fetch(parsed.href);
         if (!response.ok) return res.status(response.status).json({ message: "Failed to fetch image" });
 
         const contentType = response.headers.get("content-type") || "image/jpeg";
+        if (!contentType.toLowerCase().startsWith("image/")) {
+            return res.status(400).json({ message: "URL did not return an image" });
+        }
         res.setHeader("Content-Type", contentType);
         res.setHeader("Cache-Control", "private, max-age=3600");
 

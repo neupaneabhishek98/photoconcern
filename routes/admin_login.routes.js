@@ -18,7 +18,10 @@ router.post("/admin/login", authLimiter, async (req, res) => {
         const isMatch = await admin.comparePassword(password);
         if (!isMatch) return res.status(401).json({ message: "Invalid username or password" });
 
-        // set admin session
+        // Regenerate the session on login to prevent session fixation.
+        await new Promise((resolve, reject) => {
+            req.session.regenerate((err) => (err ? reject(err) : resolve()));
+        });
         req.session.adminId   = admin._id;
         req.session.adminRole = admin.role;
 

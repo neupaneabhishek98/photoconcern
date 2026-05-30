@@ -61,6 +61,32 @@ document.addEventListener("DOMContentLoaded", async () => {
         setTimeout(() => toast.classList.remove("show"), 2500);
     }
 
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+        }[char]));
+    }
+
+    function safeText(value, fallback = "") {
+        const text = String(value ?? "").trim();
+        return escapeHTML(text || fallback);
+    }
+
+    function safeImageUrl(value) {
+        const url = String(value || "").trim();
+        if (!url || /^(javascript|data):/i.test(url)) return "";
+        return escapeHTML(url);
+    }
+
+    function money(value) {
+        const amount = Number(value);
+        return Number.isFinite(amount) ? amount.toLocaleString() : "0";
+    }
+
 
 /* ============================================================
    SECTION 5 — WISHLIST DATA FETCH
@@ -104,19 +130,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         wishlistItems.forEach(item => {
             const card = document.createElement("div");
             card.className     = "product-card";
-            card.dataset.title = item.title;
+            card.dataset.title = item.title || "";
+            const title = safeText(item.title, "Saved item");
+            const desc = safeText(item.desc, "Saved item from your product list.");
             card.innerHTML = `
                 <div class="product-card-thumb">
-                    <img class="products_images" src="${item.img || ''}" alt="${item.title}" loading="lazy">
+                    <img class="products_images" src="${safeImageUrl(item.img)}" alt="${title}" loading="lazy">
                 </div>
                 <div class="product-inform">
-                    <h3>${item.title}</h3>
-                    <p class="desc-product">${item.desc || "Saved item from your product list."}</p>
-                    <p class="price-product">Rs.${(item.price || 0).toLocaleString()}</p>
+                    <h3>${title}</h3>
+                    <p class="desc-product">${desc}</p>
+                    <p class="price-product">Rs.${money(item.price)}</p>
                 </div>
                 <div class="card-actions">
-                    <button type="button" class="add-to-cart-btn move-cart-btn" data-title="${item.title}">Add to Cart</button>
-                    <button type="button" class="buy-now-btn remove-btn"        data-title="${item.title}">Remove</button>
+                    <button type="button" class="add-to-cart-btn move-cart-btn" data-title="${safeText(item.title)}">Add to Cart</button>
+                    <button type="button" class="buy-now-btn remove-btn"        data-title="${safeText(item.title)}">Remove</button>
                 </div>
             `;
             root.appendChild(card);

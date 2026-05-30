@@ -8,30 +8,49 @@ function parsePrice(priceText) {
   return Number(String(priceText).replace(/[^0-9]/g, "")) || 0;
 }
 
+function cleanText(value, max = 180) {
+  return String(value || "").trim().slice(0, max);
+}
+
+function parseQuantity(value) {
+  const quantity = Number(value);
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) return null;
+  return quantity;
+}
+
 // POST /api/cart/add
 router.post("/cart/add", authMiddleware.isAuthenticated, async (req, res) => {
     try {
         const userId = req.session.userId;
         const { title, price, img, desc, quantity = 1, redirect } = req.body;
+        const itemTitle = cleanText(title);
+        const itemPrice = parsePrice(price);
+        const itemQuantity = parseQuantity(quantity);
 
-        if (!title || price === undefined) {
+        if (!itemTitle || price === undefined) {
             return res.status(400).json({ message: "title and price are required" });
+        }
+        if (itemPrice < 0 || !Number.isFinite(itemPrice)) {
+            return res.status(400).json({ message: "price must be a valid non-negative number" });
+        }
+        if (!itemQuantity) {
+            return res.status(400).json({ message: "quantity must be a whole number from 1 to 99" });
         }
 
         const incomingItem = {
-            title,
-            price:       parsePrice(price),
-            img,
-            description: desc,
-            quantity:    Number(quantity) || 1,
+            title:       itemTitle,
+            price:       itemPrice,
+            img:         cleanText(img, 2048),
+            description: cleanText(desc, 800),
+            quantity:    itemQuantity,
         };
 
         let cart = await Cart.findOne({ userId });
 
         if (cart) {
-            const existingIndex = cart.items.findIndex(i => i.title === title);
+            const existingIndex = cart.items.findIndex(i => i.title === itemTitle);
             if (existingIndex > -1) {
-                cart.items[existingIndex].quantity += incomingItem.quantity;
+                cart.items[existingIndex].quantity = Math.min(99, cart.items[existingIndex].quantity + incomingItem.quantity);
             } else {
                 cart.items.push(incomingItem);
             }
@@ -55,7 +74,7 @@ router.post("/cart/add", authMiddleware.isAuthenticated, async (req, res) => {
 router.get("/cart", authMiddleware.isAuthenticated, async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.session.userId });
-        if (!cart) return res.status(404).json({ message: "Cart not found" });
+        if (!cart) return res.json({ cart: { items: [] } });
         return res.json({ cart });
     } catch (error) {
         console.error("Error fetching cart:", error);
@@ -66,9 +85,9 @@ router.get("/cart", authMiddleware.isAuthenticated, async (req, res) => {
 // PATCH /api/cart/item/:itemId/quantity
 router.patch("/cart/item/:itemId/quantity", authMiddleware.isAuthenticated, async (req, res) => {
     try {
-        const { quantity } = req.body;
-        if (!quantity || quantity < 1) {
-            return res.status(400).json({ message: "quantity must be >= 1" });
+        const quantity = parseQuantity(req.body.quantity);
+        if (!quantity) {
+            return res.status(400).json({ message: "quantity must be a whole number from 1 to 99" });
         }
 
         const cart = await Cart.findOne({ userId: req.session.userId });
@@ -77,7 +96,7 @@ router.patch("/cart/item/:itemId/quantity", authMiddleware.isAuthenticated, asyn
         const item = cart.items.id(req.params.itemId);
         if (!item) return res.status(404).json({ message: "Item not found" });
 
-        item.quantity = Number(quantity);
+        item.quantity = quantity;
         await cart.save();
 
         return res.json({ message: "Quantity updated", cart });

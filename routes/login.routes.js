@@ -11,11 +11,8 @@ const authMiddleware = require("../middlewares/auth.middleware");
 
 // Login route
 router.post("/login", async (req, res) => {
-  console.log("Login route hit");
-
   try {
     const { email_address, password } = req.body;
-    console.log("Login data received:", req.body);
     if (!email_address || !password) {
       return res.status(400).json({ message: "Email and password are required" });
     }
@@ -38,12 +35,15 @@ router.post("/login", async (req, res) => {
 
     // Determine which password field to use
     let passwordToCompare = null;
+    const customerEmail = user.email_address?.toLowerCase();
+    const studioEmail = user.studio_email?.toLowerCase();
+    const freelancerEmail = user.free_email?.toLowerCase();
 
-    if (user.password && emailInput === user.email_address.toLowerCase()) {
+    if (user.password && emailInput === customerEmail) {
       passwordToCompare = user.password;
-    } else if (user.studio_password && emailInput === user.studio_email.toLowerCase()) {
+    } else if (user.studio_password && emailInput === studioEmail) {
       passwordToCompare = user.studio_password;
-    } else if (user.free_password && emailInput === user.free_email.toLowerCase()) {
+    } else if (user.free_password && emailInput === freelancerEmail) {
       passwordToCompare = user.free_password;
     }
 
@@ -58,14 +58,13 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    console.log("User authenticated successfully");
+    // Regenerate the session on login to prevent session fixation.
+    await new Promise((resolve, reject) => {
+      req.session.regenerate((err) => (err ? reject(err) : resolve()));
+    });
+    req.session.userId = user._id;
 
-    //Session logic
-
-req.session.userId = user._id;
-    console.log("Session created with ID:", req.session.userId);
-
- return res.json({
+    return res.json({
       type: "success",
       message: "Login successful! Redirecting to homepage...",
       redirect: "/",
@@ -116,7 +115,7 @@ router.post("/forgot-password/send-otp", async (req, res) => {
     const { email } = req.body;
     if (!email) return res.status(400).json({ message: "Email is required" });
 
-    const emailLower = email.toLowerCase().trim();
+    const emailLower = String(email).toLowerCase().trim();
     const user = await User.findOne({
         $or: [
             { email_address: emailLower },
@@ -160,12 +159,12 @@ router.post("/forgot-password/verify-otp", async (req, res) => {
     const { email, otp } = req.body;
     if (!email || !otp) return res.status(400).json({ message: "Email and OTP are required" });
 
-    const emailLower = email.toLowerCase().trim();
+    const emailLower = String(email).toLowerCase().trim();
     const record     = otpStore.get(emailLower);
 
     if (!record)                       return res.status(400).json({ message: "No OTP requested for this email" });
     if (Date.now() > record.expiresAt) { otpStore.delete(emailLower); return res.status(400).json({ message: "OTP expired. Request a new one." }); }
-    if (record.otp !== otp.trim())     return res.status(400).json({ message: "Incorrect OTP" });
+    if (record.otp !== String(otp).trim()) return res.status(400).json({ message: "Incorrect OTP" });
 
     const resetToken  = Math.random().toString(36).slice(2) + Date.now().toString(36);
     record.resetToken = resetToken;
@@ -180,13 +179,13 @@ router.post("/forgot-password/reset", async (req, res) => {
     const { email, resetToken, newPassword } = req.body;
     if (!email || !resetToken || !newPassword) return res.status(400).json({ message: "All fields are required" });
 
-    const emailLower = email.toLowerCase().trim();
+    const emailLower = String(email).toLowerCase().trim();
     const record     = otpStore.get(emailLower);
 
     if (!record || !record.verified)      return res.status(400).json({ message: "OTP not verified" });
     if (record.resetToken !== resetToken) return res.status(400).json({ message: "Invalid reset token" });
     if (Date.now() > record.expiresAt)    { otpStore.delete(emailLower); return res.status(400).json({ message: "Session expired. Please start again." }); }
-    if (newPassword.length < 6)           return res.status(400).json({ message: "Password must be at least 6 characters" });
+    if (String(newPassword).length < 8)   return res.status(400).json({ message: "Password must be at least 8 characters" });
 
     const hashed = await bcrypt.hash(newPassword, 10);
 

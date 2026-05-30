@@ -77,6 +77,10 @@ function passwordsMatch(role) {
         showToast("Password cannot be empty.", "error");
         return false;
     }
+    if (pass.length < 8) {
+        showToast("Password must be at least 8 characters.", "error");
+        return false;
+    }
 
     return pass === confirm;
 }

@@ -42,20 +42,51 @@ document.addEventListener("DOMContentLoaded", async () => {
         return new Date(iso).toLocaleDateString("en-NP", { year: "numeric", month: "short", day: "numeric" });
     }
 
+    function escapeHTML(value) {
+        return String(value ?? "—").replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#39;",
+        }[char]));
+    }
+
+    function safeText(value, fallback = "—") {
+        const text = String(value ?? "").trim();
+        return escapeHTML(text || fallback);
+    }
+
+    function safeNumber(value) {
+        const number = Number(value);
+        return Number.isFinite(number) ? number.toLocaleString() : "0";
+    }
+
+    function safeImageUrl(value, fallback = "/resources/frame1.png") {
+        const raw = String(value || "").trim();
+        if (raw.startsWith("/")) return escapeHTML(raw);
+        try {
+            const url = new URL(raw);
+            if (url.protocol === "http:" || url.protocol === "https:") return escapeHTML(url.href);
+        } catch (_) {}
+        return fallback;
+    }
+
     function statusChip(status) {
-        return `<span class="chip chip-${status}">${status}</span>`;
+        const cleanStatus = String(status || "unknown").toLowerCase().replace(/[^a-z-]/g, "");
+        return `<span class="chip chip-${cleanStatus || "unknown"}">${safeText(status || "unknown")}</span>`;
     }
 
     function customerName(user) {
         if (!user) return "—";
-        if (user.role === "studio")     return user.studio_name  || user.studio_email || "—";
-        if (user.role === "freelancer") return user.free_name    || user.free_email   || "—";
-        return user.full_name || user.email_address || "—";
+        if (user.role === "studio") return safeText(user.studio_name || user.studio_email);
+        if (user.role === "freelancer") return safeText(user.free_name || user.free_email);
+        return safeText(user.full_name || user.email_address);
     }
 
     function itemsSummary(items) {
         if (!items?.length) return "—";
-        return items.map(i => `${i.title} ×${i.quantity}`).join(", ");
+        return items.map(i => `${safeText(i.title)} x${safeText(i.quantity)}`).join(", ");
     }
 
     function getItemCategory(items) {
@@ -97,15 +128,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             tbody.innerHTML = activeOrders.map(o => `
-                <tr class="clickable" data-id="${o._id}">
-                    <td><strong>${o.orderId || o._id}</strong></td>
+                <tr class="clickable" data-id="${safeText(o._id)}">
+                    <td><strong>${safeText(o.orderId || o._id)}</strong></td>
                     <td>${customerName(o.userId)}</td>
                     <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${itemsSummary(o.items)}</td>
-                    <td>Rs.${o.total?.toLocaleString()}</td>
-                    <td>${o.paymentMethod?.toUpperCase()}</td>
+                    <td>Rs.${safeNumber(o.total)}</td>
+                    <td>${safeText(o.paymentMethod?.toUpperCase())}</td>
                     <td>${formatDate(o.createdAt)}</td>
                     <td>
-                        <button class="deliver-btn" data-id="${o._id}">Mark Delivered</button>
+                        <button class="deliver-btn" data-id="${safeText(o._id)}">Mark Delivered</button>
                     </td>
                 </tr>
             `).join("");
@@ -183,11 +214,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         tbody.innerHTML = filtered.map(o => `
             <tr>
-                <td><strong>${o.orderId || o._id}</strong></td>
+                <td><strong>${safeText(o.orderId || o._id)}</strong></td>
                 <td>${customerName(o.userId)}</td>
                 <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${itemsSummary(o.items)}</td>
-                <td>Rs.${o.total?.toLocaleString()}</td>
-                <td>${o.paymentMethod?.toUpperCase()}</td>
+                <td>Rs.${safeNumber(o.total)}</td>
+                <td>${safeText(o.paymentMethod?.toUpperCase())}</td>
                 <td>${statusChip(o.orderStatus)}</td>
                 <td>${formatDate(o.createdAt)}</td>
             </tr>
@@ -220,10 +251,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const phone = u.phone || u.studio_phone || u.free_phone || "—";
                 return `
                     <tr>
-                        <td>${name}</td>
-                        <td>${email}</td>
-                        <td><span class="chip chip-processing">${u.role}</span></td>
-                        <td>${phone}</td>
+                        <td>${safeText(name)}</td>
+                        <td>${safeText(email)}</td>
+                        <td>${statusChip(u.role)}</td>
+                        <td>${safeText(phone)}</td>
                         <td>${formatDate(u.createdAt)}</td>
                     </tr>
                 `;
@@ -257,10 +288,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             tbody.innerHTML = contacts.map(c => `
                 <tr>
-                    <td>${c.name}</td>
-                    <td>${c.email}</td>
-                    <td>${c.subject}</td>
-                    <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.message}</td>
+                    <td>${safeText(c.name)}</td>
+                    <td>${safeText(c.email)}</td>
+                    <td>${safeText(c.subject)}</td>
+                    <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${safeText(c.message)}</td>
                     <td>${formatDate(c.createdAt)}</td>
                 </tr>
             `).join("");
@@ -287,12 +318,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const itemsHTML = (order.items || []).map(i => `
             <div class="popup-item">
-                <img src="${i.img || '/resources/frame1.jpg'}" alt="${i.title}">
+                <img src="${safeImageUrl(i.img)}" alt="${safeText(i.title)}">
                 <div class="popup-item-info">
-                    <div class="popup-item-title">${i.title}</div>
-                    <div class="popup-item-qty">Qty: ${i.quantity}</div>
+                    <div class="popup-item-title">${safeText(i.title)}</div>
+                    <div class="popup-item-qty">Qty: ${safeText(i.quantity)}</div>
                 </div>
-                <div class="popup-item-price">Rs.${(i.price * i.quantity).toLocaleString()}</div>
+                <div class="popup-item-price">Rs.${safeNumber(Number(i.price) * Number(i.quantity))}</div>
             </div>
         `).join("");
 
@@ -305,7 +336,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </button>
                 </div>
                 <div class="popup-images">
-                    ${order.designImages.map(url => `<img src="${url}" alt="design">`).join("")}
+                    ${order.designImages.map(url => `<img src="${safeImageUrl(url)}" alt="design">`).join("")}
                 </div>
                </div>`
             : "";
@@ -313,17 +344,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         body.innerHTML = `
             <div class="popup-section">
                 <div class="popup-section-title">Order Info</div>
-                <div class="popup-row"><span>Order ID</span><span>${order.orderId || order._id}</span></div>
+                <div class="popup-row"><span>Order ID</span><span>${safeText(order.orderId || order._id)}</span></div>
                 <div class="popup-row"><span>Status</span><span>${statusChip(order.orderStatus)}</span></div>
-                <div class="popup-row"><span>Payment</span><span>${order.paymentMethod?.toUpperCase()} — ${order.paymentStatus}</span></div>
-                <div class="popup-row"><span>Total</span><span>Rs.${order.total?.toLocaleString()}</span></div>
+                <div class="popup-row"><span>Payment</span><span>${safeText(order.paymentMethod?.toUpperCase())} — ${safeText(order.paymentStatus)}</span></div>
+                <div class="popup-row"><span>Total</span><span>Rs.${safeNumber(order.total)}</span></div>
                 <div class="popup-row"><span>Date</span><span>${formatDate(order.createdAt)}</span></div>
             </div>
             <div class="popup-section">
                 <div class="popup-section-title">Customer</div>
                 <div class="popup-row"><span>Name</span><span>${customerName(order.userId)}</span></div>
-                <div class="popup-row"><span>Delivery</span><span>${addrStr}</span></div>
-                ${order.note ? `<div class="popup-row"><span>Note</span><span>${order.note}</span></div>` : ""}
+                <div class="popup-row"><span>Delivery</span><span>${safeText(addrStr)}</span></div>
+                ${order.note ? `<div class="popup-row"><span>Note</span><span>${safeText(order.note)}</span></div>` : ""}
             </div>
             <div class="popup-section">
                 <div class="popup-section-title">Items</div>

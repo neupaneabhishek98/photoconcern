@@ -18,7 +18,7 @@ function showToast(message, type = "success") {
     <div class="toast-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2">${icon}</svg>
     </div>
-    <span>${message}</span>
+    <span>${safeText(message)}</span>
   `;
 
   container.appendChild(toast);
@@ -32,6 +32,27 @@ function showToast(message, type = "success") {
 
 function parsePrice(priceText) {
   return Number(String(priceText).replace(/[^0-9]/g, "")) || 0;
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[char]));
+}
+
+function safeText(value, fallback = "") {
+  const text = String(value ?? "").trim();
+  return escapeHTML(text || fallback);
+}
+
+function safeImageUrl(value, fallback = "/resources/frame1.jpg") {
+  const url = String(value || fallback).trim();
+  if (!url || /^(javascript|data):/i.test(url)) return fallback;
+  return escapeHTML(url);
 }
 
 function setupQuickUpload() {
@@ -91,7 +112,10 @@ function setupQuickUpload() {
       if (file.type.startsWith("image/")) {
         const url = URL.createObjectURL(file);
         objectUrls.push(url);
-        tile.innerHTML = `<img src="${url}" alt="${file.name}">`;
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = file.name;
+        tile.appendChild(img);
       }
 
       const removeBtn = document.createElement("button");
@@ -464,24 +488,28 @@ const API = {
 function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
+  const title = safeText(product.title, "PhotoConcern product");
+  const desc = safeText(product.desc);
+  const price = safeText(product.price);
+  const img = safeImageUrl(product.img);
 
   card.innerHTML = `
   <div class="product-card-thumb">
-    <img src="${product.img}" alt="${product.title}" loading="lazy">
+    <img src="${img}" alt="${title}" loading="lazy">
   </div>
   <div class="product-inform">
-    <h3>${product.title}</h3>
-    <p class="desc-product">${product.desc}</p>
-    <p class="price-product">${product.price}</p>
+    <h3>${title}</h3>
+    <p class="desc-product">${desc}</p>
+    <p class="price-product">${price}</p>
   </div>
   <div class="card-actions">
     <button type="button" class="add-to-cart-btn"
-      data-title="${product.title}"
-      data-price="${product.price}"
-      data-img="${product.img}"
-      data-desc="${product.desc}">Buy Now</button>
+      data-title="${title}"
+      data-price="${price}"
+      data-img="${img}"
+      data-desc="${desc}">Buy Now</button>
     <button type="button" class="hot-learn-btn"
-      data-title="${product.title}">Learn More</button>
+      data-title="${title}">Learn More</button>
   </div>
 `;
 
@@ -491,25 +519,29 @@ function createProductCard(product) {
 function createFeaturedBanner(product, index) {
   const wrap = document.createElement("div");
   wrap.className = "hot-section";  // same class as Karizma Album — identical layout
+  const title = safeText(product.title, "PhotoConcern product");
+  const desc = safeText(product.desc);
+  const price = safeText(product.price);
+  const img = safeImageUrl(product.img);
   wrap.innerHTML = `
     <div class="hot-img-wrap">
-      <img src="${product.img}" alt="${product.title}" class="hot-img">
+      <img src="${img}" alt="${title}" class="hot-img">
       <div class="hot-overlay">
         <div class="hot-top">
           <div class="hot-badge">#${index + 1} Top Selling</div>
         </div>
         <div class="hot-content">
-          <h2 class="hot-title">${product.title}</h2>
-          <p class="hot-desc">${product.desc}</p>
-          <p class="hot-price">${product.price}</p>
+          <h2 class="hot-title">${title}</h2>
+          <p class="hot-desc">${desc}</p>
+          <p class="hot-price">${price}</p>
           <div class="hot-actions">
             <button type="button" class="add-to-cart-btn hot-cart-btn"
-              data-title="${product.title}"
-              data-price="${product.priceNum || product.price}"
-              data-img="${product.img}"
-              data-desc="${product.desc}">Buy Now</button>
+              data-title="${title}"
+              data-price="${safeText(product.priceNum || product.price)}"
+              data-img="${img}"
+              data-desc="${desc}">Buy Now</button>
             <button type="button" class="hot-learn-btn"
-              data-title="${product.title}">Learn More</button>
+              data-title="${title}">Learn More</button>
           </div>
         </div>
       </div>
@@ -547,10 +579,10 @@ function renderProducts() {
     featured.forEach((product, i) => {
       const layer = document.createElement("div");
       layer.className = `carousel-layer${i === 0 ? " active" : ""}`;
-      layer.dataset.title = product.title;
-      layer.dataset.price = product.price;
-      layer.dataset.desc  = product.desc;
-      layer.innerHTML = `<img src="${product.img}" alt="${product.title}" class="hero-main-image">`;
+      layer.dataset.title = String(product.title || "");
+      layer.dataset.price = String(product.price || "");
+      layer.dataset.desc  = String(product.desc || "");
+      layer.innerHTML = `<img src="${safeImageUrl(product.img)}" alt="${safeText(product.title, "Featured product")}" class="hero-main-image">`;
       slider.appendChild(layer);
     });
     if (typeof initHeroSlider === "function") initHeroSlider();

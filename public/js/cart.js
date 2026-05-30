@@ -3,8 +3,10 @@
 const BASE_URL = window.location.origin;
 
 function getImageUrl(img) {
-  if (img.startsWith("http")) return img;
-  return `${BASE_URL}/resources/${img}`;
+  const image = String(img || "").trim();
+  if (!image || /^(javascript|data):/i.test(image)) return `${BASE_URL}/resources/frame1.jpg`;
+  if (/^https?:\/\//i.test(image)) return image;
+  return `${BASE_URL}/resources/${encodeURIComponent(image)}`;
 }
 
 
@@ -29,7 +31,7 @@ function showToast(message, type = "success") {
     <div class="toast-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2">${icon}</svg>
     </div>
-    <span>${message}</span>
+    <span>${safeText(message)}</span>
   `;
 
   container.appendChild(toast);
@@ -57,6 +59,32 @@ function showPopup(message, type = "info") {
 
 function closePopup() {
   document.getElementById("popup")?.classList.remove("show");
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[char]));
+}
+
+function safeText(value, fallback = "") {
+  const text = String(value ?? "").trim();
+  return escapeHTML(text || fallback);
+}
+
+function safeImageUrl(value, fallback = "/resources/frame1.jpg") {
+  const url = String(value || fallback).trim();
+  if (!url || /^(javascript|data):/i.test(url)) return fallback;
+  return escapeHTML(url);
+}
+
+function money(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount) ? amount.toLocaleString() : "0";
 }
 
 // ============================================================
@@ -192,9 +220,9 @@ function renderSummary() {
 
     itemsContainer.insertAdjacentHTML("beforeend", `
       <div class="checkout-item">
-        <img src="${item.img}">
-        <h4>${item.title}</h4>
-        <p class="checkout-line-price">रू.${total.toLocaleString()}</p>
+        <img src="${safeImageUrl(item.img)}" alt="${safeText(item.title, "Cart item")}">
+        <h4>${safeText(item.title, "Cart item")}</h4>
+        <p class="checkout-line-price">Rs.${money(total)}</p>
       </div>
     `);
   });
@@ -257,11 +285,11 @@ function renderCart() {
 <label class="item-check">
 <input type="checkbox" class="item-checkbox" ${isSelected ? "checked" : ""}>
 </label>
-<div class="img-product"><img src="${item.img}" alt="${item.title}"></div>
+<div class="img-product"><img src="${safeImageUrl(item.img)}" alt="${safeText(item.title, "Cart item")}"></div>
 <div class="details">
-<h3>${item.title}</h3>
+<h3>${safeText(item.title, "Cart item")}</h3>
 <div class="details-price-row">
-<p class="cart-price-each">रू.${item.price.toLocaleString()} /piece</p>
+<p class="cart-price-each">Rs.${money(item.price)} /piece</p>
 <div class="details-row-actions">
 <div class="quantity">
 <button type="button" class="decrease">-</button>
@@ -275,7 +303,7 @@ function renderCart() {
 </div>
 <div class="cart-item-side">
 <h3 class="cart-line-total">
-  ${item.quantity} × रू.${item.price.toLocaleString()} = रू.${(item.price * item.quantity).toLocaleString()}
+  ${money(item.quantity)} x Rs.${money(item.price)} = Rs.${money(item.price * item.quantity)}
 </h3></div>
 </div>
     `;
@@ -439,12 +467,12 @@ function buildCheckoutPopup() {
 
   const orderRowsHTML = selectedItems.map(i => `
     <div class="co-item">
-      <img src="${i.img || ''}" alt="${i.title}">
+      <img src="${safeImageUrl(i.img, "")}" alt="${safeText(i.title, "Cart item")}">
       <div class="co-item-info">
-        <span class="co-item-title">${i.title}</span>
-        <span class="co-item-qty">× ${i.quantity}</span>
+        <span class="co-item-title">${safeText(i.title, "Cart item")}</span>
+        <span class="co-item-qty">x ${money(i.quantity)}</span>
       </div>
-      <span class="co-item-price">Rs.${(i.price * i.quantity).toLocaleString()}</span>
+      <span class="co-item-price">Rs.${money(i.price * i.quantity)}</span>
     </div>
   `).join("");
 
@@ -473,9 +501,9 @@ function buildCheckoutPopup() {
           <h3 class="co-section-title">Order Summary</h3>
           <div class="co-items">${orderRowsHTML}</div>
           <div class="co-totals">
-            <div class="co-total-row"><span>Subtotal</span><span>Rs.${subtotal.toLocaleString()}</span></div>
-            <div class="co-total-row"><span>Tax (13%)</span><span>Rs.${tax.toLocaleString()}</span></div>
-            <div class="co-total-row co-total-final"><span>Total</span><span>Rs.${total.toLocaleString()}</span></div>
+            <div class="co-total-row"><span>Subtotal</span><span>Rs.${money(subtotal)}</span></div>
+            <div class="co-total-row"><span>Tax (13%)</span><span>Rs.${money(tax)}</span></div>
+            <div class="co-total-row co-total-final"><span>Total</span><span>Rs.${money(total)}</span></div>
           </div>
         </section>
 
@@ -612,14 +640,14 @@ async function loadCheckoutAddress(overlay) {
 
   // build province options
   const provinceOptions = addressData.map(p =>
-    `<option value="${p.name}" ${addr.province === p.name ? "selected" : ""}>${p.name}</option>`
+    `<option value="${safeText(p.name)}" ${addr.province === p.name ? "selected" : ""}>${safeText(p.name)}</option>`
   ).join("");
 
   // build district options for saved province
   const savedProvince = addressData.find(p => p.name === addr.province);
   const districtOptions = savedProvince
     ? savedProvince.districtList.map(d =>
-        `<option value="${d.name}" ${addr.district === d.name ? "selected" : ""}>${d.name}</option>`
+        `<option value="${safeText(d.name)}" ${addr.district === d.name ? "selected" : ""}>${safeText(d.name)}</option>`
       ).join("")
     : "";
 
@@ -627,7 +655,7 @@ async function loadCheckoutAddress(overlay) {
   const savedDistrict = savedProvince?.districtList.find(d => d.name === addr.district);
   const municipalityOptions = savedDistrict
     ? savedDistrict.municipalityList.map(m =>
-        `<option value="${m.name}" ${addr.municipality === m.name ? "selected" : ""}>${m.name}</option>`
+        `<option value="${safeText(m.name)}" ${addr.municipality === m.name ? "selected" : ""}>${safeText(m.name)}</option>`
       ).join("")
     : "";
 
@@ -655,11 +683,11 @@ async function loadCheckoutAddress(overlay) {
     </div>
     <div class="co-addr-row">
       <span class="co-addr-label">Ward No.</span>
-      <div class="co-addr-field" data-key="ward" contenteditable="true" spellcheck="false">${addr.ward || ""}</div>
+      <div class="co-addr-field" data-key="ward" contenteditable="true" spellcheck="false">${safeText(addr.ward)}</div>
     </div>
     <div class="co-addr-row">
       <span class="co-addr-label">Address Details</span>
-      <div class="co-addr-field" data-key="addressDetails" contenteditable="true" spellcheck="false">${addr.addressDetails || ""}</div>
+      <div class="co-addr-field" data-key="addressDetails" contenteditable="true" spellcheck="false">${safeText(addr.addressDetails)}</div>
     </div>
   `;
 
@@ -673,7 +701,7 @@ async function loadCheckoutAddress(overlay) {
     districtEl.innerHTML     = `<option value="">Select District</option>`;
     municipalityEl.innerHTML = `<option value="">Select Municipality</option>`;
     province?.districtList.forEach(d => {
-      districtEl.innerHTML += `<option value="${d.name}">${d.name}</option>`;
+      districtEl.innerHTML += `<option value="${safeText(d.name)}">${safeText(d.name)}</option>`;
     });
   });
 
@@ -683,7 +711,7 @@ async function loadCheckoutAddress(overlay) {
     const district = province?.districtList.find(d => d.name === districtEl.value);
     municipalityEl.innerHTML = `<option value="">Select Municipality</option>`;
     district?.municipalityList.forEach(m => {
-      municipalityEl.innerHTML += `<option value="${m.name}">${m.name}</option>`;
+      municipalityEl.innerHTML += `<option value="${safeText(m.name)}">${safeText(m.name)}</option>`;
     });
   });
 }

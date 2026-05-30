@@ -114,7 +114,10 @@ router.post("/auth/google", async (req, res) => {
             });
         }
 
-        // Set session
+        // Regenerate the session on login to prevent session fixation.
+        await new Promise((resolve, reject) => {
+            req.session.regenerate((err) => (err ? reject(err) : resolve()));
+        });
         req.session.userId = user._id;
 
         return res.json({

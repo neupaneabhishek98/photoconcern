@@ -13,9 +13,15 @@ function isValidPan(pan) {
     return d.length === 9;
 }
 
-router.post("/register", async (req, res) => {
-    console.log("Register API hit:", req.body.role);
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
+}
 
+function isValidPassword(password) {
+    return String(password || "").length >= 8;
+}
+
+router.post("/register", async (req, res) => {
     try {
         const role = (req.body.role || "").toLowerCase();
         let finalData = { role };
@@ -26,6 +32,12 @@ router.post("/register", async (req, res) => {
 
             if (!email_address || !password)
                 return res.status(400).json({ message: "Email and password are required" });
+
+            if (!isValidEmail(email_address))
+                return res.status(400).json({ message: "Enter a valid email address" });
+
+            if (!isValidPassword(password))
+                return res.status(400).json({ message: "Password must be at least 8 characters" });
 
             if (phone && !isValidPhone(phone))
                 return res.status(400).json({ message: "Phone number must be 8 or 10 digits" });
@@ -41,6 +53,12 @@ router.post("/register", async (req, res) => {
 
             if (!studio_email || !studio_password)
                 return res.status(400).json({ message: "Studio email and password are required" });
+
+            if (!isValidEmail(studio_email))
+                return res.status(400).json({ message: "Enter a valid studio email address" });
+
+            if (!isValidPassword(studio_password))
+                return res.status(400).json({ message: "Password must be at least 8 characters" });
 
             if (studio_phone && !isValidPhone(studio_phone))
                 return res.status(400).json({ message: "Phone number must be 8 or 10 digits" });
@@ -62,6 +80,12 @@ router.post("/register", async (req, res) => {
 
             if (!free_email || !free_password)
                 return res.status(400).json({ message: "Email and password are required" });
+
+            if (!isValidEmail(free_email))
+                return res.status(400).json({ message: "Enter a valid email address" });
+
+            if (!isValidPassword(free_password))
+                return res.status(400).json({ message: "Password must be at least 8 characters" });
 
             if (free_phone && !isValidPhone(free_phone))
                 return res.status(400).json({ message: "Phone number must be 8 or 10 digits" });

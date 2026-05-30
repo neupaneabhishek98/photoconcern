@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let orderCompleted  = false;
     let cancelHandled   = false; // prevents double cancel (button + pagehide)
     let selectedFiles   = [];
+    let previewUrls     = [];
 
 
 /* ── cancel helper ── */
@@ -104,15 +105,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPreviews() {
         photoPreviewGrid.innerHTML = "";
+        previewUrls.forEach((url) => URL.revokeObjectURL(url));
+        previewUrls = [];
 
         selectedFiles.forEach((file, idx) => {
             const url  = URL.createObjectURL(file);
+            previewUrls.push(url);
             const wrap = document.createElement("div");
             wrap.className = "preview-thumb";
-            wrap.innerHTML = `
-                <img src="${url}" alt="${file.name}">
-                <button type="button" class="preview-remove" data-idx="${idx}" aria-label="Remove">✕</button>
-            `;
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = file.name;
+            const remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "preview-remove";
+            remove.dataset.idx = String(idx);
+            remove.setAttribute("aria-label", `Remove ${file.name}`);
+            remove.textContent = "x";
+            wrap.append(img, remove);
             photoPreviewGrid.appendChild(wrap);
         });
 
