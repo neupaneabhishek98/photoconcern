@@ -27,8 +27,8 @@
   --shadow-md:          0 6px 20px rgba(0,0,0,0.10);
   --shadow-lg:          0 12px 36px rgba(0,0,0,0.14);
   --shadow-primary:     0 4px 14px rgba(201,146,10,0.28);
-  --pc-page-gutter: clamp(18px, 1.65vw, 32px);
-  --pc-shell-max: 1840px;
+  --pc-page-gutter: clamp(18px, 2vw, 38px);
+  --pc-shell-max: 1920px;
 }
 
 body.theme-dark {
@@ -138,7 +138,6 @@ body.theme-dark .nav-logo {
 }
 .nav-contact-btn:hover {
   color: #ffffff;
-  transform: translateY(-1px);
 }
 .nav-contact-btn .icons-svg-nav {
   width: 22px !important;
@@ -328,7 +327,7 @@ body.theme-dark .quickies .logout-btn { color: #e70000 !important; }
 body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !important; }
 
 @media (min-width: 1024px) {
-  .navbar { padding: 18px 28px !important; }
+  .navbar { padding: 18px var(--pc-page-gutter) !important; }
   .nav-bar-right { gap: 16px !important; }
 }
 
@@ -392,7 +391,7 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
   border-radius: 4px !important;
   text-decoration: none !important;
   box-shadow: none !important;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
+  transition: box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
   white-space: nowrap !important;
   border: 1.5px solid #ffffff !important;
 }
@@ -400,11 +399,11 @@ body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !im
   background: #12b886 !important;
   border-color: #12b886 !important;
   color: #ffffff !important;
-  transform: translateY(-1px) !important;
   box-shadow: 0 0 0 4px rgba(18,184,134,0.16), 0 12px 28px rgba(18,184,134,0.24) !important;
 }
 .nav-login-btn:active {
-  transform: scale(0.97) !important;
+  background: #0fa678 !important;
+  border-color: #0fa678 !important;
 }
 body.theme-dark .nav-login-btn {
   background: transparent !important;
@@ -700,16 +699,18 @@ body.theme-dark .navbar {
 .hero-primary-btn,
 .quick-upload-primary,
 .hot-cart-btn,
+.hot-order-btn,
 .add-to-cart-btn,
 .card-actions .add-to-cart-btn,
 .product-card-actions .add-to-cart-btn,
 .move-cart-btn,
 .auth-btn,
+.creators-send.is-ready,
 .passport-generate {
   background: #1a1a1a !important;
   background-image: none !important;
   color: #ffffff !important;
-  border: 1.5px solid #1a1a1a !important;
+  border: 1.5px solid #ffffff !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
   font-weight: 700 !important;
   font-family: var(--font-base) !important;
@@ -721,23 +722,27 @@ body.theme-dark .navbar {
 .hero-primary-btn:hover,
 .quick-upload-primary:hover,
 .hot-cart-btn:hover,
+.hot-order-btn:hover,
 .add-to-cart-btn:hover,
 .card-actions .add-to-cart-btn:hover,
 .product-card-actions .add-to-cart-btn:hover,
 .move-cart-btn:hover,
 .auth-btn:hover,
+.creators-send.is-ready:hover,
 .passport-generate:hover {
   background: #000000 !important;
-  border-color: #000000 !important;
+  border-color: #ffffff !important;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.32) !important;
   opacity: 1 !important;
 }
 
 /* SECONDARY group — outlined alternatives */
 .hero-secondary-btn,
+.btn-secondary,
 .quick-upload-secondary,
 .hot-buy-btn,
 .hot-learn-btn,
+.creators-learn,
 .buy-now-btn,
 .card-actions .buy-now-btn,
 .product-card-actions .buy-now-btn,
@@ -753,14 +758,16 @@ body.theme-dark .navbar {
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease !important;
 }
 .hero-secondary-btn:hover,
+.btn-secondary:hover,
 .quick-upload-secondary:hover,
 .hot-buy-btn:hover,
 .hot-learn-btn:hover,
+.creators-learn:hover,
 .buy-now-btn:hover,
 .card-actions .buy-now-btn:hover,
 .product-card-actions .buy-now-btn:hover,
 .remove-btn:hover {
-  background: #f5f5f5 !important;
+  background: #ffffff !important;
   color: #000 !important;
   border-color: #000 !important;
   opacity: 1 !important;
@@ -772,20 +779,24 @@ body.theme-dark .btn-alt,
 body.theme-dark .hero-primary-btn,
 body.theme-dark .quick-upload-primary,
 body.theme-dark .hot-cart-btn,
+body.theme-dark .hot-order-btn,
 body.theme-dark .add-to-cart-btn,
 body.theme-dark .card-actions .add-to-cart-btn,
 body.theme-dark .product-card-actions .add-to-cart-btn,
 body.theme-dark .move-cart-btn,
 body.theme-dark .auth-btn,
+body.theme-dark .creators-send.is-ready,
 body.theme-dark .passport-generate {
   background: #ffffff !important;
   color: #1a1a1a !important;
   border-color: #ffffff !important;
 }
 body.theme-dark .hero-secondary-btn,
+body.theme-dark .btn-secondary,
 body.theme-dark .quick-upload-secondary,
 body.theme-dark .hot-buy-btn,
 body.theme-dark .hot-learn-btn,
+body.theme-dark .creators-learn,
 body.theme-dark .buy-now-btn,
 body.theme-dark .card-actions .buy-now-btn,
 body.theme-dark .product-card-actions .buy-now-btn,
@@ -807,6 +818,10 @@ button,
 .quick-upload-secondary,
 .hot-cart-btn,
 .hot-buy-btn,
+.hot-order-btn,
+.hot-learn-btn,
+.creators-learn,
+.creators-send,
 .add-to-cart-btn,
 .buy-now-btn,
 .move-cart-btn,
@@ -937,12 +952,13 @@ button,
   font-family: var(--font-base);
 }
 .site-footer-inner {
-  max-width: 1240px;
+  width: calc(100% - (var(--pc-page-gutter) * 2));
+  max-width: var(--pc-shell-max);
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(140px, 0.7fr) minmax(260px, 1fr) minmax(190px, 1fr);
   gap: 34px;
-  padding: 48px 40px 36px;
+  padding: 48px 0 36px;
   align-items: center;
 }
 
@@ -1091,19 +1107,21 @@ button,
 .site-footer-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.18);
-  max-width: 1060px;
+  width: calc(100% - (var(--pc-page-gutter) * 2));
+  max-width: var(--pc-shell-max);
   margin: 0 auto;
 }
 
 .site-footer-copy {
-  max-width: 1240px;
+  width: calc(100% - (var(--pc-page-gutter) * 2));
+  max-width: var(--pc-shell-max);
   margin: 0 auto;
   text-align: center;
   font-size: 0.88rem;
   font-family: var(--font-base);
   letter-spacing: 0.025em;
   color: #ffffff;
-  padding: 22px 24px 32px;
+  padding: 22px 0 32px;
 }
 .site-footer-credit {
   color: #ffffff;

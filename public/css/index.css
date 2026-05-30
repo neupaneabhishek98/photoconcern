@@ -8,8 +8,8 @@ body {
 }
 
 :root {
-  --pc-page-gutter: clamp(18px, 1.65vw, 32px);
-  --pc-shell-max: 1840px;
+  --pc-page-gutter: clamp(18px, 2vw, 38px);
+  --pc-shell-max: 1920px;
 }
 
 /* Navbar */
@@ -1028,8 +1028,8 @@ body.theme-dark .category:hover .svg-category {
     gap: 16px;
   }
   .main-content {
-    max-width: 1240px;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
   }
 
   .hero-banner {
@@ -1442,6 +1442,8 @@ body.theme-dark .quickies a:last-child {
 .hot-badge {
   position: static;
   display: inline-flex;
+  align-items: center;
+  gap: 7px;
   align-self: flex-start;
   background: linear-gradient(135deg, #f0b429, #c9920a);
   color: #fff;
@@ -1453,6 +1455,9 @@ body.theme-dark .quickies a:last-child {
   border-radius: 999px;
   box-shadow: 0 4px 12px rgba(201,146,10,0.45);
   white-space: nowrap;
+}
+.hot-badge i {
+  font-size: 0.82rem;
 }
 
 .hot-content {
@@ -1525,9 +1530,9 @@ body.theme-dark .quickies a:last-child {
   font-family: inherit;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(0,0,0,0.2);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
-.hot-learn-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.hot-learn-btn:hover { opacity: 1; }
 
 .hot-order-btn {
   height: 44px;
@@ -1541,11 +1546,10 @@ body.theme-dark .quickies a:last-child {
   font-family: inherit;
   cursor: pointer;
   backdrop-filter: blur(4px);
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 .hot-order-btn:hover {
   background: rgba(255,255,255,0.9);
-  transform: translateY(-1px);
 }
 
 /* ============================================================
@@ -1645,11 +1649,11 @@ body.theme-dark .quickies a:last-child {
 }
 
 .quick-upload-secondary.is-ready {
-  background: #16a34a !important;
+  background: #1a1a1a !important;
   color: #ffffff !important;
-  border-color: #16a34a !important;
+  border-color: #ffffff !important;
   cursor: pointer;
-  box-shadow: 0 12px 26px rgba(22, 163, 74, 0.26) !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22) !important;
 }
 
 .quick-upload-secondary:disabled {
@@ -1807,9 +1811,9 @@ body.theme-dark .quick-upload-secondary {
 }
 
 body.theme-dark .quick-upload-secondary.is-ready {
-  background: #16a34a !important;
-  color: #ffffff !important;
-  border-color: #16a34a !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  border-color: #ffffff !important;
 }
 
 /* ============================================================
@@ -1838,19 +1842,13 @@ body.theme-dark .quick-upload-secondary.is-ready {
   gap: 12px;
 }
 
-.creators-kicker {
+.creators-logo {
   grid-column: 1 / -1;
-  width: fit-content;
-  font-size: clamp(1.55rem, 3.2vw, 2.65rem);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  line-height: 1;
-}
-
-.creators-kicker strong {
-  color: #e70000;
-  font-weight: 800;
+  display: block;
+  width: min(100%, 460px);
+  max-height: 92px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .creators-copy h2 {
@@ -1878,13 +1876,12 @@ body.theme-dark .quick-upload-secondary.is-ready {
   font-family: inherit;
   font-weight: 800;
   cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
 .creators-learn:hover {
   background: rgba(255,255,255,0.1);
   border-color: rgba(255,255,255,0.7);
-  transform: translateY(-1px);
 }
 
 .creators-learn-icon {
@@ -2062,7 +2059,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
   font-family: inherit;
   font-weight: 800;
   cursor: not-allowed;
-  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
 .creators-send svg {
@@ -2077,7 +2074,6 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-send.is-ready:hover {
-  transform: translateY(-2px);
   background: #129e91;
 }
 

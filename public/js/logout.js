@@ -96,16 +96,15 @@ async function logout() {
             text-decoration: none;
             white-space: nowrap;
             border: 1.5px solid #fff;
-            transition: box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+            transition: box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
             box-shadow: none;
         }
         .nav-login-btn:hover {
             background: #12b886;
             border-color: #12b886;
             box-shadow: 0 0 0 4px rgba(18,184,134,0.16), 0 12px 28px rgba(18,184,134,0.24);
-            transform: translateY(-1px);
         }
-        .nav-login-btn:active { transform: scale(0.97); }
+        .nav-login-btn:active { background: #0fa678; border-color: #0fa678; }
         body.theme-dark .nav-login-btn { background: transparent; color: #fff !important; border-color: #fff; }
         body.theme-dark .nav-login-btn:hover { background: #12b886; border-color: #12b886; }
         @media (min-width: 768px) {
