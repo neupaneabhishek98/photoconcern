@@ -48,10 +48,17 @@
   margin-bottom: 32px;
 }
 .contact-card__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin: 0 0 8px;
   font-size: 1.4rem;
   font-weight: 800;
   color: #0a0a0a;
+}
+.contact-card__title i {
+  color: var(--pc-primary, #d00106);
+  font-size: 1.05em;
 }
 .contact-card__sub {
   margin: 0 0 24px;
@@ -125,12 +132,18 @@
   display: block;
 }
 .contact-map__cta {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   margin-top: 20px;
   height: 46px;
   padding: 0 22px;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
   text-decoration: none;
+}
+.contact-map__cta i {
+  font-size: 1rem;
 }
 
 /* Dark mode */

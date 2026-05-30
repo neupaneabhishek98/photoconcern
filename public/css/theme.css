@@ -101,7 +101,8 @@ body.theme-dark .nav-logo {
   padding: 0;
   border-radius: 0;
 }
-.nav-logo-main {
+.nav-logo-main,
+.nav-logo-alt {
   position: absolute;
   inset: 0 auto auto 0;
   opacity: 0;
@@ -113,7 +114,9 @@ body.theme-dark .nav-logo {
   transform: scale(1.02);
 }
 .photoconcern-nav:hover .nav-logo-main,
-.photoconcern-nav:focus-visible .nav-logo-main {
+.photoconcern-nav:focus-visible .nav-logo-main,
+.photoconcern-nav:hover .nav-logo-alt,
+.photoconcern-nav:focus-visible .nav-logo-alt {
   opacity: 1;
   transform: scale(1);
 }
@@ -950,6 +953,7 @@ button,
 }
 .site-footer-brand a {
   display: inline-flex;
+  position: relative;
   background: transparent;
   padding: 0;
   border-radius: 0;
@@ -960,6 +964,23 @@ button,
   max-width: 220px;
   object-fit: contain;
   display: block;
+  transition: opacity 0.34s ease-in-out, transform 0.34s ease-in-out;
+}
+.site-footer-logo-alt {
+  position: absolute;
+  inset: 0 auto auto 0;
+  opacity: 0;
+  transform: scale(0.98);
+}
+.site-footer-brand a:hover .site-footer-logo-white,
+.site-footer-brand a:focus-visible .site-footer-logo-white {
+  opacity: 0;
+  transform: scale(1.02);
+}
+.site-footer-brand a:hover .site-footer-logo-alt,
+.site-footer-brand a:focus-visible .site-footer-logo-alt {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .site-footer-socials {
@@ -1049,11 +1070,17 @@ button,
   min-height: 82px;
   color: #fff;
 }
-.site-footer-social-tile i { font-size: 1.35rem; }
+.site-footer-social-tile i {
+  font-size: 1.35rem;
+  transition: transform 0.22s ease;
+}
 .site-footer-social-tile:hover {
-  transform: translateY(-3px);
+  transform: none;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
   filter: brightness(1.08);
+}
+.site-footer-social-tile:hover i {
+  transform: scale(1.16);
 }
 .site-footer-social-tile--fb { background: #1877F2; }
 .site-footer-social-tile--ig {
