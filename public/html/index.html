@@ -77,7 +77,7 @@
         <h2 id="creatorsTitle">Send your original photographs</h2>
         <p>Watermark your picture and send it to us. If selected, we will get back to you.</p>
         <ol class="creators-steps" aria-label="How to submit your photograph">
-          <li><span>1</span>Log in to your account.</li>
+          <li><span>1</span><a href="/login" class="creators-login-link">Log in</a> to your account.</li>
           <li><span>2</span>Drag or browse to upload your picture.</li>
           <li><span>3</span>Confirm ownership and send the photograph.</li>
         </ol>
@@ -95,14 +95,14 @@
               <circle cx="8" cy="9" r="1.5"/>
             </svg>
           </div>
-          <strong>Upload photographs</strong>
+          <strong id="creatorsUploadTitle">Upload photographs</strong>
           <span id="creatorsCount">Drag and drop your Photograph(s) here, or <button type="button" class="creators-browse">Browse</button> files in your computer.</span>
           <div class="creators-preview" id="creatorsPreview" aria-live="polite"></div>
         </div>
 
         <label class="creators-owner" id="creatorsOwnerLabel">
           <input id="creatorsOwner" name="ownerConfirmed" type="checkbox" disabled>
-          <span>I confirm that I own the rights to this photograph and accept responsibility for any ownership dispute.</span>
+          <span id="creatorsOwnerText">I confirm that I own the rights to this photograph and accept responsibility for any ownership dispute.</span>
         </label>
 
         <button type="submit" class="creators-send" id="creatorsSend" disabled>

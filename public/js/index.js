@@ -47,9 +47,21 @@ function setupQuickUpload() {
   let objectUrls = [];
   const MIN_PHOTOS = 120;
   const MAX_PHOTOS = 150;
+  let isStartingOrder = false;
 
   function openPicker() {
     input.click();
+  }
+
+  function pulseText(el) {
+    if (!el) return;
+    el.classList.remove("pc-text-attention");
+    void el.offsetWidth;
+    el.classList.add("pc-text-attention");
+    window.clearTimeout(el._pcAttentionTimer);
+    el._pcAttentionTimer = window.setTimeout(() => {
+      el.classList.remove("pc-text-attention");
+    }, 1200);
   }
 
   function clearObjectUrls() {
@@ -101,8 +113,10 @@ function setupQuickUpload() {
   }
 
   function updateContinueButton(isStarting = false) {
+    isStartingOrder = isStarting;
     const ready = files.length >= MIN_PHOTOS;
-    continueBtn.disabled = !ready || isStarting;
+    continueBtn.disabled = isStarting;
+    continueBtn.setAttribute("aria-disabled", String(!ready || isStarting));
     continueBtn.classList.toggle("is-ready", ready && !isStarting);
     continueBtn.innerHTML = isStarting
       ? "Starting..."
@@ -151,8 +165,15 @@ function setupQuickUpload() {
     addFiles(event.dataTransfer.files);
   });
 
+  continueBtn.addEventListener("mouseenter", () => {
+    if (!isStartingOrder && files.length < MIN_PHOTOS) pulseText(meta);
+  });
+
   continueBtn.addEventListener("click", async () => {
-    if (files.length < MIN_PHOTOS) return;
+    if (files.length < MIN_PHOTOS) {
+      pulseText(meta);
+      return;
+    }
     updateContinueButton(true);
 
     try {
@@ -190,13 +211,16 @@ function setupCreatorsForm() {
   const input = document.getElementById("creatorsInput");
   const preview = document.getElementById("creatorsPreview");
   const count = document.getElementById("creatorsCount");
+  const uploadTitle = document.getElementById("creatorsUploadTitle");
   const owner = document.getElementById("creatorsOwner");
   const ownerLabel = document.getElementById("creatorsOwnerLabel");
+  const ownerText = document.getElementById("creatorsOwnerText");
   const send = document.getElementById("creatorsSend");
   if (!form || !dropzone || !input || !preview || !count || !owner || !send) return;
 
   let files = [];
   let objectUrls = [];
+  let isSending = false;
   const MAX_FILES = 30;
 
   function clearObjectUrls() {
@@ -204,13 +228,37 @@ function setupCreatorsForm() {
     objectUrls = [];
   }
 
+  function pulseText(el) {
+    if (!el) return;
+    el.classList.remove("pc-text-attention");
+    void el.offsetWidth;
+    el.classList.add("pc-text-attention");
+    window.clearTimeout(el._pcAttentionTimer);
+    el._pcAttentionTimer = window.setTimeout(() => {
+      el.classList.remove("pc-text-attention");
+    }, 1200);
+  }
+
+  function showCreatorRequirements() {
+    const hasPhotos = files.length > 0;
+    if (!hasPhotos) {
+      pulseText(uploadTitle);
+      pulseText(count);
+      pulseText(ownerText);
+      return;
+    }
+    if (!owner.checked) pulseText(ownerText);
+  }
+
   function updateState() {
     const hasPhotos = files.length > 0;
     owner.disabled = !hasPhotos;
     ownerLabel?.classList.toggle("is-enabled", hasPhotos);
     if (!hasPhotos) owner.checked = false;
-    send.disabled = !(hasPhotos && owner.checked);
-    send.classList.toggle("is-ready", !send.disabled);
+    const ready = hasPhotos && owner.checked;
+    send.disabled = isSending;
+    send.setAttribute("aria-disabled", String(!ready || isSending));
+    send.classList.toggle("is-ready", ready && !isSending);
     if (hasPhotos) {
       count.textContent = `${files.length} photograph${files.length === 1 ? "" : "s"} ready`;
     } else {
@@ -284,13 +332,22 @@ function setupCreatorsForm() {
     addFiles(event.dataTransfer.files);
   });
   owner.addEventListener("change", updateState);
+  send.addEventListener("mouseenter", () => {
+    if (!send.classList.contains("is-ready")) showCreatorRequirements();
+  });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (send.disabled) return;
+    const ready = files.length > 0 && owner.checked;
+    if (!ready || isSending) {
+      showCreatorRequirements();
+      return;
+    }
 
+    isSending = true;
     send.disabled = true;
     send.classList.remove("is-ready");
+    send.setAttribute("aria-disabled", "true");
     send.querySelector("span").textContent = "Sending...";
 
     const formData = new FormData();
@@ -315,6 +372,8 @@ function setupCreatorsForm() {
       showToast(err.message || "Could not send your submission.", "error");
       updateState();
     } finally {
+      isSending = false;
+      updateState();
       send.querySelector("span").textContent = "Send submission";
     }
   });

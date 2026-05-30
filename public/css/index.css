@@ -1583,6 +1583,8 @@ body.theme-dark .quickies a:last-child {
   flex-direction: column;
   justify-content: center;
   gap: 12px;
+  text-align: justify;
+  text-wrap: pretty;
 }
 
 .quick-upload-kicker {
@@ -1644,16 +1646,23 @@ body.theme-dark .quickies a:last-child {
   border: 1px solid rgba(2, 16, 36, 0.12) !important;
   background: #e5e7eb !important;
   color: #8a94a6 !important;
-  cursor: not-allowed;
+  cursor: pointer;
   box-shadow: none !important;
 }
 
 .quick-upload-secondary.is-ready {
-  background: #1a1a1a !important;
+  background: #16a34a !important;
   color: #ffffff !important;
-  border-color: #ffffff !important;
+  border-color: #16a34a !important;
   cursor: pointer;
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: none !important;
+}
+
+.quick-upload-secondary.is-ready:hover {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
+  box-shadow: none !important;
 }
 
 .quick-upload-secondary:disabled {
@@ -1679,6 +1688,23 @@ body.theme-dark .quickies a:last-child {
 .quick-upload-meta {
   font-size: 0.84rem;
   color: #7a8494 !important;
+  --pc-attention-base: #7a8494;
+}
+
+.pc-text-attention {
+  color: transparent !important;
+  background-image: linear-gradient(90deg, #e70000 0 50%, var(--pc-attention-base, #ffffff) 50% 100%);
+  background-size: 220% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: pcTextSweep 1.05s ease-in-out;
+}
+
+@keyframes pcTextSweep {
+  0% { background-position: 100% 0; }
+  52% { background-position: 0 0; }
+  100% { background-position: 100% 0; }
 }
 
 .quick-upload-dropzone {
@@ -1811,9 +1837,9 @@ body.theme-dark .quick-upload-secondary {
 }
 
 body.theme-dark .quick-upload-secondary.is-ready {
-  background: #ffffff !important;
-  color: #1a1a1a !important;
-  border-color: #ffffff !important;
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
 }
 
 /* ============================================================
@@ -1826,6 +1852,9 @@ body.theme-dark .quick-upload-secondary.is-ready {
   margin: 0 auto 54px;
   display: grid;
   grid-template-columns: minmax(260px, 40fr) minmax(320px, 60fr);
+  grid-template-areas:
+    "brand cta"
+    "copy form";
   gap: 22px;
   padding: 28px;
   border-radius: 18px;
@@ -1836,29 +1865,32 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-copy {
+  grid-area: copy;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 12px;
+  min-height: 410px;
+  text-wrap: pretty;
 }
 
 .creators-brand-row {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(220px, 0.6fr);
-  gap: 22px;
-  align-items: end;
+  display: contents;
 }
 
 .creators-logo {
+  grid-area: brand;
+  align-self: start;
   display: block;
   width: 100%;
-  max-height: 132px;
+  max-height: 128px;
   object-fit: contain;
   object-position: left center;
 }
 
 .creators-cta {
+  grid-area: cta;
+  align-self: start;
   justify-self: end;
   max-width: 360px;
   margin: 0;
@@ -1881,6 +1913,19 @@ body.theme-dark .quick-upload-secondary.is-ready {
   color: rgba(255,255,255,0.74);
   line-height: 1.6;
   max-width: 440px;
+  text-align: justify;
+}
+
+.creators-login-link {
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.18s ease;
+}
+
+.creators-login-link:hover {
+  color: #e70000;
 }
 
 .creators-steps {
@@ -1892,12 +1937,28 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-steps li {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
   color: rgba(255,255,255,0.86);
   font-size: 0.92rem;
   line-height: 1.35;
+}
+
+.creators-steps li:nth-child(2)::after {
+  content: "\2192";
+  display: inline-flex;
+  margin-left: 4px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  animation: creatorsStepArrow 1.1s ease-in-out infinite;
+}
+
+@keyframes creatorsStepArrow {
+  0%, 100% { transform: translateX(0); opacity: 0.72; }
+  50% { transform: translateX(5px); opacity: 1; }
 }
 
 .creators-steps span {
@@ -1920,6 +1981,8 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-form {
+  grid-area: form;
+  align-self: start;
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
@@ -1971,12 +2034,15 @@ body.theme-dark .quick-upload-secondary.is-ready {
 .creators-upload strong {
   font-size: 1.05rem;
   color: #ffffff;
+  --pc-attention-base: #ffffff;
 }
 
 .creators-upload span {
   color: rgba(255,255,255,0.68);
   font-size: 0.88rem;
   max-width: 360px;
+  text-align: center;
+  --pc-attention-base: rgba(255,255,255,0.68);
 }
 
 .creators-browse {
@@ -2052,12 +2118,15 @@ body.theme-dark .quick-upload-secondary.is-ready {
   color: rgba(255,255,255,0.46);
   font-size: 0.9rem;
   line-height: 1.45;
+  text-align: justify;
   transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  --pc-attention-base: rgba(255,255,255,0.46);
 }
 
 .creators-owner.is-enabled {
   color: #ffffff;
   border-color: rgba(145,232,221,0.42);
+  --pc-attention-base: #ffffff;
 }
 
 .creators-owner input {
@@ -2080,7 +2149,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
   color: rgba(255,255,255,0.48);
   font-family: inherit;
   font-weight: 800;
-  cursor: not-allowed;
+  cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
@@ -2090,13 +2159,14 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-send.is-ready {
-  background: #17b8a6;
-  color: #ffffff;
+  background: #16a34a !important;
+  color: #ffffff !important;
   cursor: pointer;
 }
 
 .creators-send.is-ready:hover {
-  background: #129e91;
+  background: #16a34a !important;
+  color: #ffffff !important;
 }
 
 .tools-section {
@@ -2104,18 +2174,30 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 @media (max-width: 860px) {
-  .creators-section,
+  .creators-section {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "cta"
+      "copy"
+      "form";
+  }
+
   .creators-form {
     grid-template-columns: 1fr;
   }
 
   .creators-brand-row {
-    grid-template-columns: 1fr;
+    display: contents;
   }
 
   .creators-cta {
     justify-self: start;
     text-align: left;
+  }
+
+  .creators-copy {
+    min-height: auto;
   }
 }
 

@@ -105,7 +105,6 @@
       <ul class="site-footer-col site-footer-home">
         <li><a href="/">Home</a></li>
         <li><a href="/serve/cart">Cart</a></li>
-        <li><a href="https://www.messenger.com/t/photoconcernnepal" target="_blank" rel="noopener">Chat with us</a></li>
         <li><a href="/serve/contact">Contact us</a></li>
       </ul>
 
