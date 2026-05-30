@@ -56,13 +56,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         processing:  "#3b82f6",
         shipped:     "#8b5cf6",
         delivered:   "#22c55e",
-        cancelled:   "#ef4444",
+        cancelled:   "#e70000",
     };
 
     const PAYMENT_COLORS = {
         paid:    "#22c55e",
         pending: "#f59e0b",
-        failed:  "#ef4444",
+        failed:  "#e70000",
     };
 
 

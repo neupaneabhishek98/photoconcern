@@ -3,7 +3,7 @@
    1) Session-aware navbar:
         - Logged in   → profile + cart visible
         - Not logged  → profile becomes a Login button, cart hidden
-   2) Active-state highlighting on nav icons (primary color #d00106).
+   2) Active-state highlighting on nav icons (primary color #e70000).
    ============================================================ */
 
 (function highlightActiveNav() {

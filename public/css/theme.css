@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    theme.css — PhotoConcern Design System
    Loaded FIRST on every page. Defines all shared styles.
    Page-specific CSS files should NOT redefine these.
@@ -18,7 +18,7 @@
   --color-fg-muted:     #50545d;
   --color-border:       rgba(0,0,0,0.08);
   --color-success:      #16a34a;
-  --color-error:        #ef4444;
+  --color-error:        #e70000;
   --font-base:          'Manrope', 'Poppins', sans-serif;
   --radius-sm:          8px;
   --radius-md:          12px;
@@ -290,7 +290,7 @@ body.theme-dark .nav-contact-btn:hover { color: #ffffff; }
 }
 
 .quickies a:last-of-type { border-bottom: none !important; }
-.quickies .logout-btn    { border-bottom: none !important; color: #ef4444 !important; }
+.quickies .logout-btn    { border-bottom: none !important; color: #e70000 !important; }
 .quickies a:hover,
 .quickies .logout-btn:hover { background: #f5f5f5 !important; }
 
@@ -324,7 +324,7 @@ body.theme-dark .quickies .logout-btn {
 }
 body.theme-dark .quickies a:hover,
 body.theme-dark .quickies .logout-btn:hover { background: rgba(255,255,255,0.06) !important; }
-body.theme-dark .quickies .logout-btn { color: #f87171 !important; }
+body.theme-dark .quickies .logout-btn { color: #e70000 !important; }
 body.theme-dark .menu-item-icon { stroke: #e5e7eb !important; color: #e5e7eb !important; }
 
 @media (min-width: 1024px) {
@@ -547,7 +547,7 @@ body.theme-dark #_pageLoader { background: rgba(13,17,23,0.94); }
 
 /* Color variants */
 .toast.toast--success { border-left-color: #16a34a; }
-.toast.toast--error   { border-left-color: #dc2626; }
+.toast.toast--error   { border-left-color: #e70000; }
 .toast.toast--warning,
 .toast.toast--info    { border-left-color: #ca8a04; }
 
@@ -563,7 +563,7 @@ body.theme-dark #_pageLoader { background: rgba(13,17,23,0.94); }
   transform: scale(0);
   animation: toastIconPop 0.5s 0.05s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
-.toast.toast--error   .toast-icon { background: #dc2626; }
+.toast.toast--error   .toast-icon { background: #e70000; }
 .toast.toast--warning .toast-icon,
 .toast.toast--info    .toast-icon { background: #ca8a04; }
 
@@ -613,13 +613,13 @@ body.theme-dark .toast {
   display: flex !important; align-items: center !important; gap: 11px !important;
   width: 100% !important; padding: 14px 16px !important;
   font-size: 0.96rem !important; font-weight: 600 !important;
-  font-family: var(--font-base) !important; color: #ef4444 !important;
+  font-family: var(--font-base) !important; color: #e70000 !important;
   background: none !important; border: none !important; cursor: pointer !important;
   text-align: left !important; transition: background 0.15s ease !important;
 }
 .logout-btn:hover { background: #fff5f5 !important; }
-body.theme-dark .logout-btn { color: #f87171 !important; }
-body.theme-dark .logout-btn:hover { background: rgba(248,113,113,0.08) !important; }
+body.theme-dark .logout-btn { color: #e70000 !important; }
+body.theme-dark .logout-btn:hover { background: rgba(231, 0, 0, 0.08) !important; }
 
 /* ============================================================
    MOBILE NAVBAR — hamburger left, logo center, icons right
@@ -665,8 +665,8 @@ body.theme-dark .logout-btn:hover { background: rgba(248,113,113,0.08) !importan
 
 /* ====== Primary brand color & active-state nav icons ====== */
 :root {
-  --pc-primary: #d00106;
-  --pc-primary-tint: #ffe5e5;
+  --pc-primary: #e70000;
+  --pc-primary-tint: rgba(231, 0, 0, 0.1);
 }
 
 /* ============================================================
@@ -1084,7 +1084,7 @@ button,
 }
 .site-footer-social-tile--fb { background: #1877F2; }
 .site-footer-social-tile--ig {
-  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: linear-gradient(135deg, #f09433 0%, #e70000 25%, #e70000 50%, #e70000 75%, #bc1888 100%);
 }
 .site-footer-social-tile--wa { background: #25D366; }
 

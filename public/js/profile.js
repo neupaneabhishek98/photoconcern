@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 : `<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v5M12 16h.01"/>`;
         const iconBg =
             type === "success" ? "#22c55e" :
-            type === "error"   ? "#ef4444" : "#3b82f6";
+            type === "error"   ? "#e70000" : "#3b82f6";
         toast.innerHTML = `
             <div class="toast-icon" style="background:${iconBg}">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="#fff">${iconSvg}</svg>
@@ -339,8 +339,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     // show error near current password field if wrong password
                     if (res.status === 401) {
                         const pwInput = document.getElementById("_currentPasswordInput");
-                        pwInput.style.borderColor = "#ef4444";
-                        pwInput.style.boxShadow   = "0 0 0 3px rgba(239,68,68,0.2)";
+                        pwInput.style.borderColor = "#e70000";
+                        pwInput.style.boxShadow   = "0 0 0 3px rgba(231, 0, 0, 0.2)";
                         pwInput.placeholder       = err.message;
                         pwInput.value             = "";
                         pwInput.focus();

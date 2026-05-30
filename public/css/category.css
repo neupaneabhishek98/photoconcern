@@ -238,7 +238,7 @@ body {
 .footer-gradient-line {
   height: 4px;
   width: 100%;
-  background: linear-gradient(90deg, #ff003c, #0040ff); /* red to blue gradient */
+  background: linear-gradient(90deg, #e70000, #0040ff); /* red to blue gradient */
 }
 
 /* Footer container for sections */
@@ -302,7 +302,7 @@ body {
 }
 
 .footer-nav:hover {
-  background: linear-gradient(90deg, #ff003c, #0040ff);
+  background: linear-gradient(90deg, #e70000, #0040ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

@@ -40,7 +40,7 @@ function showCategoryToast(message, type = "success") {
       : type === "error"
       ? `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>`
       : `<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v5M12 16h.01"/>`;
-  const iconBg = type === "success" ? "#22c55e" : type === "error" ? "#ef4444" : "#3b82f6";
+  const iconBg = type === "success" ? "#22c55e" : type === "error" ? "#e70000" : "#3b82f6";
   toast.innerHTML = `
     <div class="toast-icon" style="background:${iconBg}">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="#fff">${iconSvg}</svg>

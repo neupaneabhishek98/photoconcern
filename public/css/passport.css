@@ -112,7 +112,7 @@
   font-size: 0.95rem;
   min-height: 1.2em;
 }
-.passport-status.error { color: #c0392b; }
+.passport-status.error { color: #e70000; }
 .passport-status.success { color: #1e7d3a; }
 
 .passport-result {

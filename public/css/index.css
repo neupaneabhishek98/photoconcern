@@ -672,7 +672,7 @@ body {
 .footer-gradient-line {
   height: 4px;
   width: 100%;
-  background: linear-gradient(90deg, #ff003c, #0040ff); /* red to blue gradient */
+  background: linear-gradient(90deg, #e70000, #0040ff); /* red to blue gradient */
 }
 
 /* Footer container for sections */
@@ -710,7 +710,7 @@ body {
 }
 
 .footer-nav:hover {
-  background: linear-gradient(90deg, #ff003c, #0040ff);
+  background: linear-gradient(90deg, #e70000, #0040ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -719,20 +719,20 @@ body {
 #send-feed-foot {
   width: calc(100% - 20px); /* full width minus margin */
   margin: 10px 10px 0 10px;
-  background-color: #dc143c;
+  background-color: #e70000;
   color: #fff;
   border: none;
   padding: 12px 0;
   border-radius: 12px;
   font-size: 0.95rem;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(220,20,60,0.35);
+  box-shadow: 0 4px 16px rgba(231, 0, 0, 0.35);
   transition: all 0.3s ease;
 }
 
 #send-feed-foot:hover {
-  background-color: #b50f30;
-  box-shadow: 0 8px 28px rgba(220,20,60,0.45);
+  background-color: #e70000;
+  box-shadow: 0 8px 28px rgba(231, 0, 0, 0.45);
 }
 
 /* Email link */
@@ -1382,15 +1382,15 @@ body.theme-dark::-webkit-scrollbar-thumb {
 
 
 .quickies a:last-child {
-  color: #ef4444; /* red */
+  color: #e70000; /* red */
 }
 
 .quickies a:last-child:hover {
-  background: rgba(239,68,68,0.1);
+  background: rgba(231, 0, 0, 0.1);
 }
 
 body.theme-dark .quickies a:last-child {
-  color: #f87171;
+  color: #e70000;
 }
 
 /* ============================================================
@@ -1849,7 +1849,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-kicker strong {
-  color: #ef4444;
+  color: #e70000;
   font-weight: 800;
 }
 

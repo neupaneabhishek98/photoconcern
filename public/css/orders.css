@@ -121,7 +121,7 @@ body {
 }
 
 .payment.cash {
-  color: #f44336;
+  color: #e70000;
 }
 
 .total {
@@ -303,7 +303,7 @@ body.theme-dark .payment.paid {
 }
 
 body.theme-dark .payment.cash {
-  color: #ef4444;
+  color: #e70000;
 }
 
 /* Empty state */
@@ -334,5 +334,5 @@ body.theme-dark .payment.cash {
 
 /* page-specific last-child color override */
 .quickies a:last-child {
-  color: #ef4444; /* red */
+  color: #e70000; /* red */
 }

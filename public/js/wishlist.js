@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.body.appendChild(toast);
         }
         toast.textContent        = msg;
-        toast.style.background   = isError ? "#ef4444" : "#021024";
+        toast.style.background   = isError ? "#e70000" : "#021024";
         toast.classList.add("show");
         setTimeout(() => toast.classList.remove("show"), 2500);
     }

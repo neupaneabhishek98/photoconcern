@@ -22,8 +22,8 @@
     <div class="navbar">
       <div class="nav-bar-left">
         <a href="/" class="photoconcern-nav" aria-label="PhotoConcern Home">
-          <img src="/resources/logo_white.webp" alt="PhotoConcern" class="nav-logo nav-logo-white">
-          <img src="/resources/logo_alt.webp" alt="" class="nav-logo nav-logo-alt" aria-hidden="true">
+          <img src="/resources/logo_white.webp?v=20260530-2" alt="PhotoConcern" class="nav-logo nav-logo-white">
+          <img src="/resources/logo_alt.webp?v=20260530-2" alt="" class="nav-logo nav-logo-alt" aria-hidden="true">
         </a>
         <a href="https://www.messenger.com/t/photoconcernnepal" target="_blank" rel="noopener" class="nav-contact-btn" aria-label="Chat with PhotoConcern on Messenger">
           <svg class="icons-svg-nav nav-chat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -97,8 +97,8 @@
     <div class="site-footer-inner">
       <div class="site-footer-brand">
         <a href="/" aria-label="PhotoConcern Home">
-          <img src="/resources/logo_white.webp" alt="PhotoConcern" class="site-footer-logo site-footer-logo-white">
-          <img src="/resources/logo_alt.webp" alt="" class="site-footer-logo site-footer-logo-alt" aria-hidden="true">
+          <img src="/resources/logo_white.webp?v=20260530-2" alt="PhotoConcern" class="site-footer-logo site-footer-logo-white">
+          <img src="/resources/logo_alt.webp?v=20260530-2" alt="" class="site-footer-logo site-footer-logo-alt" aria-hidden="true">
         </a>
       </div>
 

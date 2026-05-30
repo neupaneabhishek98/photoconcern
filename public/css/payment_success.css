@@ -13,7 +13,7 @@ body {
 
 /* page-specific last-child color override */
 .quickies a:last-child {
-  color: #ef4444; /* red */
+  color: #e70000; /* red */
 }
 
   /* ===============================

@@ -253,7 +253,7 @@ body {
     transition: background 0.15s ease;
 }
 
-.preview-remove:hover { background: #ef4444; }
+.preview-remove:hover { background: #e70000; }
 
 .upload-count {
     margin: 6px 0 0;

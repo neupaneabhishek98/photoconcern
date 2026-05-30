@@ -1,11 +1,11 @@
 /* ───────────────────────────────────────────────────────────
    profile.css — clean professional layout for /serve/profile
-   Brand primary: #d00106
+   Brand primary: #e70000
    ─────────────────────────────────────────────────────────── */
 
 :root {
-  --pc-primary: #d00106;
-  --pc-primary-soft: #ffe5e5;
+  --pc-primary: #e70000;
+  --pc-primary-soft: rgba(231, 0, 0, 0.1);
   --pc-ink: #0c1320;
   --pc-muted: #6b7280;
   --pc-bg: #f6f8fb;
@@ -49,7 +49,7 @@ body { background: var(--pc-bg); color: var(--pc-ink); font-family: system-ui, -
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--pc-primary), #ff5359);
+  background: linear-gradient(135deg, var(--pc-primary), #e70000);
   color: #fff;
   display: grid;
   place-items: center;

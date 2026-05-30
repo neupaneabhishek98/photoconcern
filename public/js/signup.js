@@ -28,7 +28,7 @@ function showToast(message, type = "info", duration = 4000) {
         box-shadow: 0 4px 16px rgba(0,0,0,0.25);
         opacity: 0;
         transition: opacity 0.3s ease;
-        background: ${type === "success" ? "#16a34a" : type === "error" ? "#ef4444" : "#021024"};
+        background: ${type === "success" ? "#16a34a" : type === "error" ? "#e70000" : "#021024"};
     `;
     container.appendChild(toast);
     setTimeout(() => toast.style.opacity = 1, 50);
