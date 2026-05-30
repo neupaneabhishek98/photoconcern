@@ -25,19 +25,15 @@
         <img src="/resources/karizma-album.png" alt="Karizma Album" class="hot-img">
         <div class="hot-overlay">
           <div class="hot-top">
-            <div class="hot-badge">🔥 Hot Right Now</div>
+            <div class="hot-badge">Featured Product</div>
           </div>
           <div class="hot-content">
             <h2 class="hot-title">Karizma Album</h2>
             <p class="hot-desc">Turn your memories into a beautifully printed Karizma Album. Custom layouts, premium paper, and fast delivery across Nepal.</p>
             <p class="hot-price">रू.1,499</p>
             <div class="hot-actions">
-              <button type="button" class="add-to-cart-btn hot-cart-btn"
-                data-title="Karizma Album"
-                data-price="1499"
-                data-img="/resources/karizma-album.png"
-                data-desc="Custom printed Karizma Album with premium paper.">Buy Now</button>
               <button type="button" class="hot-learn-btn" data-title="Karizma Album">Learn More</button>
+              <button type="button" class="hot-order-btn" id="karizmaOrderToggle">Order Now -&gt;</button>
             </div>
           </div>
         </div>
@@ -45,7 +41,7 @@
     </div>
 
     <!-- QUICK UPLOAD SECTION -->
-    <section class="quick-upload-section" aria-labelledby="quickUploadTitle">
+    <section class="quick-upload-section is-collapsed" id="karizmaOrderCard" aria-labelledby="quickUploadTitle">
       <div class="quick-upload-copy">
         <span class="quick-upload-kicker">ORDER KARIZMA ALBUM</span>
         <h2 id="quickUploadTitle">Upload pictures to create an order</h2>
@@ -76,8 +72,8 @@
       <span class="creators-kicker"><span>PhotoConcern</span> <strong>Creators</strong></span>
       <div class="creators-copy">
         <h2 id="creatorsTitle">Send your original photographs</h2>
-        <p>Upload one or more photographs and confirm ownership before sending.</p>
-        <button type="button" class="creators-learn">Learn more</button>
+        <p>Watermark your picture and send it to us, if its selected, we'll get back to you.</p>
+        <button type="button" class="creators-learn"><span class="creators-learn-icon" aria-hidden="true">i</span> Learn more</button>
       </div>
 
       <form class="creators-form" id="creatorsForm">

@@ -174,6 +174,17 @@ function setupQuickUpload() {
   updateContinueButton();
 }
 
+function setupKarizmaOrderToggle() {
+  const trigger = document.getElementById("karizmaOrderToggle");
+  const card = document.getElementById("karizmaOrderCard");
+  if (!trigger || !card) return;
+
+  trigger.addEventListener("click", () => {
+    card.classList.remove("is-collapsed");
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 function setupCreatorsForm() {
   const form = document.getElementById("creatorsForm");
   const dropzone = document.getElementById("creatorsDropzone");
@@ -213,14 +224,12 @@ function setupCreatorsForm() {
     preview.innerHTML = "";
     files.slice(0, 8).forEach((file, index) => {
       const tile = document.createElement("div");
-      tile.className = "creators-thumb";
-      const url = URL.createObjectURL(file);
-      objectUrls.push(url);
+      tile.className = "creators-thumb creators-thumb--file";
 
-      const img = document.createElement("img");
-      img.src = url;
-      img.alt = file.name;
-      tile.appendChild(img);
+      const name = document.createElement("span");
+      name.className = "creators-file-name";
+      name.textContent = file.name;
+      tile.appendChild(name);
 
       const remove = document.createElement("button");
       remove.type = "button";
@@ -640,6 +649,7 @@ function setupHeroSlider() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   setupQuickUpload();
+  setupKarizmaOrderToggle();
   setupCreatorsForm();
   setupMenuOutsideClick();
   // Products section was replaced with the Services grid (static HTML).

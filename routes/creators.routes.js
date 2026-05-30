@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const CreatorSubmission = require("../models/creator_submission.models");
+const { sendEmail } = require("../services/email.services");
 
 function lazy(modulePath) {
     let mod = null;
@@ -14,6 +15,16 @@ function lazy(modulePath) {
 
 const drive = lazy("../services/drive.services");
 const router = express.Router();
+const CREATORS_NOTIFY_EMAIL = "neupaneabhishek98@gmail.com";
+
+function escapeHtml(value) {
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -65,6 +76,23 @@ router.post("/creators", handleCreatorUpload, async (req, res) => {
             submitterIp: req.ip,
             userAgent: req.get("user-agent") || "",
         });
+
+        try {
+            const fileList = req.files.map((file) => `<li>${escapeHtml(file.originalname)}</li>`).join("");
+            const folderUrl = escapeHtml(submission.driveFolderUrl || "");
+            await sendEmail({
+                to: CREATORS_NOTIFY_EMAIL,
+                subject: "New PhotoConcern Creators submission",
+                html: `<h2>New PhotoConcern Creators submission</h2>
+                       <p><b>Photos:</b> ${req.files.length}</p>
+                       <p><b>Description:</b> ${escapeHtml(description)}</p>
+                       <p><b>Drive folder:</b> <a href="${folderUrl}">${folderUrl}</a></p>
+                       <p><b>Files:</b></p>
+                       <ul>${fileList}</ul>`,
+            });
+        } catch (emailErr) {
+            console.error("[creators/email]", emailErr.message);
+        }
 
         return res.status(201).json({
             message: "Your PhotoConcern Creators submission was sent.",

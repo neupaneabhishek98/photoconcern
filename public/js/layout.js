@@ -22,10 +22,10 @@
     <div class="navbar">
       <div class="nav-bar-left">
         <a href="/" class="photoconcern-nav" aria-label="PhotoConcern Home">
-          <img src="/resources/alt_white.webp" alt="PhotoConcern" class="nav-logo nav-logo-white">
-          <img src="/resources/main.webp" alt="" class="nav-logo nav-logo-main" aria-hidden="true">
+          <img src="/resources/logo_white.webp" alt="PhotoConcern" class="nav-logo nav-logo-white">
+          <img src="/resources/logo_main.webp" alt="" class="nav-logo nav-logo-main" aria-hidden="true">
         </a>
-        <a href="https://m.me/photoconcernnepal?text=Hi%2C%20Can%20I%20learn%20more%20about%20your%20services" target="_blank" rel="noopener" class="nav-contact-btn" aria-label="Chat with PhotoConcern on Messenger">
+        <a href="https://www.messenger.com/t/photoconcernnepal" target="_blank" rel="noopener" class="nav-contact-btn" aria-label="Chat with PhotoConcern on Messenger">
           <svg class="icons-svg-nav nav-chat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path class="chat-bubble" d="M4.4 11.2c0-4.1 3.6-7.2 8-7.2s8 3.1 8 7.2-3.6 7.2-8 7.2c-.9 0-1.8-.1-2.6-.4l-4.3 2.2 1.1-4A6.9 6.9 0 0 1 4.4 11.2Z" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
             <path class="chat-spark" d="M16.8 6.7l.6 1.2 1.3.5-1.3.5-.6 1.2-.6-1.2-1.3-.5 1.3-.5.6-1.2Z" fill="currentColor"/>
@@ -97,14 +97,14 @@
     <div class="site-footer-inner">
       <div class="site-footer-brand">
         <a href="/" aria-label="PhotoConcern Home">
-          <img src="/resources/alt_white.webp" alt="PhotoConcern" class="site-footer-logo">
+          <img src="/resources/logo_white.webp" alt="PhotoConcern" class="site-footer-logo">
         </a>
       </div>
 
       <ul class="site-footer-col site-footer-home">
         <li><a href="/">Home</a></li>
         <li><a href="/serve/cart">Cart</a></li>
-        <li><a href="https://m.me/photoconcernnepal?text=Hi%2C%20Can%20I%20learn%20more%20about%20your%20services" target="_blank" rel="noopener">Chat with us</a></li>
+        <li><a href="https://www.messenger.com/t/photoconcernnepal" target="_blank" rel="noopener">Chat with us</a></li>
         <li><a href="/serve/contact">Contact us</a></li>
       </ul>
 

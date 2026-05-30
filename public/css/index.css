@@ -7,6 +7,11 @@ body {
       linear-gradient(104deg, #ffffff 0%, #f8f9fa 42%, #e8ebef 100%);
 }
 
+:root {
+  --pc-page-gutter: clamp(18px, 1.65vw, 32px);
+  --pc-shell-max: 1840px;
+}
+
 /* Navbar */
 .navbar {
     position: sticky;
@@ -362,7 +367,11 @@ body {
   overflow: hidden;
 }
 .top-products {
-    padding: 2rem 1rem;
+    width: calc(100% - (var(--pc-page-gutter) * 2));
+    max-width: var(--pc-shell-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 0;
     font-family: 'Poppins', 'Manrope', sans-serif;
 }
 .text-top-products p{
@@ -1389,9 +1398,10 @@ body.theme-dark .quickies a:last-child {
    ============================================================ */
 
 .hot-section {
-  width: 100%;
-  margin: 2.5rem 0;
-  padding: 0 16px;
+  width: calc(100% - (var(--pc-page-gutter) * 2));
+  max-width: var(--pc-shell-max);
+  margin: 2.5rem auto;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -1401,6 +1411,8 @@ body.theme-dark .quickies a:last-child {
   border-radius: 20px;
   overflow: hidden;
   aspect-ratio: 1 / 1;
+  border: 1px solid rgba(2, 16, 36, 0.1);
+  box-shadow: 0 24px 60px rgba(2, 16, 36, 0.1);
 }
 
 .hot-img {
@@ -1501,46 +1513,48 @@ body.theme-dark .quickies a:last-child {
   margin-top: 4px;
 }
 
-.hot-cart-btn {
+.hot-learn-btn {
   height: 44px;
   padding: 0 26px;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #f0b429, #c9920a);
+  background: #0b0b0b;
   color: #fff;
   font-size: 0.9rem;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(201,146,10,0.4);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.2);
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
-.hot-cart-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-.hot-cart-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.hot-learn-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-.hot-buy-btn {
+.hot-order-btn {
   height: 44px;
   padding: 0 26px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
+  background: #ffffff;
+  color: #0b0b0b;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 800;
   font-family: inherit;
   cursor: pointer;
   backdrop-filter: blur(4px);
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
-.hot-buy-btn:hover { background: rgba(255,255,255,0.16); }
+.hot-order-btn:hover {
+  background: rgba(255,255,255,0.9);
+  transform: translateY(-1px);
+}
 
 /* ============================================================
    Quick upload section
    ============================================================ */
 
 .quick-upload-section {
-  width: calc(100% - 32px);
-  max-width: 1184px;
+  width: calc(100% - (var(--pc-page-gutter) * 2));
+  max-width: var(--pc-shell-max);
   margin: 0 auto 42px;
   padding: 22px;
   box-sizing: border-box;
@@ -1554,6 +1568,10 @@ body.theme-dark .quickies a:last-child {
   grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
   gap: 20px;
   align-items: stretch;
+}
+
+.quick-upload-section.is-collapsed {
+  display: none;
 }
 
 .quick-upload-copy {
@@ -1799,11 +1817,11 @@ body.theme-dark .quick-upload-secondary.is-ready {
    ============================================================ */
 
 .creators-section {
-  width: calc(100% - 32px);
-  max-width: 1184px;
+  width: calc(100% - (var(--pc-page-gutter) * 2));
+  max-width: var(--pc-shell-max);
   margin: 0 auto 54px;
   display: grid;
-  grid-template-columns: minmax(260px, 0.8fr) minmax(320px, 1.2fr);
+  grid-template-columns: minmax(260px, 40fr) minmax(320px, 60fr);
   gap: 22px;
   padding: 28px;
   border-radius: 18px;
@@ -1816,7 +1834,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
 .creators-copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
 }
 
@@ -1826,7 +1844,6 @@ body.theme-dark .quick-upload-secondary.is-ready {
   font-size: clamp(1.55rem, 3.2vw, 2.65rem);
   font-weight: 800;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
   color: #ffffff;
   line-height: 1;
 }
@@ -1851,8 +1868,8 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 .creators-learn {
-  width: fit-content;
-  margin-top: 6px;
+  width: 100%;
+  margin-top: auto;
   padding: 10px 18px;
   border: 1px solid rgba(255,255,255,0.42);
   border-radius: 6px;
@@ -1868,6 +1885,19 @@ body.theme-dark .quick-upload-secondary.is-ready {
   background: rgba(255,255,255,0.1);
   border-color: rgba(255,255,255,0.7);
   transform: translateY(-1px);
+}
+
+.creators-learn-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  margin-right: 8px;
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 50%;
+  font-size: 0.74rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .creators-form {
@@ -1965,6 +1995,22 @@ body.theme-dark .quick-upload-secondary.is-ready {
   display: block;
 }
 
+.creators-thumb--file {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 10px 36px 10px 12px;
+}
+
+.creators-file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .creators-remove {
   position: absolute;
   top: 5px;
@@ -2048,7 +2094,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
 
 @media (max-width: 520px) {
   .creators-section {
-    width: calc(100% - 24px);
+    width: calc(100% - (var(--pc-page-gutter) * 2));
     padding: 20px;
   }
 }
@@ -2056,7 +2102,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
 @media (max-width: 780px) {
   .quick-upload-section {
     grid-template-columns: 1fr;
-    width: calc(100% - 24px);
+    width: calc(100% - (var(--pc-page-gutter) * 2));
     margin-bottom: 30px;
     padding: 18px;
   }
@@ -2076,7 +2122,7 @@ body.theme-dark .quick-upload-secondary.is-ready {
 }
 
 @media (min-width: 768px) {
-  .hot-section { padding: 0 28px; }
+  .hot-section { width: calc(100% - (var(--pc-page-gutter) * 2)); }
 
   .hot-img-wrap { aspect-ratio: 16 / 7; border-radius: 24px; }
   .hot-img { min-height: unset; }
@@ -2111,9 +2157,9 @@ body.theme-dark .quick-upload-secondary.is-ready {
 
 @media (min-width: 1024px) {
   .hot-section {
-    max-width: 1240px;
+    max-width: var(--pc-shell-max);
     margin: 2.5rem auto;
-    padding: 0 28px;
+    padding: 0;
   }
   .hot-img-wrap { aspect-ratio: 16 / 7; border-radius: 28px; }
   .hot-img { min-height: unset; }
